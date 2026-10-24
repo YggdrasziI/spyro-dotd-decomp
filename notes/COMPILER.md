@@ -81,7 +81,7 @@ the linker strips them and `.ctors` / `.dtors` shift (`main.dol: FAILED`).
 Method: scratch C++ (not in the repository) compiled with every mwcc in
 `build/compilers/GC` and `build/compilers/Wii`, base flags of `configure.py` plus
 `-RTTI on`, then compared word by word to the original functions (relocated fields
-masked, trailing padding ignored).
+masked, trailing padding ignored). The method is now `tools/compiler_sweep.py`.
 
 Classes, from RTTI (`__RTTI` objects in `.sdata`, names in `.rodata`): vtable
 `lbl_804F0288` → RTTI `lbl_805CBDC0` → `"IKAnchor"` (0x804C1BC0), base list
