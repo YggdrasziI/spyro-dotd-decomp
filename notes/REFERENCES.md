@@ -56,6 +56,14 @@ GameCube, `E:\Projets\Github\Decomp\GC\`:
 The `doldecomp` organization hosts reusable libraries (SDK, JSystem...); check the
 version of each library against this DOL.
 
+## Finding library code by comparison
+
+`tools/ref_match.py <project root> <ID>` compares this game's functions with another
+dtk project's (symbol operands and local branch offsets normalized) and prints runs of
+matched functions with the reference unit names. Monster Lab
+(`E:\Projets\Dev\mlab-decomp`, `RM7P4F`, same RVL_SDK build tag) gives the region map
+of `notes/SPLITS.md`; its `build/RM7P4F/asm` must exist (`ninja` there).
+
 ## Reuse permissions
 
 - CC0 references (mscharged-decomp, Petari, TP) come first.
