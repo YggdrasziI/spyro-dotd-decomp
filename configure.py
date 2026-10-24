@@ -231,6 +231,7 @@ cflags_base = [
     f"-i build/{config.version}/include",
     "-i libs/Runtime/include",
     "-i libs/MSL_C/include",
+    "-i libs/MetroTRK/include",
     f"-DBUILD_VERSION={version_num}",  # compare with the names in include/version.h
 ]
 
@@ -357,7 +358,13 @@ config.libs = [
         "progress_category": "sdk",
         "objects": [
             Object(Matching, "MSL_C/alloc.c", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
+            Object(Matching, "MSL_C/ansi_files.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "MSL_C/ansi_fp.c", extra_cflags=["-Cpp_exceptions on", "-rostr", "-use_lmw_stmw on"], mw_version="GC/3.0a5"),
+            Object(Matching, "MSL_C/buffer_io.c", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
+            Object(Matching, "MSL_C/direct_io.c", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
+            Object(Matching, "MSL_C/file_io.c", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
+            Object(Matching, "MSL_C/FILE_POS.c", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
+            Object(Matching, "MSL_C/mbstring.c", extra_cflags=["-use_lmw_stmw on"]),
             Object(Matching, "MSL_C/mem.c"),
             Object(Matching, "MSL_C/mem_funcs.c"),
             Object(Matching, "MSL_C/math_api.c"),

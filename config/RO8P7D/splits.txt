@@ -59,6 +59,13 @@ MSL_C/alloc.c:
 	.bss        start:0x8057ADB8 end:0x8057ADF0
 	.sbss       start:0x805CE600 end:0x805CE608
 
+MSL_C/ansi_files.c:
+	extab       start:0x80006630 end:0x80006640
+	extabindex  start:0x80008CB8 end:0x80008CD0
+	.text       start:0x80384A40 end:0x80384B50
+	.data       start:0x80506348 end:0x80506488
+	.bss        start:0x8057ADF0 end:0x8057B0F0
+
 MSL_C/ansi_fp.c:
 	extab       start:0x80006640 end:0x80006678
 	extabindex  start:0x80008CD0 end:0x80008D24
@@ -66,6 +73,31 @@ MSL_C/ansi_fp.c:
 	.rodata     start:0x804C2878 end:0x804C2958
 	.data       start:0x80506488 end:0x805065F0
 	.sdata2     start:0x805D2920 end:0x805D2958
+
+MSL_C/buffer_io.c:
+	extab       start:0x80006678 end:0x80006680
+	extabindex  start:0x80008D24 end:0x80008D30
+	.text       start:0x803864C0 end:0x803865A0
+
+MSL_C/direct_io.c:
+	extab       start:0x80006680 end:0x80006688
+	extabindex  start:0x80008D30 end:0x80008D3C
+	.text       start:0x803865A0 end:0x803868A8
+
+MSL_C/file_io.c:
+	extab       start:0x80006688 end:0x80006698
+	extabindex  start:0x80008D3C end:0x80008D54
+	.text       start:0x803868A8 end:0x80386A98
+
+MSL_C/FILE_POS.c:
+	extab       start:0x80006698 end:0x800066A0
+	extabindex  start:0x80008D54 end:0x80008D60
+	.text       start:0x80386A98 end:0x80386D08
+
+MSL_C/mbstring.c:
+	extab       start:0x800066A0 end:0x800066B0
+	extabindex  start:0x80008D60 end:0x80008D78
+	.text       start:0x80386D08 end:0x80386F00
 
 MSL_C/mem.c:
 	extab       start:0x800066B0 end:0x800066B8

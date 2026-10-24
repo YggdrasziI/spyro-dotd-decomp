@@ -36,7 +36,12 @@ in `mlab-decomp/notes/MATCHING.md` is a lead once the compiler is identified.
   position; the `lbl_` names can stay, only the sizes must agree.
 
 - Library sources may define functions this DOL lacks; the linker dead-strips
-  unreferenced functions, so leave them in (`ptmf.c`, `runtime.c`).
+  unreferenced functions, so leave them in (`ptmf.c`, `runtime.c`). Exception: a
+  function compiled with `-Cpp_exceptions on` leaves its `extab` / `extabindex`
+  entries in the object and objdiff scores the unit's data below 100 %; put such
+  functions under `#if 0` (`ansi_files.c`, `buffer_io.c`, `direct_io.c`, `file_io.c`).
+  Conversely, re-enable a function mlab disabled when this DOL has it (`mbstowcs` in
+  `mbstring.c`).
 
 - `mullw rD, rD, rB` versus `mullw rD, rB, rD`: swap the operands of `*` in the
   source (`calloc` in `alloc.c`: `size * nmemb`).

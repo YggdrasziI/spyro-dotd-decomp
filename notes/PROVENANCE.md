@@ -34,7 +34,7 @@ Functions of these sources that this DOL does not have (`__ptmf_cmpr`, `__shr2u`
 `__cvt_ull_dbl`, `__cvt_ull_flt`) are left in the sources and dead-stripped by the
 linker (the build matches).
 
-## MSL_C (31 units, Matching)
+## MSL_C (37 units, Matching)
 
 Source: `YggdrasziI/mlab-decomp` (private, same owner), commit
 `55db5381722bed8ad1fe3cd096f3955ae28130c1`, copied unchanged. mlab-decomp's
@@ -74,3 +74,15 @@ Units chosen with a scratch script: the reference unit's functions appear in the
 order with the same normalized code (`tools/ref_match.py` fingerprints), the `.text`
 size is equal, and each data section is placed by pairing the symbols both functions
 reference. Function and data names are mlab's, mapped by offset inside each section.
+
+Then, from the same commit: `ansi_files.c`, `buffer_io.c`, `direct_io.c`, `file_io.c`,
+`FILE_POS.c`, `mbstring.c`, the headers `libs/MSL_C/include/{ansi_files.h,
+buffer_io.h,direct_io.h,file_io.h,file_struct.h,FILE_POS.h,locale.h,mbstring.h,mem.h,
+misc_io.h,string.h,wchar_io.h}` and `libs/MetroTRK/include/MetroTRK/trkenum.h`, copied
+unchanged except: `ansi_files.h` includes `<types.h>` instead of
+`<revolution/types.h>`; the functions this DOL lacks (`__find_unopened_file`,
+`__init_file`, `__flush_line_buffered_output_files`, `__load_buffer`, `setvbuf`,
+`fread`, `__fread`, `fopen`, `freopen`, `__get_file_modes`, `__msl_strnicmp`,
+`__msl_itoa`) are put under `#if 0`, and `mbstowcs`, which mlab had under `#if 0`, is
+enabled again (this DOL has it at 0x80386D88). These units hold only part of mlab's
+functions, so their `.text` sizes differ; the kept functions have the same code.
