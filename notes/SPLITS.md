@@ -50,7 +50,7 @@ RenderWare from about 0x803EAF84), what lies around 0x804117F0, and where PhysX
 ## Units
 
 MSL_C units not split yet: those whose code differs from mlab or is too short to
-place (`printf.c`, `string.c`, `w_*.c`, `math_ppc.c` …). Gaps between the fdlibm units:
+place (`printf.c`, `w_*.c`, `math_ppc.c` …). Gaps between the fdlibm units:
 0x80390170-0x803903A4 (after `e_atan2.c`) and 0x80393978-0x80393998 (after `s_tan.c`).
 
 Runtime.PPCEABI.H layout (`.text`): `__mem.c` (`strlen`), `__va_arg.c`,
@@ -84,6 +84,7 @@ functions they describe.
 | `MSL_C/mem.c` | `extab` 0x800066B0-0x800066B8, `extabindex` 0x80008D78-0x80008D84, `.text` 0x80386F00-0x80387070 | Matching; same code as mlab. `extab` / `extabindex` bounds of these MSL_C units: the `extabindex` entries (function, size, `extab` pointer) of the unit's functions |
 | `MSL_C/math_api.c` | `extab` 0x800066B8-0x800066C8, `extabindex` 0x80008D84-0x80008D9C, `.text` 0x80387340-0x803873D8 | Matching; same code as mlab |
 | `MSL_C/qsort.c` | `extab` 0x80006728-0x80006730, `extabindex` 0x80008E2C-0x80008E38, `.text` 0x803897B0-0x80389920 | Matching; same code as mlab |
+| `MSL_C/string.c` | `extab` 0x80006750-0x80006758, `extabindex` 0x80008E68-0x80008E74, `.text` 0x8038AF5C-0x8038B43C, `.sdata` 0x805CC220-0x805CC228, `.sdata2` 0x805D2978-0x805D2980 | Matching; mlab's functions plus `strrchr` (0x8038B264, 0x48), between `strchr` and `strtok`: it scans with `lbzu`, keeps the last match of `chr & 0xFF` and returns the end of the string when `chr` is 0, the shape of MSL's `strrchr`. `.sdata` holds `strtok_null` / `strtok_ptr`, both pointing to `""` (`.sdata2`, 1 byte; dtk said 8) |
 | `MSL_C/signal.c` | `extab` 0x80006748-0x80006750, `extabindex` 0x80008E5C-0x80008E68, `.text` 0x8038AEAC-0x8038AF5C, `.bss` 0x8057B0F0-0x8057B110 | Matching; `signal_funcs` has 7 entries (`raise` tests `sig > 7`), so 0x1C bytes plus padding |
 | `MSL_C/abort_exit_ppc_eabi.c` | `extab` 0x800067B8-0x800067C0, `extabindex` 0x80008F04-0x80008F10, `.text` 0x8038F60C-0x8038F640, `.sbss` 0x805CE618-0x805CE620 | Matching; `__aborting`, `__stdio_exit` |
 | `MSL_C/math_sun.c` | `extab` 0x800067C0-0x800067C8, `extabindex` 0x80008F10-0x80008F1C, `.text` 0x8038F640-0x8038F680 | Matching; `scalbn` |

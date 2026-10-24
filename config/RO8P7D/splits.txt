@@ -130,6 +130,13 @@ MSL_C/signal.c:
 	.text       start:0x8038AEAC end:0x8038AF5C
 	.bss        start:0x8057B0F0 end:0x8057B110
 
+MSL_C/string.c:
+	extab       start:0x80006750 end:0x80006758
+	extabindex  start:0x80008E68 end:0x80008E74
+	.text       start:0x8038AF5C end:0x8038B43C
+	.sdata      start:0x805CC220 end:0x805CC228
+	.sdata2     start:0x805D2978 end:0x805D2980
+
 MSL_C/abort_exit_ppc_eabi.c:
 	extab       start:0x800067B8 end:0x800067C0
 	extabindex  start:0x80008F04 end:0x80008F10

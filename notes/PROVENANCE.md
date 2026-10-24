@@ -34,7 +34,7 @@ Functions of these sources that this DOL does not have (`__ptmf_cmpr`, `__shr2u`
 `__cvt_ull_dbl`, `__cvt_ull_flt`) are left in the sources and dead-stripped by the
 linker (the build matches).
 
-## MSL_C (37 units, Matching)
+## MSL_C (38 units, Matching)
 
 Source: `YggdrasziI/mlab-decomp` (private, same owner), commit
 `55db5381722bed8ad1fe3cd096f3955ae28130c1`, copied unchanged. mlab-decomp's
@@ -86,3 +86,9 @@ unchanged except: `ansi_files.h` includes `<types.h>` instead of
 `__msl_itoa`) are put under `#if 0`, and `mbstowcs`, which mlab had under `#if 0`, is
 enabled again (this DOL has it at 0x80386D88). These units hold only part of mlab's
 functions, so their `.text` sizes differ; the kept functions have the same code.
+
+Then `string.c` from the same mlab-decomp commit, copied unchanged except for
+`strrchr`, added before `strtok`: taken from
+[SMGCommunity/Petari](https://github.com/SMGCommunity/Petari) `src/MSL_C/string.c`
+(CC0-1.0, commit `f3defb7b21bad70d84949adfdeb66b7b1c573031`), reformatted to the
+file's brace style.
