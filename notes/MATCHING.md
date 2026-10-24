@@ -42,7 +42,8 @@ in `mlab-decomp/notes/MATCHING.md` is a lead once the compiler is identified.
   entries in the object and objdiff scores the unit's data below 100 %; put such
   functions under `#if 0` (`ansi_files.c`, `buffer_io.c`, `direct_io.c`, `file_io.c`).
   Same for a function whose string literals are absent from the DOL's `.data`: the
-  linker strips them with it, objdiff does not (`SIGetTypeString` in `SIBios.c`).
+  linker strips them with it, objdiff does not (`SIGetTypeString` in `SIBios.c`), and for float
+  constants in `.sdata2` (`C_MTXPerspective` in `mtx44.c`).
 - A `static inline` function that the DOL also keeps as a global function: make it a
   plain global function; under `-ipa file` the compiler still inlines it into earlier
   callers (`VIGetScanMode` into `VIInit`).

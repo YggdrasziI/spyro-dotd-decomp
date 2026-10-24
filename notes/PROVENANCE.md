@@ -172,6 +172,13 @@ in `vi.c`:
 - `VIGetScanMode` is a global function instead of `static inline`, as in Petari (CC0,
   commit `f3defb7b21bad70d84949adfdeb66b7b1c573031`, `src/RVL_SDK/vi/vi.c`).
 
+## RVL_SDK/mtx (3 units)
+
+From mlab-decomp `src/RVL_SDK/mtx/mtx.c`, `mtxvec.c`, `mtx44.c` (commit
+`55db5381722bed8ad1fe3cd096f3955ae28130c1`, from mscharged-decomp, CC0), unchanged except
+that `C_MTXPerspective` is put under `#if 0` in `mtx44.c` (dead-stripped; its float
+constants are not in the DOL).
+
 ## RVL_SDK/os (34 units)
 
 From mlab-decomp `src/RVL_SDK/os/*` (commit `55db5381722bed8ad1fe3cd096f3955ae28130c1`,
