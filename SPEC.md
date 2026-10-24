@@ -54,7 +54,9 @@ Evidence and the candidate analysis go in `notes/COMPILER.md`.
 - Linker: **GC 3.0 family** (3.0a3 … 3.0a5.2 all link a matching DOL; Wii 1.x,
   GC 2.7 and GC 2.6 do not, see `notes/COMPILER.md`). `configure.py` uses
   `GC/3.0a5.2` with `mw_comment_version: 15`, a working choice inside that family.
-- Game-code compiler: **unknown**, not tested yet.
+- Game-code compiler: **GC/3.0a5.2** by elimination on small functions, with
+  `-opt nopeephole` in at least one region and peephole on in another
+  (`notes/COMPILER.md`); to confirm with a linked game unit.
 - Wii SDK: RVL_SDK libraries built August 2007 to January 2008, tag `0x4199_60831`
   (version strings in `main.dol`, e.g. OS at file offset 0x4EE1E8). Commercial SDK
   version name unknown.

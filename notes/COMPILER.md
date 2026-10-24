@@ -1,7 +1,8 @@
 # Compiler, SDK and runtime — evidence
 
 The linker family is proven (GC 3.0, see "Linker test" below). The game-code
-compiler is not tested yet.
+compiler is GC/3.0a5.2 by elimination on small functions (see "Game-code compiler
+test" below); flags differ between at least two regions.
 
 ## Disc
 
@@ -75,6 +76,40 @@ reason as in Monster Lab: SDK tag `0x4199_60831`); not proven.
 Without `#pragma force_active on` around the `.ctors$10` / `.dtors$15` references,
 the linker strips them and `.ctors` / `.dtors` shift (`main.dol: FAILED`).
 
+## Game-code compiler test (2026-10-24)
+
+Method: scratch C++ (not in the repository) compiled with every mwcc in
+`build/compilers/GC` and `build/compilers/Wii`, base flags of `configure.py` plus
+`-RTTI on`, then compared word by word to the original functions (relocated fields
+masked, trailing padding ignored).
+
+Classes, from RTTI (`__RTTI` objects in `.sdata`, names in `.rodata`): vtable
+`lbl_804F0288` → RTTI `lbl_805CBDC0` → `"IKAnchor"` (0x804C1BC0), base list
+`lbl_804EF950` → `"IKSerializable"` (0x804B8910) → `"IKBaseClass"` (0x804B8920).
+The vtable `lbl_804C82A8` stored by `fn_8000CB40` points to the `IKSerializable` RTTI,
+so `fn_8000CB40` is very likely `IKSerializable::IKSerializable()` and `fn_8032E43C`
+`IKAnchor::IKAnchor()` (not renamed yet).
+
+| Function | Test source | Flags | Matches with |
+|---|---|---|---|
+| `fn_8000CB40` (ctor, calls base ctor, stores vtable) | `B::B() {}` | default | GC 3.0a3 … 3.0a5.2, all Wii; not GC ≤ 2.7 |
+| `fn_8000CB40` | same | `-opt nopeephole` | none |
+| `fn_8032E43C` (ctor) | `IK::IK() {}` | `-opt nopeephole` | GC 3.0a5.2, all Wii; not GC 3.0a3 … 3.0a5, not GC ≤ 2.7 |
+| `fn_8032E43C` | same | default | none (`addi r4` instead of `addi r0`, epilogue order) |
+| `fn_8032E478` (deleting dtor) | `IK::~IK() {}` | `-opt nopeephole` | GC 3.0a3 … 3.0a5.2, all Wii |
+| `fn_8032E520` (calls base, then `beq` over `b`) | `switch (c) { case 0: …; break; } return 1;` | `-opt nopeephole` | GC 2.0 … 3.0a5.2; not Wii (one instruction shorter) |
+| `fn_8032E4D4`, `fn_8032E4D8`, `fn_8032E590` | trivial | `-opt nopeephole` | all GC 3.0 and Wii |
+
+Conclusions:
+
+- Game code near 0x8032E43C: **GC/3.0a5.2** is the only compiler that matches both
+  `fn_8032E43C` and `fn_8032E520`, with **`-opt nopeephole`** (or a flag with the same
+  effect). This rests on the test sources being the original forms: a different
+  source for `fn_8032E520` could still match on a Wii compiler. Same build number
+  (60831) as the SDK tag `0x4199_60831`.
+- Code near 0x8000CB40 is built **with** the peephole optimizer: at least two flag
+  sets exist (likely two libraries or two parts of the engine).
+
 ## Candidates
 
 | Part | Candidates | Status |
@@ -84,4 +119,4 @@ the linker strips them and `.ctors` / `.dtors` shift (`main.dol: FAILED`).
 | MSL_C | — | not tested |
 | MetroTRK | — | not tested |
 | RVL_SDK | — | not tested |
-| Game code | — | not tested |
+| Game code | GC/3.0a5.2; `-opt nopeephole` near 0x8032E43C, peephole on near 0x8000CB40 | strong (scratch tests), to confirm with a linked unit |
