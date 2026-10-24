@@ -53,6 +53,11 @@ MSL_C units not split yet: those whose code differs from mlab or is too short to
 place. The float wrappers at 0x8038F680-0x8038F8A4 (small functions that call
 `acos`, `atan`, `cos` …, probably float versions) are not identified yet.
 
+RVL_SDK `os/` layout: mlab's order and file names, from `OS.c` (0x803561AC) to
+`__ppc_eabi_init.cpp` (ends 0x80364660); data placed by pairing the relocations of
+mlab's compiled objects with this DOL's references. `time.dolphin.c` (`__get_time`) is
+absent from this DOL.
+
 Runtime.PPCEABI.H layout (`.text`): `__mem.c` (`strlen`), `__va_arg.c`,
 `global_destructor_chain.c`, `New.cpp` (0x80380AD0-0x80380BC4), `NMWException.cpp`
 (from 0x80380BC4), `ptmf.c`, `MWRTTI.cpp` (0x80381250-0x803814F8,
@@ -63,8 +68,40 @@ functions they describe.
 
 | Unit | Sections | Evidence |
 |---|---|---|
-| `RVL_SDK/os/OSAlloc.c` | `.text` 0x80357DA0-0x803580C8, `.sdata` 0x805CC068-0x805CC070, `.sbss` 0x805CE108-0x805CE118 | Matching; same layout as mlab (`DLInsert` first, `DLAddFront` / `DLExtract` inlined), plus `OSDestroyHeap` (0x803580A8, same body as tp's, after `OSCreateHeap` as in tp). `ArenaEnd`, `ArenaStart`, `NumHeaps`, `HeapArray` in mlab's `.sbss` order; `__OSCurrHeap` 4 bytes (dtk said 8). Starts after `OSGetAlarmUserData` (0x80357D98, `OSAlarm.c` not split) |
-| `RVL_SDK/os/OSArena.c` | `.text` 0x803580C8-0x8035815C, `.sdata` 0x805CC070-0x805CC078, `.sbss` 0x805CE118-0x805CE120 | Matching; mlab's functions in mlab's order: `OSSetArenaHi` (0x80358108) and `OSAllocFromMEM1ArenaLo` (0x80358128) named by position; `OSAllocFromMEM2ArenaLo` dead-stripped. `__AIClockInit` follows (0x8035815C) |
+| `RVL_SDK/os/OS.c` | `.text` 0x803561AC-0x803575BC, `.data` 0x804F2108-0x804F24F8, `.bss` 0x8055E920-0x8055E990, `.sdata` 0x805CC038-0x805CC068, `.sbss` 0x805CE0B8-0x805CE100 | Matching; `__OSGetHollywoodRev` dead-stripped. `OSInit` builds `OSPhysicalToCached(0x4000)` with `lis`/`addi`: the two relocations dtk made to `__check_pad3` (0x80356D68, 0x80356DE0) are blocked in `config.yml`, as in mlab |
+| `RVL_SDK/os/OSAlarm.c` | `.text` 0x803575BC-0x80357DA0, `.data` 0x804F24F8-0x804F2508, `.sbss` 0x805CE100-0x805CE108 | Matching; all of mlab's functions (`OSSetAlarmTag`, `OSSetAlarmUserData`, `OSGetAlarmUserData` named by position) |
+| `RVL_SDK/os/OSAlloc.c` | `.text` 0x80357DA0-0x803580C8, `.sdata` 0x805CC068-0x805CC070, `.sbss` 0x805CE108-0x805CE118 | Matching; same layout as mlab (`DLInsert` first, `DLAddFront` / `DLExtract` inlined), plus `OSDestroyHeap` (0x803580A8, same body as tp's, after `OSCreateHeap` as in tp). `ArenaEnd`, `ArenaStart`, `NumHeaps`, `HeapArray` in mlab's `.sbss` order; `__OSCurrHeap` 4 bytes (dtk said 8) |
+| `RVL_SDK/os/OSArena.c` | `.text` 0x803580C8-0x8035815C, `.sdata` 0x805CC070-0x805CC078, `.sbss` 0x805CE118-0x805CE120 | Matching; `OSSetArenaHi` (0x80358108) and `OSAllocFromMEM1ArenaLo` (0x80358128) named by position; `OSAllocFromMEM2ArenaLo` dead-stripped |
+| `RVL_SDK/os/OSAudioSystem.c` | `.text` 0x8035815C-0x80358610, `.data` 0x804F2508-0x804F2588 | Matching |
+| `RVL_SDK/os/OSCache.c` | `.text` 0x80358610-0x80358A08, `.data` 0x804F2588-0x804F27C0 | Matching; the `LC*` / `L2*` functions and `DCStoreRangeNoSync` dead-stripped |
+| `RVL_SDK/os/OSContext.c` | `.text` 0x80358A08-0x80359290, `.data` 0x804F27C0-0x804F29A0 | Matching |
+| `RVL_SDK/os/OSError.c` | `.text` 0x80359290-0x803599C0, `.data` 0x804F29A0-0x804F2CBC, `.bss` 0x8055E990-0x8055E9D4, `.sdata` 0x805CC078-0x805CC080 | Matching; `OSVReport` dead-stripped |
+| `RVL_SDK/os/OSExec.c` | `.text` 0x803599C0-0x8035B030, `.data` 0x804F2CC0-0x804F2D30, `.bss` 0x8055E9E0-0x8055EA00, `.sdata` 0x805CC080-0x805CC090, `.sbss` 0x805CE120-0x805CE138, `.sdata2` 0x805D26D0-0x805D26D8 | Matching; starts with `PackArgs` (0x803599C0, size as in mlab) |
+| `RVL_SDK/os/OSFatal.c` | `.text` 0x8035B030-0x8035BC68, `.bss` 0x8055EA00-0x8055ECE0, `.sdata` 0x805CC090-0x805CC094, `.sdata2` 0x805D26D8-0x805D2718 | Matching; needs `-fp_contract off` (`Halt`) |
+| `RVL_SDK/os/OSFont.c` | `.text` 0x8035BC68-0x8035CFE8, `.data` 0x804F2D30-0x804F3840, `.sdata` 0x805CC098-0x805CC0A0, `.sbss` 0x805CE138-0x805CE148, `.sdata2` 0x805D2718-0x805D2720 | Matching; `OSGetFontEncode`, `ExpandFontSheet`, `OSInitFont`, `OSGetFontTexture`, `OSGetFontWidth` named by position (same sizes as mlab) |
+| `RVL_SDK/os/OSInterrupt.c` | `.text` 0x8035CFE8-0x8035D76C, `.data` 0x804F3840-0x804F3870, `.sbss` 0x805CE148-0x805CE15C | Matching |
+| `RVL_SDK/os/OSLink.c` | `.text` 0x8035D76C-0x8035D784 | Matching |
+| `RVL_SDK/os/OSMessage.c` | `.text` 0x8035D784-0x8035DA58 | Matching; plus `OSJamMessage` (0x8035D988, tp's body) |
+| `RVL_SDK/os/OSMemory.c` | `.text` 0x8035DA58-0x8035E26C, `.data` 0x804F3870-0x804F3880 | Matching |
+| `RVL_SDK/os/OSMutex.c` | `.text` 0x8035E26C-0x8035E570 | Matching; the condition-variable functions dead-stripped |
+| `RVL_SDK/os/OSReboot.c` | `.text` 0x8035E570-0x8035E5F0, `.sbss` 0x805CE160-0x805CE168 | Matching; `.sbss` after a 4-byte gap |
+| `RVL_SDK/os/OSReset.c` | `.text` 0x8035E5F0-0x8035EE58, `.data` 0x804F3880-0x804F3B08, `.sdata` 0x805CC0A0-0x805CC0A8, `.sbss` 0x805CE168-0x805CE178 | Matching; `OSRebootSystem`, `OSReturnToDataManager`, `OSSetBootDol` dead-stripped |
+| `RVL_SDK/os/OSRtc.c` | `.text` 0x8035EE58-0x8035F8E4, `.bss` 0x8055ECE0-0x8055ED34 | Matching |
+| `RVL_SDK/os/OSSemaphore.c` | `.text` 0x8035F8E4-0x8035FA5C | Matching; `OSTryWaitSemaphore` (0x8035F9AC, 0x50 bytes against mlab's 0x58) written from the DOL and named by position; `OSGetSemaphoreCount` dead-stripped |
+| `RVL_SDK/os/OSSync.c` | `.text` 0x8035FA5C-0x8035FADC | Matching |
+| `RVL_SDK/os/OSThread.c` | `.text` 0x8035FADC-0x803611BC, `.bss` 0x8055ED38-0x8055F740, `.sdata` 0x805CC0A8-0x805CC0AC, `.sbss` 0x805CE178-0x805CE184 | Matching; starts with `DefaultSwitchThreadCallback` (0x8035FADC). `OSSetThreadSpecific` / `OSGetThreadSpecific` (0x8036107C, 0x803610AC, absent from mlab) written from the DOL; several mlab functions dead-stripped |
+| `RVL_SDK/os/OSTime.c` | `.text` 0x803611BC-0x803615D0, `.data` 0x804F3B08-0x804F3B68 | Matching |
+| `RVL_SDK/os/OSUtf.c` | `.text` 0x803615D0-0x80361808, `.data` 0x804F3B68-0x804FF9A8 | Matching |
+| `RVL_SDK/os/OSIpc.c` | `.text` 0x80361808-0x80361830, `.sdata` 0x805CC0B0-0x805CC0B4, `.sbss` 0x805CE188-0x805CE18C | Matching; `__OSGetIPCBufferHi` / `Lo` named by position |
+| `RVL_SDK/os/OSStateTM.c` | `.text` 0x80361830-0x80361EE4, `.data` 0x804FF9A8-0x804FFA70, `.bss` 0x8055F740-0x8055F800, `.sbss` 0x805CE190-0x805CE1B0 | Matching; starts with `OSSetResetCallback` (0x80361830); `OSGetResetButtonState`, `__OSSetIdleLEDMode` dead-stripped |
+| `RVL_SDK/os/OSPlayRecord.c` | `.text` 0x80361EE4-0x803625DC, `.data` 0x804FFA70-0x804FFAB8, `.bss` 0x8055F800-0x8055FA00, `.sdata` 0x805CC0B8-0x805CC0BC, `.sbss` 0x805CE1B8-0x805CE1D8 | Matching |
+| `RVL_SDK/os/OSStateFlags.c` | `.text` 0x803625DC-0x803627E8, `.data` 0x804FFAB8-0x804FFAE0, `.bss` 0x8055FA00-0x8055FA20 | Matching |
+| `RVL_SDK/os/OSNet.c` | `.text` 0x803627E8-0x80362D4C, `.data` 0x804FFAE0-0x804FFC48 | NonMatching, gap in `TASKS.md`: this SDK version has the NWC24 functions of tp's `OSNet.c` (0x8036289C-0x80362D4C), absent from mlab's source |
+| `RVL_SDK/os/OSNandbootInfo.c` | `.text` 0x80362D4C-0x80362F54, `.data` 0x804FFC48-0x804FFC68 | Matching |
+| `RVL_SDK/os/OSPlayTime.c` | `.text` 0x80362F54-0x803637EC, `.data` 0x804FFC68-0x804FFCA8, `.bss` 0x8055FAE0-0x8055FB10, `.sdata` 0x805CC0C8-0x805CC0D0, `.sbss` 0x805CE1E8-0x805CE200, `.sdata2` 0x805D2720-0x805D2730 | Matching |
+| `RVL_SDK/os/OSLaunch.c` | `.text` 0x803637EC-0x803645AC, `.data` 0x804FFCA8-0x804FFE98, `.sdata` 0x805CC0D0-0x805CC0D8, `.sbss` 0x805CE200-0x805CE208 | Matching; `.data` also holds the strings of three dead-stripped functions (`__OSLaunchTitlevForSystem`, `__OSLaunchTitlelForSystem`, `OSLaunchManualViewer`, from 0x804FFDC0), emitted by a stand-in `dummyStrings` |
+| `RVL_SDK/os/__ppc_eabi_init.cpp` | `.text` 0x803645AC-0x80364660 | Matching; `__init_user`, `__init_cpp`, `exit` |
+| `RVL_SDK/os/init/__ppc_eabi_init.cpp` | `.init` 0x800042E0-0x80004338 | Matching; `__init_hardware`, `__flush_cache` in `.init` |
 | `game/unit_8032E43C.cpp` (IKAnchor) | `.text` 0x8032E43C-0x8032E5E4, `.ctors` 0x804B87FC-0x804B8800, `.data` 0x804F0288-0x804F02F8 (vtable), `.bss` 0x8052E6F0-0x8052E700, `.sbss` 0x805CDF60-0x805CDF68, `.sdata2` 0x805D23E8-0x805D23F0 | Matching. Start: after the `__sinit` of the previous unit (0x8032E3B8, `.ctors` 0x804B87F8); end: its own `__sinit` (0x8032E5A0). RTTI, base list and `vfC` / `vf5C` of IKAnchor are in the unit at 0x80327260 (weak copies, first unit wins) |
 | `Runtime.PPCEABI.H/__mem.c` | `.init` 0x80004338-0x8000446C, `.text` 0x8038098C-0x803809A8 (`strlen`) | Matching; same code as mlab |
 | `Runtime.PPCEABI.H/__va_arg.c` | `.text` 0x803809A8-0x80380A70 | Matching; same code as mlab |

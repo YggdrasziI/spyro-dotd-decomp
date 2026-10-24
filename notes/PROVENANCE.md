@@ -143,6 +143,25 @@ headers come from mscharged-decomp (CC0-1.0, commit
 `126acd42cb8ca0eea1efa75c5a8da7110ef9a142`) with mlab's additions. `include/types.h`
 already skips its typedefs when `<revolution/types.h>` came first, as in mlab.
 
+## RVL_SDK/os (34 units)
+
+From mlab-decomp `src/RVL_SDK/os/*` (commit `55db5381722bed8ad1fe3cd096f3955ae28130c1`,
+itself from mscharged-decomp, CC0), unchanged except:
+
+- `OSAlloc.c`, `OSArena.c`: see below.
+- `OSMessage.c`: `OSJamMessage` added from tp (CC0, commit
+  `c8fa8c9e2aab72cf4e5db0e5d1c84a9ea6ee6eb0`, `libs/dolphin/src/os/OSMessage.c`), with
+  this file's field names.
+- `OSSemaphore.c`: `OSTryWaitSemaphore` rewritten from the DOL (tests the loaded count).
+- `OSThread.c`: `OSSetThreadSpecific` / `OSGetThreadSpecific` written for this project
+  from the DOL.
+- `OSLaunch.c`: a `dummyStrings` stand-in written for this project to emit the strings
+  of three dead-stripped functions (the technique of tp's `OSNet.c`).
+
+Headers copied unchanged from mlab-decomp (same commit):
+`libs/RVL_SDK/include/private/bus.h`, `libs/MetroTRK/include/MetroTRK/dolphin_trk.h`,
+`dserror.h`. `config.yml` blocks the two `OSInit` relocations that mlab blocks too.
+
 ## RVL_SDK/os/OSAlloc.c, OSArena.c
 
 From mlab-decomp `src/RVL_SDK/os/OSAlloc.c` and `OSArena.c`, unchanged except for

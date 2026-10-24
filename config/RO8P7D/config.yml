@@ -7,3 +7,9 @@ splits: config/RO8P7D/splits.txt
 # Change this to match the linker version.
 # See config.example.yml for a list.
 mw_comment_version: 15
+
+# OSInit builds OSPhysicalToCached(0x4000) = 0x80004000 with lis/addi; dtk read it as a
+# pointer to __check_pad3 (same two relocations blocked in mlab-decomp).
+block_relocations:
+- source: .text:0x80356D68
+- source: .text:0x80356DE0

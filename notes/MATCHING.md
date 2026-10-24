@@ -46,6 +46,18 @@ in `mlab-decomp/notes/MATCHING.md` is a lead once the compiler is identified.
   `inline` instead, so it is still inlined but not emitted (`strtol` in `strtoul.c`,
   as mlab did for `strtod` in `strtold.c`).
 
+- Strings of dead-stripped functions kept in the DOL's `.data` (the linker strips the
+  function, not the string pool): emit them from a stand-in function at the same place
+  in the file, as tp's `OSNet.c` does with `dummyStrings` (`OSLaunch.c`).
+- A constant that looks like an address (`OSPhysicalToCached(0x4000)` = 0x80004000)
+  gets a dtk relocation to the symbol there; block it with `block_relocations` in
+  `config.yml` (`OSInit` in `OS.c`).
+- Porting a reference library unit by unit: pair each relocation of the reference's
+  compiled object with this DOL's reference at the same offset of the same function;
+  this gives every data section's start and the names of referenced symbols
+  (RVL_SDK `os/`). Then copy the data symbol sizes of the compiled object into
+  `symbols.txt` (dtk merges or splits strings and pads sizes).
+
 - `mullw rD, rD, rB` versus `mullw rD, rB, rD`: swap the operands of `*` in the
   source (`calloc` in `alloc.c`: `size * nmemb`).
 - `add` operands swapped in an inlined rounding macro that swapping the source
