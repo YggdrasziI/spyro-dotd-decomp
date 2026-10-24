@@ -117,6 +117,10 @@ MSL_C/qsort.c:
 	extabindex  start:0x80008E2C end:0x80008E38
 	.text       start:0x803897B0 end:0x80389920
 
+MSL_C/rand.c:
+	.text       start:0x80389920 end:0x80389940
+	.sdata      start:0x805CC218 end:0x805CC220
+
 MSL_C/scanf.c:
 	extab       start:0x80006730 end:0x80006748
 	extabindex  start:0x80008E38 end:0x80008E5C
@@ -136,6 +140,12 @@ MSL_C/string.c:
 	.text       start:0x8038AF5C end:0x8038B43C
 	.sdata      start:0x805CC220 end:0x805CC228
 	.sdata2     start:0x805D2978 end:0x805D2980
+
+MSL_C/wstring.c:
+	.text       start:0x8038F3D4 end:0x8038F4B0
+
+MSL_C/wchar_io.c:
+	.text       start:0x8038F4B0 end:0x8038F534
 
 MSL_C/abort_exit_ppc_eabi.c:
 	extab       start:0x800067B8 end:0x800067C0
