@@ -34,7 +34,7 @@ Functions of these sources that this DOL does not have (`__ptmf_cmpr`, `__shr2u`
 `__cvt_ull_dbl`, `__cvt_ull_flt`) are left in the sources and dead-stripped by the
 linker (the build matches).
 
-## MSL_C (41 units, Matching)
+## MSL_C (42 units, Matching)
 
 Source: `YggdrasziI/mlab-decomp` (private, same owner), commit
 `55db5381722bed8ad1fe3cd096f3955ae28130c1`, copied unchanged. mlab-decomp's
@@ -96,3 +96,6 @@ file's brace style.
 Then `rand.c`, `wstring.c`, `wchar_io.c` and `libs/MSL_C/include/wstring.h` from the
 same mlab-decomp commit, copied unchanged except that `wcscpy` and `wcschr`, which mlab
 had under `#if 0`, are enabled again (this DOL has them at 0x8038F3F0 and 0x8038F484).
+
+Then `printf.c` from the same mlab-decomp commit, copied unchanged except that
+`printf` and `fprintf`, absent from this DOL, are put under `#if 0`.

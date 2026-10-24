@@ -112,6 +112,15 @@ MSL_C/math_api.c:
 	extabindex  start:0x80008D84 end:0x80008D9C
 	.text       start:0x80387340 end:0x803873D8
 
+MSL_C/printf.c:
+	extab       start:0x800066C8 end:0x80006728
+	extabindex  start:0x80008D9C end:0x80008E2C
+	.text       start:0x803873E8 end:0x803897B0
+	.rodata     start:0x804C2E60 end:0x804C2E90
+	.data       start:0x805067E8 end:0x80506A38
+	.sdata      start:0x805CC210 end:0x805CC218
+	.sdata2     start:0x805D2970 end:0x805D2978
+
 MSL_C/qsort.c:
 	extab       start:0x80006728 end:0x80006730
 	extabindex  start:0x80008E2C end:0x80008E38
