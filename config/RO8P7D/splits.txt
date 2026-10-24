@@ -21,6 +21,16 @@ game/unit_8032E43C.cpp:
 	.sbss       start:0x805CDF60 end:0x805CDF68
 	.sdata2     start:0x805D23E8 end:0x805D23F0
 
+RVL_SDK/os/OSAlloc.c:
+	.text       start:0x80357DA0 end:0x803580C8
+	.sdata      start:0x805CC068 end:0x805CC070
+	.sbss       start:0x805CE108 end:0x805CE118
+
+RVL_SDK/os/OSArena.c:
+	.text       start:0x803580C8 end:0x8035815C
+	.sdata      start:0x805CC070 end:0x805CC078
+	.sbss       start:0x805CE118 end:0x805CE120
+
 Runtime.PPCEABI.H/__mem.c:
 	.init       start:0x80004338 end:0x8000446C
 	.text       start:0x8038098C end:0x803809A8

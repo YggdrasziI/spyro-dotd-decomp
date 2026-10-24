@@ -137,6 +137,17 @@ commit `8592d67e2865975066fa6a9065826ff0e36e610f`), unchanged except that the th
 `<revolution/os/...>` includes are replaced by declarations taken from mscharged's
 `OSAlloc.h`, `OSArena.h` and `OSError.h` (this project has no RVL_SDK headers yet).
 
+## RVL_SDK/os/OSAlloc.c, OSArena.c
+
+From mlab-decomp `src/RVL_SDK/os/OSAlloc.c` and `OSArena.c`, with
+`#include <revolution/os.h>` replaced by `<stddef.h>`, `<types.h>` and the few
+declarations and macros they need (from mlab's `revolution/os.h`, `revolution/types.h`,
+`revolution/os/OSAlloc.h`, `include/decomp.h`). From tp (CC0, commit
+`c8fa8c9e2aab72cf4e5db0e5d1c84a9ea6ee6eb0`, `libs/revolution/src/os/`):
+`OSDestroyHeap` in `OSAlloc.c` (assertions and debug code removed),
+`OSAllocFromMEM1ArenaLo` in `OSArena.c` and the `ROUND` macro of tp's
+`include/global.h`.
+
 ## Runtime.PPCEABI.H/MWRTTI.cpp (NonMatching)
 
 From [DarkRTA/rb3](https://github.com/DarkRTA/rb3) (no license file; reuse allowed by

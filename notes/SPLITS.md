@@ -56,13 +56,15 @@ place. The float wrappers at 0x8038F680-0x8038F8A4 (small functions that call
 Runtime.PPCEABI.H layout (`.text`): `__mem.c` (`strlen`), `__va_arg.c`,
 `global_destructor_chain.c`, `New.cpp` (0x80380AD0-0x80380BC4), `NMWException.cpp`
 (from 0x80380BC4), `ptmf.c`, `MWRTTI.cpp` (0x80381250-0x803814F8,
-`__dynamic_cast`, `bad_cast`; not split yet), `runtime.c`, `__init_cpp_exceptions.cpp`,
-`Gecko_ExceptionPPC.cpp` (from 0x80381D50; not split yet). The order and the two
+`__dynamic_cast`, `bad_cast`), `runtime.c`, `__init_cpp_exceptions.cpp`,
+`Gecko_ExceptionPPC.cpp` (0x80381D50-0x80383498), `GCN_mem_alloc.c`. The order and the two
 extra files are those of rb3 (`sdk/Runtime/*`); `extab` / `extabindex` are cut by the
 functions they describe.
 
 | Unit | Sections | Evidence |
 |---|---|---|
+| `RVL_SDK/os/OSAlloc.c` | `.text` 0x80357DA0-0x803580C8, `.sdata` 0x805CC068-0x805CC070, `.sbss` 0x805CE108-0x805CE118 | Matching; same layout as mlab (`DLInsert` first, `DLAddFront` / `DLExtract` inlined), plus `OSDestroyHeap` (0x803580A8, same body as tp's, after `OSCreateHeap` as in tp). `ArenaEnd`, `ArenaStart`, `NumHeaps`, `HeapArray` in mlab's `.sbss` order; `__OSCurrHeap` 4 bytes (dtk said 8). Starts after `OSGetAlarmUserData` (0x80357D98, `OSAlarm.c` not split) |
+| `RVL_SDK/os/OSArena.c` | `.text` 0x803580C8-0x8035815C, `.sdata` 0x805CC070-0x805CC078, `.sbss` 0x805CE118-0x805CE120 | Matching; mlab's functions in mlab's order: `OSSetArenaHi` (0x80358108) and `OSAllocFromMEM1ArenaLo` (0x80358128) named by position; `OSAllocFromMEM2ArenaLo` dead-stripped. `__AIClockInit` follows (0x8035815C) |
 | `game/unit_8032E43C.cpp` (IKAnchor) | `.text` 0x8032E43C-0x8032E5E4, `.ctors` 0x804B87FC-0x804B8800, `.data` 0x804F0288-0x804F02F8 (vtable), `.bss` 0x8052E6F0-0x8052E700, `.sbss` 0x805CDF60-0x805CDF68, `.sdata2` 0x805D23E8-0x805D23F0 | Matching. Start: after the `__sinit` of the previous unit (0x8032E3B8, `.ctors` 0x804B87F8); end: its own `__sinit` (0x8032E5A0). RTTI, base list and `vfC` / `vf5C` of IKAnchor are in the unit at 0x80327260 (weak copies, first unit wins) |
 | `Runtime.PPCEABI.H/__mem.c` | `.init` 0x80004338-0x8000446C, `.text` 0x8038098C-0x803809A8 (`strlen`) | Matching; same code as mlab |
 | `Runtime.PPCEABI.H/__va_arg.c` | `.text` 0x803809A8-0x80380A70 | Matching; same code as mlab |

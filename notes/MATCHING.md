@@ -48,6 +48,10 @@ in `mlab-decomp/notes/MATCHING.md` is a lead once the compiler is identified.
 
 - `mullw rD, rD, rB` versus `mullw rD, rB, rD`: swap the operands of `*` in the
   source (`calloc` in `alloc.c`: `size * nmemb`).
+- `add` operands swapped in an inlined rounding macro that swapping the source
+  operands does not fix: try another reference's version of the function, written with
+  separate statements (`OSAllocFromMEM1ArenaLo` in `OSArena.c`: tp's version matches,
+  mlab's does not).
 
 ## Control flow
 

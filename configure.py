@@ -270,6 +270,12 @@ cflags_msl = [
 ]
 
 # Game code flags (GC/3.0a5.2, see notes/COMPILER.md); vtables carry RTTI pointers
+# RVL_SDK flags (from mlab-decomp, after mscharged-decomp)
+cflags_rvl_sdk = [
+    *cflags_base,
+    "-ipa file",
+]
+
 cflags_game = [
     *cflags_base,
     "-RTTI on",
@@ -334,6 +340,17 @@ config.libs = [
         "progress_category": "game",
         "objects": [
             Object(Matching, "game/unit_8032E43C.cpp", extra_cflags=["-opt nopeephole"]),
+        ],
+    },
+    {
+        "lib": "RVL_SDK",
+        # Same sources and flags as mlab-decomp (see notes/PROVENANCE.md)
+        "mw_version": "GC/3.0a5.2",
+        "cflags": cflags_rvl_sdk,
+        "progress_category": "sdk",
+        "objects": [
+            Object(Matching, "RVL_SDK/os/OSAlloc.c"),
+            Object(Matching, "RVL_SDK/os/OSArena.c"),
         ],
     },
     {
