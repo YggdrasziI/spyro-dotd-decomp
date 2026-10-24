@@ -53,6 +53,9 @@ MSL_C units not split yet: those whose code differs from mlab or is too short to
 place. The float wrappers at 0x8038F680-0x8038F8A4 (small functions that call
 `acos`, `atan`, `cos` …, probably float versions) are not identified yet.
 
+RVL_SDK starts with `base/PPCArch.c` (0x80355F60) and `db/db.c` (0x803560C4), right
+before `os/OS.c`; mlab links `db.c` later, after `si/`.
+
 RVL_SDK `os/` layout: mlab's order and file names, from `OS.c` (0x803561AC) to
 `__ppc_eabi_init.cpp` (ends 0x80364660); data placed by pairing the relocations of
 mlab's compiled objects with this DOL's references. `time.dolphin.c` (`__get_time`) is
@@ -68,6 +71,8 @@ functions they describe.
 
 | Unit | Sections | Evidence |
 |---|---|---|
+| `RVL_SDK/base/PPCArch.c` | `.text` 0x80355F60-0x803560C4, `.data` 0x804F20B8-0x804F20F0 | Matching; `PPCMthid0` (0x80355F78) and `PPCSync` (0x80355F98) named by position (same code as mlab); `PPCMfwpar` dead-stripped |
+| `RVL_SDK/db/db.c` | `.text` 0x803560C4-0x803561AC, `.data` 0x804F20F0-0x804F2108, `.sbss` 0x805CE0B0-0x805CE0B8 | Matching; `__DBExceptionDestinationAux` (0x803560EC) named by position |
 | `RVL_SDK/os/OS.c` | `.text` 0x803561AC-0x803575BC, `.data` 0x804F2108-0x804F24F8, `.bss` 0x8055E920-0x8055E990, `.sdata` 0x805CC038-0x805CC068, `.sbss` 0x805CE0B8-0x805CE100 | Matching; `__OSGetHollywoodRev` dead-stripped. `OSInit` builds `OSPhysicalToCached(0x4000)` with `lis`/`addi`: the two relocations dtk made to `__check_pad3` (0x80356D68, 0x80356DE0) are blocked in `config.yml`, as in mlab |
 | `RVL_SDK/os/OSAlarm.c` | `.text` 0x803575BC-0x80357DA0, `.data` 0x804F24F8-0x804F2508, `.sbss` 0x805CE100-0x805CE108 | Matching; all of mlab's functions (`OSSetAlarmTag`, `OSSetAlarmUserData`, `OSGetAlarmUserData` named by position) |
 | `RVL_SDK/os/OSAlloc.c` | `.text` 0x80357DA0-0x803580C8, `.sdata` 0x805CC068-0x805CC070, `.sbss` 0x805CE108-0x805CE118 | Matching; same layout as mlab (`DLInsert` first, `DLAddFront` / `DLExtract` inlined), plus `OSDestroyHeap` (0x803580A8, same body as tp's, after `OSCreateHeap` as in tp). `ArenaEnd`, `ArenaStart`, `NumHeaps`, `HeapArray` in mlab's `.sbss` order; `__OSCurrHeap` 4 bytes (dtk said 8) |

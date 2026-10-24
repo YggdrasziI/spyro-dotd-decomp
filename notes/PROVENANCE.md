@@ -143,6 +143,11 @@ headers come from mscharged-decomp (CC0-1.0, commit
 `126acd42cb8ca0eea1efa75c5a8da7110ef9a142`) with mlab's additions. `include/types.h`
 already skips its typedefs when `<revolution/types.h>` came first, as in mlab.
 
+## RVL_SDK/base/PPCArch.c, RVL_SDK/db/db.c
+
+From mlab-decomp `src/RVL_SDK/base/PPCArch.c` and `src/RVL_SDK/db/db.c` (commit
+`55db5381722bed8ad1fe3cd096f3955ae28130c1`, from mscharged-decomp, CC0), unchanged.
+
 ## RVL_SDK/os (34 units)
 
 From mlab-decomp `src/RVL_SDK/os/*` (commit `55db5381722bed8ad1fe3cd096f3955ae28130c1`,

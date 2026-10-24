@@ -351,6 +351,8 @@ config.libs = [
         "cflags": cflags_rvl_sdk,
         "progress_category": "sdk",
         "objects": [
+            Object(Matching, "RVL_SDK/base/PPCArch.c"),
+            Object(Matching, "RVL_SDK/db/db.c"),
             Object(Matching, "RVL_SDK/os/OS.c"),
             Object(Matching, "RVL_SDK/os/OSAlarm.c"),
             Object(Matching, "RVL_SDK/os/OSAlloc.c"),
