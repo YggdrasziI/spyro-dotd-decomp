@@ -145,3 +145,9 @@ the owner, see `notes/REFERENCES.md`), local clone at commit
 and `MWRTTI.h` unchanged, `MSL/MSL_C++/exception` and `typeinfo` into
 `libs/MSL_C++/include/` with the `<MSL_C++/...>` includes of `typeinfo` changed to
 `<cstring>`, `<stddef.h>`, `<exception>`.
+
+## Runtime.PPCEABI.H/New.cpp (NonMatching)
+
+Written for this project from the DOL. `libs/MSL_C++/include/new` from rb3 (same commit
+as `MWRTTI.cpp`), with its `<MSL_C++/...>` includes changed to `<stddef.h>` /
+`<exception>` and `using ::size_t;` added in `std`.

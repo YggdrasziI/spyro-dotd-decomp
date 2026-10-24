@@ -345,6 +345,7 @@ config.libs = [
             Object(Matching, "Runtime.PPCEABI.H/__mem.c"),
             Object(Matching, "Runtime.PPCEABI.H/__va_arg.c"),
             Object(Matching, "Runtime.PPCEABI.H/global_destructor_chain.c"),
+            Object(NonMatching, "Runtime.PPCEABI.H/New.cpp", extra_cflags=["-Cpp_exceptions on", "-RTTI on"]),
             Object(Matching, "Runtime.PPCEABI.H/NMWException.cpp", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "Runtime.PPCEABI.H/ptmf.c"),
             Object(NonMatching, "Runtime.PPCEABI.H/MWRTTI.cpp", extra_cflags=["-Cpp_exceptions on", "-RTTI on"]),

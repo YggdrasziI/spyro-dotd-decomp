@@ -32,6 +32,15 @@ Runtime.PPCEABI.H/global_destructor_chain.c:
 	.text       start:0x80380A70 end:0x80380AD0
 	.sbss       start:0x805CE5F0 end:0x805CE5F8
 
+Runtime.PPCEABI.H/New.cpp:
+	extab       start:0x800064E0 end:0x80006514
+	extabindex  start:0x80008B80 end:0x80008B98
+	.text       start:0x80380AD0 end:0x80380BC4
+	.rodata     start:0x804C26B0 end:0x804C2708
+	.data       start:0x805061F8 end:0x80506220
+	.sdata      start:0x805CC1E0 end:0x805CC1F0
+	.sbss       start:0x805CE5F8 end:0x805CE600
+
 Runtime.PPCEABI.H/NMWException.cpp:
 	extab       start:0x80006514 end:0x8000655C
 	extabindex  start:0x80008B98 end:0x80008BD4
