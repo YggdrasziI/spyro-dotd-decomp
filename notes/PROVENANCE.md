@@ -148,6 +148,11 @@ already skips its typedefs when `<revolution/types.h>` came first, as in mlab.
 From mlab-decomp `src/RVL_SDK/base/PPCArch.c` and `src/RVL_SDK/db/db.c` (commit
 `55db5381722bed8ad1fe3cd096f3955ae28130c1`, from mscharged-decomp, CC0), unchanged.
 
+## RVL_SDK/exi (3 units)
+
+From mlab-decomp `src/RVL_SDK/exi/EXIBios.c`, `EXIUart.c`, `EXICommon.c` (commit
+`55db5381722bed8ad1fe3cd096f3955ae28130c1`, from mscharged-decomp, CC0), unchanged.
+
 ## RVL_SDK/os (34 units)
 
 From mlab-decomp `src/RVL_SDK/os/*` (commit `55db5381722bed8ad1fe3cd096f3955ae28130c1`,

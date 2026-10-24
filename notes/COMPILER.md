@@ -130,5 +130,5 @@ links (`main.dol: OK`) with GC/3.0a5.2, `cflags_game` (`cflags_base` + `-RTTI on
 | Runtime.PPCEABI.H | GC 3.0a3 … 3.0a5.2 (2 small units only) | partial |
 | MSL_C | GC/3.0a5.2, and GC/3.0a5 for `e_asin.c`, `e_pow.c`, `e_rem_pio2.c`, `k_tan.c`, `s_atan.c`, `e_exp.c`; `-fp_contract off` | units linked (same split of compilers as mlab); with 3.0a5.2 those five reach only 94.6–98.7 % (`e_exp.c` 99.3 %), and with `-fp_contract on` most fdlibm units fall to 62–99 % |
 | MetroTRK | — | not tested |
-| RVL_SDK | GC/3.0a5.2, `-ipa file`, `-fp_contract off` (mlab's `cflags_rvl_sdk`) | **proven** for 33 `os/` units (linked); `OSFatal.c` (`Halt`) needs `-fp_contract off` |
+| RVL_SDK | GC/3.0a5.2, `-ipa file`, `-fp_contract off` (mlab's `cflags_rvl_sdk`) | **proven** for 33 `os/` units, `base/`, `db/`, `exi/` (linked); `OSFatal.c` (`Halt`) needs `-fp_contract off`; per-unit flags as in mlab: `OSExec.c` `-opt nolifetimes,noloop`, `EXIBios.c` `-schedule off` (67.9 % without it) |
 | Game code | GC/3.0a5.2; `-opt nopeephole` near 0x8032E43C, peephole on near 0x8000CB40 | **proven** for `unit_8032E43C` (linked, see below) |
