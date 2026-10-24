@@ -51,6 +51,10 @@ Runtime.PPCEABI.H/__init_cpp_exceptions.cpp:
 	.dtors      start:0x804B88C4 end:0x804B88C8 rename:.dtors$15
 	.sdata      start:0x805CC200 end:0x805CC208
 
+Runtime.PPCEABI.H/GCN_mem_alloc.c:
+	.text       start:0x80383498 end:0x80383608
+	.rodata     start:0x804C27F0 end:0x804C2860
+
 MSL_C/alloc.c:
 	extab       start:0x800065E0 end:0x80006630
 	extabindex  start:0x80008C40 end:0x80008CB8

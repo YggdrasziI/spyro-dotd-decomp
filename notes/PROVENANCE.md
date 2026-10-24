@@ -128,3 +128,11 @@ from [yannicksuter/mscharged-decomp](https://github.com/yannicksuter/mscharged-d
 (CC0-1.0, local clone at commit `8592d67e2865975066fa6a9065826ff0e36e610f`), copied
 unchanged except in `wprintf.c`: `vswprintf` is declared `inline` (this DOL has it only
 inlined) and `swprintf` is added, written for this project from the DOL.
+
+## Runtime.PPCEABI.H/GCN_mem_alloc.c
+
+From [yannicksuter/mscharged-decomp](https://github.com/yannicksuter/mscharged-decomp)
+`src/Runtime/GCN_mem_alloc.c` (CC0-1.0, itself adapted from Petari; local clone at
+commit `8592d67e2865975066fa6a9065826ff0e36e610f`), unchanged except that the three
+`<revolution/os/...>` includes are replaced by declarations taken from mscharged's
+`OSAlloc.h`, `OSArena.h` and `OSError.h` (this project has no RVL_SDK headers yet).
