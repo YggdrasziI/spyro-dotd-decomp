@@ -34,7 +34,7 @@ Functions of these sources that this DOL does not have (`__ptmf_cmpr`, `__shr2u`
 `__cvt_ull_dbl`, `__cvt_ull_flt`) are left in the sources and dead-stripped by the
 linker (the build matches).
 
-## MSL_C (53 units, Matching)
+## MSL_C (55 units, Matching)
 
 Source: `YggdrasziI/mlab-decomp` (private, same owner), commit
 `55db5381722bed8ad1fe3cd096f3955ae28130c1`, copied unchanged. mlab-decomp's
@@ -105,3 +105,7 @@ Then `w_acos.c`, `w_asin.c`, `w_atan2.c`, `w_fmod.c`, `w_log.c`, `w_log10.c`, `w
 and `w_exp.c` from [zeldaret/tp](https://github.com/zeldaret/tp)
 `libs/PowerPC_EABI_Support/MSL/MSL_C/MSL_Common_Embedded/Math/Double_precision/`
 (CC0-1.0, commit `c8fa8c9e2aab72cf4e5db0e5d1c84a9ea6ee6eb0`), include line adapted.
+
+Then `strtold.c`, `strtoul.c` and `libs/MSL_C/include/limits.h` from the same
+mlab-decomp commit, copied unchanged except: `atof` and `strtoul`, absent from this DOL,
+are put under `#if 0`, and `strtol` (inlined into `atoi`) is declared `inline`.

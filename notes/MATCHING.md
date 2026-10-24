@@ -42,7 +42,9 @@ in `mlab-decomp/notes/MATCHING.md` is a lead once the compiler is identified.
   entries in the object and objdiff scores the unit's data below 100 %; put such
   functions under `#if 0` (`ansi_files.c`, `buffer_io.c`, `direct_io.c`, `file_io.c`).
   Conversely, re-enable a function mlab disabled when this DOL has it (`mbstowcs` in
-  `mbstring.c`).
+  `mbstring.c`). A function the DOL lacks but that a kept function inlines is marked
+  `inline` instead, so it is still inlined but not emitted (`strtol` in `strtoul.c`,
+  as mlab did for `strtod` in `strtold.c`).
 
 - `mullw rD, rD, rB` versus `mullw rD, rB, rD`: swap the operands of `*` in the
   source (`calloc` in `alloc.c`: `size * nmemb`).
