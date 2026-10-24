@@ -27,10 +27,25 @@ from tools.project import (
 )
 
 # Game versions
+# The index is passed to the compiler as BUILD_VERSION; keep it in sync with
+# include/version.h and only append new versions.
 DEFAULT_VERSION = 0
 VERSIONS = [
-    "RO8P7D",  # 0
+    "RO8P7D",  # 0: Europe (En,Fr,De,Es,It,Nl)
+    "RO8X7D",  # 1: Scandinavia (En,Sv,No,Da,Fi)
+    "RO8E7D",  # 2: USA (En,Fr,Es)
 ]
+
+# Versions to disable until properly configured
+DISABLED_VERSIONS = [
+    1,  # Scandinavia
+    2,  # USA
+]
+
+# Version groups for MatchingFor
+ALL_PAL = ["RO8P7D", "RO8X7D"]
+ALL_USA = ["RO8E7D"]
+ALL = ALL_PAL + ALL_USA
 
 parser = argparse.ArgumentParser()
 parser.add_argument(
@@ -138,6 +153,9 @@ config = ProjectConfig()
 config.version = str(args.version)
 version_num = VERSIONS.index(config.version)
 
+if version_num in DISABLED_VERSIONS:
+    sys.exit(f"Version {config.version} is disabled until it is configured (DISABLED_VERSIONS)")
+
 # Apply arguments
 config.build_dir = args.build_dir
 config.dtk_path = args.dtk
@@ -211,8 +229,7 @@ cflags_base = [
     "-multibyte",  # For Wii compilers, replace with `-enc SJIS`
     "-i include",
     f"-i build/{config.version}/include",
-    f"-DBUILD_VERSION={version_num}",
-    f"-DVERSION_{config.version}",
+    f"-DBUILD_VERSION={version_num}",  # compare with the names in include/version.h
 ]
 
 # Debug flags
@@ -277,9 +294,16 @@ NonMatching = False               # Object does not match and should not be link
 Equivalent = config.non_matching  # Object should be linked when configured with --non-matching
 
 
-# Object is only matching for specific versions
-def MatchingFor(*versions):
-    return config.version in versions
+# Object is only matching for specific versions (IDs or groups such as ALL_PAL)
+def MatchingFor(*versions) -> bool:
+    fullset = set()
+    for vers in versions:
+        if isinstance(vers, (list, tuple, set)):
+            fullset.update(vers)
+        else:
+            fullset.add(vers)
+
+    return config.version in fullset
 
 
 config.warn_missing_config = True
