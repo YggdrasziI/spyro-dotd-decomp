@@ -64,6 +64,16 @@ matched functions with the reference unit names. Monster Lab
 (`E:\Projets\Dev\mlab-decomp`, `RM7P4F`, same RVL_SDK build tag) gives the region map
 of `notes/SPLITS.md`; its `build/RM7P4F/asm` must exist (`ninja` there).
 
+`tools/ref_port.py <project root> <ID> <command>` ports a reference library unit by
+unit (it needs the reference's compiled objects, `build/<ID>/src`): `place` shows one
+unit (functions here, data section starts, names), `plan` prints `splits.txt` blocks
+for a group of units with warnings, `names --write` gives reference names to generic
+labels, `fixdata` copies the data symbols of a compiled unit into `symbols.txt`.
+Workflow used for RVL_SDK `os/`: `plan`, copy the blocks to `splits.txt`, `names
+--write`, copy the sources, build every unit `NonMatching`, `fixdata` the units whose
+code matches, then switch the 100 % units to `Matching`. Static names that repeat
+across units (`Callback`, `Prepared`) are skipped by `names`; give them by hand.
+
 ## Reuse permissions
 
 - CC0 references (mscharged-decomp, Petari, TP) come first.

@@ -95,6 +95,22 @@ def unit_of(ranges, starts, addr):
     return None
 
 
+def match_functions(ours, theirs, min_size):
+    """[(our address, our name, their name, their address)] of the functions whose
+    fingerprint is unique on both sides, sorted by our address."""
+    ours_count = Counter(d for _, size, d in ours.values() if size >= min_size)
+    theirs_count = Counter(d for _, size, d in theirs.values() if size >= min_size)
+    by_digest = {d: (name, addr) for addr, (name, size, d) in theirs.items()
+                 if size >= min_size and theirs_count[d] == 1}
+    matches = []
+    for addr, (name, size, d) in ours.items():
+        if size < min_size or ours_count[d] != 1 or d not in by_digest:
+            continue
+        ref_name, ref_addr = by_digest[d]
+        matches.append((addr, name, ref_name, ref_addr))
+    return sorted(matches)
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument("ref_root", help="root of the reference dtk project")
@@ -111,18 +127,9 @@ def main():
     ranges = unit_ranges(os.path.join(args.ref_root, "config", args.ref_version, "splits.txt"))
     starts = [r[0] for r in ranges]
 
-    ours_count = Counter(d for _, size, d in ours.values() if size >= args.min_size)
-    theirs_count = Counter(d for _, size, d in theirs.values() if size >= args.min_size)
-    by_digest = {d: (name, addr) for addr, (name, size, d) in theirs.items()
-                 if size >= args.min_size and theirs_count[d] == 1}
-
-    matches = []  # (our address, our name, their name, their address, their unit)
-    for addr, (name, size, d) in ours.items():
-        if size < args.min_size or ours_count[d] != 1 or d not in by_digest:
-            continue
-        ref_name, ref_addr = by_digest[d]
-        matches.append((addr, name, ref_name, ref_addr, unit_of(ranges, starts, ref_addr)))
-    matches.sort()
+    # (our address, our name, their name, their address, their unit)
+    matches = [m + (unit_of(ranges, starts, m[3]),)
+               for m in match_functions(ours, theirs, args.min_size)]
 
     runs = []  # [first, last, unit, matches]
     for m in matches:
