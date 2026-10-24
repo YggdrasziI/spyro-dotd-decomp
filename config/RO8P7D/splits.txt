@@ -189,6 +189,9 @@ MSL_C/math_sun.c:
 	extabindex  start:0x80008F10 end:0x80008F1C
 	.text       start:0x8038F640 end:0x8038F680
 
+MSL_C/extras.c:
+	.text       start:0x8038F8A4 end:0x8038F9A4
+
 MSL_C/e_acos.c:
 	.text       start:0x8038F9A4 end:0x8038FC68
 	.sdata2     start:0x805D29A8 end:0x805D2A30

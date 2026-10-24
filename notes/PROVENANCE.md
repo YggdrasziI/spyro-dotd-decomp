@@ -34,7 +34,7 @@ Functions of these sources that this DOL does not have (`__ptmf_cmpr`, `__shr2u`
 `__cvt_ull_dbl`, `__cvt_ull_flt`) are left in the sources and dead-stripped by the
 linker (the build matches).
 
-## MSL_C (57 units, Matching)
+## MSL_C (58 units, Matching)
 
 Source: `YggdrasziI/mlab-decomp` (private, same owner), commit
 `55db5381722bed8ad1fe3cd096f3955ae28130c1`, copied unchanged. mlab-decomp's
@@ -117,3 +117,8 @@ the includes of `<revolution/euart.h>` and `<revolution/os.h>` are replaced by
 (signatures as in mlab-decomp's headers, `EUARTError` as `int`), and `fn_8033B094`,
 absent from this DOL, is put under `#if 0`. `include/types.h` gains `BOOL`, `TRUE` and
 `FALSE` (definitions as in mlab-decomp's `revolution/types.h`).
+
+Then `extras.c` and `libs/MSL_C/include/extras.h` from the same mlab-decomp commit:
+`strnicmp`, `strncasecmp` and `itoa`, absent from this DOL and calling functions
+removed from `file_io.c`, are put under `#if 0`; `strlwr` is added, written for this
+project from the DOL.

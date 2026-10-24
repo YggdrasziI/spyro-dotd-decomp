@@ -50,7 +50,7 @@ RenderWare from about 0x803EAF84), what lies around 0x804117F0, and where PhysX
 ## Units
 
 MSL_C units not split yet: those whose code differs from mlab or is too short to
-place. The float wrappers at 0x8038F680-0x8038F9A4 (small functions that call
+place. The float wrappers at 0x8038F680-0x8038F8A4 (small functions that call
 `acos`, `atan`, `cos` …, probably float versions) are not identified yet.
 
 Runtime.PPCEABI.H layout (`.text`): `__mem.c` (`strlen`), `__va_arg.c`,
@@ -96,6 +96,7 @@ functions they describe.
 | `MSL_C/uart_console_io_gcn.c` | `extab` 0x800067B0-0x800067B8, `extabindex` 0x80008EF8-0x80008F04, `.text` 0x8038F534-0x8038F60C, `.sbss` 0x805CE610-0x805CE618 | Matching; `__write_console`, `__close_console`; `initialized` 4 bytes (dtk said 8). Callees named from mlab matches: `__TRK_write_console` (0x8039B1B0), `InitializeUART` (0x8039DA5C), `WriteUARTN` (0x8039DAA4) |
 | `MSL_C/abort_exit_ppc_eabi.c` | `extab` 0x800067B8-0x800067C0, `extabindex` 0x80008F04-0x80008F10, `.text` 0x8038F60C-0x8038F640, `.sbss` 0x805CE618-0x805CE620 | Matching; `__aborting`, `__stdio_exit` |
 | `MSL_C/math_sun.c` | `extab` 0x800067C0-0x800067C8, `extabindex` 0x80008F10-0x80008F1C, `.text` 0x8038F640-0x8038F680 | Matching; `scalbn` |
+| `MSL_C/extras.c` | `.text` 0x8038F8A4-0x8038F9A4 | Matching; `stricmp` (same code as mlab) and, before it, `strlwr` (0x8038F8A4, 0x58), absent from mlab: it lowers each byte in place through `_current_locale`'s `lower_map_ptr`, as `stricmp` does, the shape of MSL's `strlwr`. Written for this project |
 | `MSL_C/e_acos.c` … `MSL_C/s_tan.c`, `MSL_C/e_sqrt.c` (21 fdlibm units) | `.text` 0x8038F9A4-0x80393BE0 with gaps; `.rodata`, `.sbss`, `.sdata2` per unit (see `splits.txt`) | Matching; same code and sizes as mlab |
 | `MSL_C/e_exp.c` | `.text` 0x80390170-0x803903A4, `.rodata` 0x804C34D0-0x804C3500, `.sdata2` 0x805D2B10-0x805D2B88 | Matching (GC/3.0a5); fills the gap after `e_atan2.c`; `__ieee754_exp`, called by `exp` (`w_exp.c`). Absent from mlab; source from tp |
 | `MSL_C/w_acos.c` … `MSL_C/w_pow.c` (8 units) | `.text` 0x80393978-0x80393998, 4 bytes each: `acos`, `asin`, `atan2`, `exp`, `fmod`, `log`, `log10`, `pow` | Matching; each is a `b __ieee754_<name>` (`-D_IEEE_LIBM`), fills the gap after `s_tan.c` |
