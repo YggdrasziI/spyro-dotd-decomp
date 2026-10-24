@@ -13,6 +13,14 @@ Sections:
 	.sdata2     type:rodata align:32
 	.sbss2      type:bss align:8
 
+game/unit_8032E43C.cpp:
+	.text       start:0x8032E43C end:0x8032E5E4
+	.ctors      start:0x804B87FC end:0x804B8800
+	.data       start:0x804F0288 end:0x804F02F8
+	.bss        start:0x8052E6F0 end:0x8052E700
+	.sbss       start:0x805CDF60 end:0x805CDF68
+	.sdata2     start:0x805D23E8 end:0x805D23F0
+
 Runtime.PPCEABI.H/global_destructor_chain.c:
 	.text       start:0x80380A70 end:0x80380AD0
 	.sbss       start:0x805CE5F0 end:0x805CE5F8

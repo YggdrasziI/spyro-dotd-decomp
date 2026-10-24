@@ -259,6 +259,12 @@ cflags_runtime = [
     "-inline auto",
 ]
 
+# Game code flags (GC/3.0a5.2, see notes/COMPILER.md); vtables carry RTTI pointers
+cflags_game = [
+    *cflags_base,
+    "-RTTI on",
+]
+
 # REL flags
 cflags_rel = [
     *cflags_base,
@@ -311,6 +317,15 @@ def MatchingFor(*versions) -> bool:
 config.warn_missing_config = True
 config.warn_missing_source = False
 config.libs = [
+    {
+        "lib": "game",
+        "mw_version": "GC/3.0a5.2",
+        "cflags": cflags_game,
+        "progress_category": "game",
+        "objects": [
+            Object(Matching, "game/unit_8032E43C.cpp", extra_cflags=["-opt nopeephole"]),
+        ],
+    },
     {
         "lib": "Runtime.PPCEABI.H",
         "mw_version": config.linker_version,

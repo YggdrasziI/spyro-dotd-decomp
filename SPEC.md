@@ -54,9 +54,9 @@ Evidence and the candidate analysis go in `notes/COMPILER.md`.
 - Linker: **GC 3.0 family** (3.0a3 … 3.0a5.2 all link a matching DOL; Wii 1.x,
   GC 2.7 and GC 2.6 do not, see `notes/COMPILER.md`). `configure.py` uses
   `GC/3.0a5.2` with `mw_comment_version: 15`, a working choice inside that family.
-- Game-code compiler: **GC/3.0a5.2** by elimination on small functions, with
-  `-opt nopeephole` in at least one region and peephole on in another
-  (`notes/COMPILER.md`); to confirm with a linked game unit.
+- Game-code compiler: **GC/3.0a5.2**, proven by `unit_8032E43C` (only version at
+  100 %), flags `cflags_game` (`cflags_base` + `-RTTI on`); `-opt nopeephole` per unit
+  where needed (peephole on near 0x8000CB40, see `notes/COMPILER.md`).
 - Wii SDK: RVL_SDK libraries built August 2007 to January 2008, tag `0x4199_60831`
   (version strings in `main.dol`, e.g. OS at file offset 0x4EE1E8). Commercial SDK
   version name unknown.
@@ -90,7 +90,8 @@ Evidence and the candidate analysis go in `notes/COMPILER.md`.
 - Real names only from evidence: RTTI class names, strings, symbols of other projects
   on the same library.
 - Code, comments, notes and commit messages are in English.
-- Shared game headers go in `include/game/` (listed here as they are added).
+- Shared game headers go in `include/game/` (listed here as they are added):
+  `IKSerializable.h` (IKBaseClass, IKSerializable), `IKAnchor.h`.
   `include/version.h` holds the version names used in `#if`.
 
 ## Repository layout

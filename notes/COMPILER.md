@@ -110,6 +110,18 @@ Conclusions:
 - Code near 0x8000CB40 is built **with** the peephole optimizer: at least two flag
   sets exist (likely two libraries or two parts of the engine).
 
+## Confirmation with a linked unit (2026-10-24)
+
+`game/unit_8032E43C.cpp` (IKAnchor, 9 functions, 148 bytes of data) matches 100 % and
+links (`main.dol: OK`) with GC/3.0a5.2, `cflags_game` (`cflags_base` + `-RTTI on`) and
+`-opt nopeephole`. The same source in the real build with other compilers (objdiff):
+
+| Compiler | Unit fuzzy | Functions below 100 % |
+|---|---|---|
+| GC/3.0a3, GC/3.0a5 | 96.84 % | `__ct__8IKAnchorFv`, `__sinit_\unit_8032E43C_cpp` |
+| GC/3.0a5.2 | 100 % | none |
+| Wii/0x4201_127, 1.0, 1.3, 1.7 | 98.96 % | `vf30__8IKAnchorFP9UnkStreami` |
+
 ## Candidates
 
 | Part | Candidates | Status |
@@ -119,4 +131,4 @@ Conclusions:
 | MSL_C | — | not tested |
 | MetroTRK | — | not tested |
 | RVL_SDK | — | not tested |
-| Game code | GC/3.0a5.2; `-opt nopeephole` near 0x8032E43C, peephole on near 0x8000CB40 | strong (scratch tests), to confirm with a linked unit |
+| Game code | GC/3.0a5.2; `-opt nopeephole` near 0x8032E43C, peephole on near 0x8000CB40 | **proven** for `unit_8032E43C` (linked, see below) |
