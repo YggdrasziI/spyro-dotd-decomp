@@ -545,3 +545,15 @@ RVL_SDK/exi/EXIUart.c:
 
 RVL_SDK/exi/EXICommon.c:
 	.text       start:0x803957B0 end:0x8039593C
+
+RVL_SDK/si/SIBios.c:
+	.text       start:0x8039593C end:0x80396944
+	.data       start:0x80506ED0 end:0x80506F40
+	.bss        start:0x8057B1D0 end:0x8057B3F0
+	.sdata      start:0x805CC240 end:0x805CC244
+	.sbss       start:0x805CE648 end:0x805CE658
+
+RVL_SDK/si/SISamplingRate.c:
+	.text       start:0x80396944 end:0x80396A24
+	.data       start:0x80506F40 end:0x80506FD8
+	.sbss       start:0x805CE658 end:0x805CE65C

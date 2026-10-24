@@ -390,6 +390,8 @@ config.libs = [
             Object(Matching, "RVL_SDK/exi/EXIBios.c", extra_cflags=["-schedule off"]),
             Object(Matching, "RVL_SDK/exi/EXIUart.c"),
             Object(Matching, "RVL_SDK/exi/EXICommon.c"),
+            Object(Matching, "RVL_SDK/si/SIBios.c"),
+            Object(Matching, "RVL_SDK/si/SISamplingRate.c"),
         ],
     },
     {

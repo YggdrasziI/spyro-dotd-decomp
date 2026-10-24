@@ -153,6 +153,13 @@ From mlab-decomp `src/RVL_SDK/base/PPCArch.c` and `src/RVL_SDK/db/db.c` (commit
 From mlab-decomp `src/RVL_SDK/exi/EXIBios.c`, `EXIUart.c`, `EXICommon.c` (commit
 `55db5381722bed8ad1fe3cd096f3955ae28130c1`, from mscharged-decomp, CC0), unchanged.
 
+## RVL_SDK/si (2 units)
+
+From mlab-decomp `src/RVL_SDK/si/SIBios.c`, `SISamplingRate.c` (commit
+`55db5381722bed8ad1fe3cd096f3955ae28130c1`, from mscharged-decomp, CC0), unchanged except
+that `SIGetTypeString` is put under `#if 0` in `SIBios.c` (dead-stripped; its strings are not
+in the DOL and would only add unmatched `.data` to the object).
+
 ## RVL_SDK/os (34 units)
 
 From mlab-decomp `src/RVL_SDK/os/*` (commit `55db5381722bed8ad1fe3cd096f3955ae28130c1`,
