@@ -28,6 +28,9 @@ in `mlab-decomp/notes/MATCHING.md` is a lead once the compiler is identified.
 
 ## Data layout
 
+- Library sources may define functions this DOL lacks; the linker dead-strips
+  unreferenced functions, so leave them in (`ptmf.c`, `runtime.c`).
+
 ## Control flow
 
 - `beq` over an unconditional `b` to the common return (`vf30__8IKAnchor`): a

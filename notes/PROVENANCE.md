@@ -4,7 +4,7 @@ Every file or function taken from another project, with the project, its commit
 (`git -C <clone> rev-parse HEAD`), its license (or its absence and the owner's
 approval, see `notes/REFERENCES.md`) and the changes made.
 
-## Runtime.PPCEABI.H (2 units, Matching)
+## Runtime.PPCEABI.H (7 units, Matching)
 
 Source: [yannicksuter/mscharged-decomp](https://github.com/yannicksuter/mscharged-decomp)
 (Mario Strikers Charged, Wii), local clone at commit
@@ -15,6 +15,21 @@ Line endings converted to LF.
 |---|---|---|
 | `src/Runtime.PPCEABI.H/global_destructor_chain.c` | `src/Runtime/global_destructor_chain.c` | none |
 | `src/Runtime.PPCEABI.H/__init_cpp_exceptions.cpp` | `src/Runtime/__init_cpp_exceptions.cpp` | `#pragma force_active on` / `reset` around the `.ctors` / `.dtors` references (as in mlab-decomp) |
+| `src/Runtime.PPCEABI.H/__mem.c` | `src/Runtime/__mem.c` | none |
+| `src/Runtime.PPCEABI.H/__va_arg.c` | `src/Runtime/__va_arg.c` | none |
+| `src/Runtime.PPCEABI.H/NMWException.cpp` | `src/Runtime/NMWException.cpp` | none (built with `-Cpp_exceptions on`, as in mscharged) |
+| `src/Runtime.PPCEABI.H/ptmf.c` | `src/Runtime/ptmf.c` | `__ptmf_scall4` added, **transcribed from this game's DOL** (0x80381228) |
 
-Headers copied unchanged: `libs/Runtime/include/{global_destructor_chain.h,__ppc_eabi_linker.h,NMWException.h}`,
+Headers copied unchanged: `libs/Runtime/include/{global_destructor_chain.h,__ppc_eabi_linker.h,NMWException.h,__mem.h,runtime.h}`,
 `libs/MSL_C/include/{cstring,size_t.h}`.
+
+`src/Runtime.PPCEABI.H/runtime.c` comes from `YggdrasziI/mlab-decomp` (private, same
+owner), commit `55db5381722bed8ad1fe3cd096f3955ae28130c1`, unchanged. That file is
+mscharged's `src/Runtime/runtime.c` (CC0) plus `__shr2u` and `__cvt_dbl_usll` from
+[zeldaret/tp](https://github.com/zeldaret/tp) (CC0, commit
+`c8fa8c9e2aab72cf4e5db0e5d1c84a9ea6ee6eb0`) and `__cvt_sll_dbl` transcribed from the
+Monster Lab DOL (see mlab-decomp `notes/PROVENANCE.md`).
+
+Functions of these sources that this DOL does not have (`__ptmf_cmpr`, `__shr2u`,
+`__cvt_ull_dbl`, `__cvt_ull_flt`) are left in the sources and dead-stripped by the
+linker (the build matches).

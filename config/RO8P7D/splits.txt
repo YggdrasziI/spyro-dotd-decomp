@@ -21,9 +21,28 @@ game/unit_8032E43C.cpp:
 	.sbss       start:0x805CDF60 end:0x805CDF68
 	.sdata2     start:0x805D23E8 end:0x805D23F0
 
+Runtime.PPCEABI.H/__mem.c:
+	.init       start:0x80004338 end:0x8000446C
+	.text       start:0x8038098C end:0x803809A8
+
+Runtime.PPCEABI.H/__va_arg.c:
+	.text       start:0x803809A8 end:0x80380A70
+
 Runtime.PPCEABI.H/global_destructor_chain.c:
 	.text       start:0x80380A70 end:0x80380AD0
 	.sbss       start:0x805CE5F0 end:0x805CE5F8
+
+Runtime.PPCEABI.H/NMWException.cpp:
+	extab       start:0x80006514 end:0x8000655C
+	extabindex  start:0x80008B98 end:0x80008BD4
+	.text       start:0x80380E20 end:0x803811D0
+
+Runtime.PPCEABI.H/ptmf.c:
+	.text       start:0x803811D0 end:0x80381250
+
+Runtime.PPCEABI.H/runtime.c:
+	.text       start:0x803814F8 end:0x80381CE0
+	.rodata     start:0x804C2770 end:0x804C2788
 
 Runtime.PPCEABI.H/__init_cpp_exceptions.cpp:
 	.text       start:0x80381CE0 end:0x80381D50

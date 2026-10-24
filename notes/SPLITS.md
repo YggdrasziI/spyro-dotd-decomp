@@ -49,8 +49,21 @@ RenderWare from about 0x803EAF84), what lies around 0x804117F0, and where PhysX
 
 ## Units
 
+Runtime.PPCEABI.H layout (`.text`): `__mem.c` (`strlen`), `__va_arg.c`,
+`global_destructor_chain.c`, `New.cpp` (0x80380AD0-0x80380E20, `bad_alloc`; not split
+yet), `NMWException.cpp`, `ptmf.c`, `MWRTTI.cpp` (0x80381250-0x803814F8,
+`__dynamic_cast`, `bad_cast`; not split yet), `runtime.c`, `__init_cpp_exceptions.cpp`,
+`Gecko_ExceptionPPC.cpp` (from 0x80381D50; not split yet). The order and the two
+extra files are those of rb3 (`sdk/Runtime/*`); `extab` / `extabindex` are cut by the
+functions they describe.
+
 | Unit | Sections | Evidence |
 |---|---|---|
 | `game/unit_8032E43C.cpp` (IKAnchor) | `.text` 0x8032E43C-0x8032E5E4, `.ctors` 0x804B87FC-0x804B8800, `.data` 0x804F0288-0x804F02F8 (vtable), `.bss` 0x8052E6F0-0x8052E700, `.sbss` 0x805CDF60-0x805CDF68, `.sdata2` 0x805D23E8-0x805D23F0 | Matching. Start: after the `__sinit` of the previous unit (0x8032E3B8, `.ctors` 0x804B87F8); end: its own `__sinit` (0x8032E5A0). RTTI, base list and `vfC` / `vf5C` of IKAnchor are in the unit at 0x80327260 (weak copies, first unit wins) |
+| `Runtime.PPCEABI.H/__mem.c` | `.init` 0x80004338-0x8000446C, `.text` 0x8038098C-0x803809A8 (`strlen`) | Matching; same code as mlab |
+| `Runtime.PPCEABI.H/__va_arg.c` | `.text` 0x803809A8-0x80380A70 | Matching; same code as mlab |
 | `Runtime.PPCEABI.H/global_destructor_chain.c` | `.text` 0x80380A70-0x80380AD0, `.sbss` 0x805CE5F0-0x805CE5F8 | Matching (objdiff 100 %, `main.dol: OK`) |
+| `Runtime.PPCEABI.H/NMWException.cpp` | `extab` 0x80006514-0x8000655C, `extabindex` 0x80008B98-0x80008BD4, `.text` 0x80380E20-0x803811D0 | Matching; same code and sizes as mlab |
+| `Runtime.PPCEABI.H/ptmf.c` | `.text` 0x803811D0-0x80381250 | Matching; `__ptmf_test`, `__ptmf_scall`, `__ptmf_scall4` |
+| `Runtime.PPCEABI.H/runtime.c` | `.text` 0x803814F8-0x80381CE0, `.rodata` 0x804C2770-0x804C2788 | Matching |
 | `Runtime.PPCEABI.H/__init_cpp_exceptions.cpp` | `.text` 0x80381CE0-0x80381D50, `.ctors$10` 0x804B7EC0, `.dtors$10` 0x804B88C0, `.dtors$15` 0x804B88C4, `.sdata` 0x805CC200-0x805CC208 | Matching (objdiff 100 %, `main.dol: OK`) |
