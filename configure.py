@@ -259,6 +259,14 @@ cflags_runtime = [
     "-inline auto",
 ]
 
+# MSL_C flags (as in mlab-decomp, from mscharged-decomp: SDK flags with -ipa file)
+cflags_msl = [
+    *(flag for flag in cflags_base if flag != "-fp_contract on"),
+    "-fp_contract off",
+    "-inline auto",
+    "-ipa file",
+]
+
 # Game code flags (GC/3.0a5.2, see notes/COMPILER.md); vtables carry RTTI pointers
 cflags_game = [
     *cflags_base,
@@ -339,6 +347,37 @@ config.libs = [
             Object(Matching, "Runtime.PPCEABI.H/ptmf.c"),
             Object(Matching, "Runtime.PPCEABI.H/runtime.c"),
             Object(Matching, "Runtime.PPCEABI.H/__init_cpp_exceptions.cpp"),
+        ],
+    },
+    {
+        "lib": "MSL_C",
+        # Same sources and per-file flags as mlab-decomp (see notes/PROVENANCE.md)
+        "mw_version": "GC/3.0a5.2",
+        "cflags": cflags_msl,
+        "progress_category": "sdk",
+        "objects": [
+            Object(Matching, "MSL_C/mem_funcs.c"),
+            Object(Matching, "MSL_C/e_acos.c"),
+            Object(Matching, "MSL_C/e_asin.c", mw_version="GC/3.0a5"),
+            Object(Matching, "MSL_C/e_atan2.c"),
+            Object(Matching, "MSL_C/e_fmod.c"),
+            Object(Matching, "MSL_C/e_log.c"),
+            Object(Matching, "MSL_C/e_log10.c"),
+            Object(Matching, "MSL_C/e_pow.c", mw_version="GC/3.0a5"),
+            Object(Matching, "MSL_C/e_rem_pio2.c", mw_version="GC/3.0a5"),
+            Object(Matching, "MSL_C/k_cos.c"),
+            Object(Matching, "MSL_C/k_rem_pio2.c", extra_cflags=["-use_lmw_stmw on"]),
+            Object(Matching, "MSL_C/k_sin.c"),
+            Object(Matching, "MSL_C/k_tan.c", mw_version="GC/3.0a5"),
+            Object(Matching, "MSL_C/s_atan.c", mw_version="GC/3.0a5"),
+            Object(Matching, "MSL_C/s_copysign.c"),
+            Object(Matching, "MSL_C/s_cos.c"),
+            Object(Matching, "MSL_C/s_floor.c"),
+            Object(Matching, "MSL_C/s_frexp.c"),
+            Object(Matching, "MSL_C/s_ldexp.c"),
+            Object(Matching, "MSL_C/s_sin.c"),
+            Object(Matching, "MSL_C/s_tan.c"),
+            Object(Matching, "MSL_C/e_sqrt.c"),
         ],
     },
 ]

@@ -49,6 +49,13 @@ RenderWare from about 0x803EAF84), what lies around 0x804117F0, and where PhysX
 
 ## Units
 
+MSL_C units not split yet: those with exception tables (`alloc.c`, `ansi_fp.c`,
+`mem.c`, `math_api.c`, `qsort.c`, `scanf.c`, `signal.c`, `abort_exit_ppc_eabi.c`,
+`math_sun.c`: same code as mlab, `extab` / `extabindex` bounds still to place), and
+those whose code differs from mlab or is too short to place (`ansi_files.c`,
+`printf.c`, `string.c`, `w_*.c`, `math_ppc.c` …). Gaps between the fdlibm units:
+0x80390170-0x803903A4 (after `e_atan2.c`) and 0x80393978-0x80393998 (after `s_tan.c`).
+
 Runtime.PPCEABI.H layout (`.text`): `__mem.c` (`strlen`), `__va_arg.c`,
 `global_destructor_chain.c`, `New.cpp` (0x80380AD0-0x80380E20, `bad_alloc`; not split
 yet), `NMWException.cpp`, `ptmf.c`, `MWRTTI.cpp` (0x80381250-0x803814F8,
@@ -67,3 +74,5 @@ functions they describe.
 | `Runtime.PPCEABI.H/ptmf.c` | `.text` 0x803811D0-0x80381250 | Matching; `__ptmf_test`, `__ptmf_scall`, `__ptmf_scall4` |
 | `Runtime.PPCEABI.H/runtime.c` | `.text` 0x803814F8-0x80381CE0, `.rodata` 0x804C2770-0x804C2788 | Matching |
 | `Runtime.PPCEABI.H/__init_cpp_exceptions.cpp` | `.text` 0x80381CE0-0x80381D50, `.ctors$10` 0x804B7EC0, `.dtors$10` 0x804B88C0, `.dtors$15` 0x804B88C4, `.sdata` 0x805CC200-0x805CC208 | Matching (objdiff 100 %, `main.dol: OK`) |
+| `MSL_C/mem_funcs.c` | `.text` 0x80387070-0x80387340 | Matching; same code as mlab |
+| `MSL_C/e_acos.c` … `MSL_C/s_tan.c`, `MSL_C/e_sqrt.c` (21 fdlibm units) | `.text` 0x8038F9A4-0x80393BE0 with gaps; `.rodata`, `.sbss`, `.sdata2` per unit (see `splits.txt`) | Matching; same code and sizes as mlab |

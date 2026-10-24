@@ -33,3 +33,28 @@ Monster Lab DOL (see mlab-decomp `notes/PROVENANCE.md`).
 Functions of these sources that this DOL does not have (`__ptmf_cmpr`, `__shr2u`,
 `__cvt_ull_dbl`, `__cvt_ull_flt`) are left in the sources and dead-stripped by the
 linker (the build matches).
+
+## MSL_C (22 units, Matching)
+
+Source: `YggdrasziI/mlab-decomp` (private, same owner), commit
+`55db5381722bed8ad1fe3cd096f3955ae28130c1`, copied unchanged. mlab-decomp's
+`notes/PROVENANCE.md` traces each file to a CC0 project:
+
+- from [yannicksuter/mscharged-decomp](https://github.com/yannicksuter/mscharged-decomp)
+  (CC0-1.0, commit `126acd42cb8ca0eea1efa75c5a8da7110ef9a142`), unchanged:
+  `mem_funcs.c`, `e_acos.c`, `e_atan2.c`, `e_pow.c`, `e_rem_pio2.c`, `e_sqrt.c`,
+  `k_cos.c`, `k_rem_pio2.c`, `k_sin.c`, `k_tan.c`, `s_atan.c`, `s_copysign.c`,
+  `s_cos.c`, `s_floor.c`, `s_frexp.c`, `s_ldexp.c`, `s_sin.c`, `s_tan.c`;
+- `e_asin.c` from [SMGCommunity/Petari](https://github.com/SMGCommunity/Petari)
+  (CC0-1.0, commit `6804bd31724eaa01b33b68c622fcda6d1b433e17`), include line adapted;
+- `e_fmod.c`, `e_log.c`, `e_log10.c` from [zeldaret/tp](https://github.com/zeldaret/tp)
+  (CC0-1.0, commit `c8fa8c9e2aab72cf4e5db0e5d1c84a9ea6ee6eb0`), include lines adapted.
+
+Headers copied unchanged from the same mlab-decomp commit (mscharged origin):
+`include/types.h`, `libs/MSL_C/include/{errno.h,mem_funcs.h}`,
+`libs/MSL_C/include/internal/{fdlibm.h,math_api.h,math_nan.h}`.
+
+Units chosen with a scratch script: the reference unit's functions appear in the same
+order with the same normalized code (`tools/ref_match.py` fingerprints), the `.text`
+size is equal, and each data section is placed by pairing the symbols both functions
+reference. Function and data names are mlab's, mapped by offset inside each section.

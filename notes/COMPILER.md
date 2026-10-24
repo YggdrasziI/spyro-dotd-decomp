@@ -128,7 +128,7 @@ links (`main.dol: OK`) with GC/3.0a5.2, `cflags_game` (`cflags_base` + `-RTTI on
 |---|---|---|
 | Linker | GC 3.0a3 … 3.0a5.2 | family proven, exact version open |
 | Runtime.PPCEABI.H | GC 3.0a3 … 3.0a5.2 (2 small units only) | partial |
-| MSL_C | — | not tested |
+| MSL_C | GC/3.0a5.2, and GC/3.0a5 for `e_asin.c`, `e_pow.c`, `e_rem_pio2.c`, `k_tan.c`, `s_atan.c`; `-fp_contract off` | 22 units linked (same split of compilers as mlab); with 3.0a5.2 those five reach only 94.6–98.7 %, and with `-fp_contract on` most fdlibm units fall to 62–99 % |
 | MetroTRK | — | not tested |
 | RVL_SDK | — | not tested |
 | Game code | GC/3.0a5.2; `-opt nopeephole` near 0x8032E43C, peephole on near 0x8000CB40 | **proven** for `unit_8032E43C` (linked, see below) |

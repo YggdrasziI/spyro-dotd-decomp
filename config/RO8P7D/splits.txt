@@ -50,3 +50,96 @@ Runtime.PPCEABI.H/__init_cpp_exceptions.cpp:
 	.dtors      start:0x804B88C0 end:0x804B88C4 rename:.dtors$10
 	.dtors      start:0x804B88C4 end:0x804B88C8 rename:.dtors$15
 	.sdata      start:0x805CC200 end:0x805CC208
+
+MSL_C/mem_funcs.c:
+	.text       start:0x80387070 end:0x80387340
+
+MSL_C/e_acos.c:
+	.text       start:0x8038F9A4 end:0x8038FC68
+	.sdata2     start:0x805D29A8 end:0x805D2A30
+
+MSL_C/e_asin.c:
+	.text       start:0x8038FC68 end:0x8038FF00
+	.sdata2     start:0x805D2A30 end:0x805D2AB8
+
+MSL_C/e_atan2.c:
+	.text       start:0x8038FF00 end:0x80390170
+	.sdata2     start:0x805D2AB8 end:0x805D2B10
+
+MSL_C/e_fmod.c:
+	.text       start:0x803903A4 end:0x803906D4
+	.rodata     start:0x804C3500 end:0x804C3510
+
+MSL_C/e_log.c:
+	.text       start:0x803906D4 end:0x80390988
+	.sbss       start:0x805CE620 end:0x805CE628
+	.sdata2     start:0x805D2B88 end:0x805D2C08
+
+MSL_C/e_log10.c:
+	.text       start:0x80390988 end:0x80390A9C
+	.sbss       start:0x805CE628 end:0x805CE630
+	.sdata2     start:0x805D2C08 end:0x805D2C38
+
+MSL_C/e_pow.c:
+	.text       start:0x80390A9C end:0x803912E4
+	.rodata     start:0x804C3510 end:0x804C3540
+	.sdata2     start:0x805D2C38 end:0x805D2D48
+
+MSL_C/e_rem_pio2.c:
+	.text       start:0x803912E4 end:0x8039167C
+	.rodata     start:0x804C3540 end:0x804C36C8
+	.sdata2     start:0x805D2D48 end:0x805D2DA0
+
+MSL_C/k_cos.c:
+	.text       start:0x8039167C end:0x8039178C
+	.sdata2     start:0x805D2DA0 end:0x805D2DE8
+
+MSL_C/k_rem_pio2.c:
+	.text       start:0x8039178C end:0x80392E98
+	.rodata     start:0x804C36C8 end:0x804C3718
+	.sdata2     start:0x805D2DE8 end:0x805D2E28
+
+MSL_C/k_sin.c:
+	.text       start:0x80392E98 end:0x80392F58
+	.sdata2     start:0x805D2E28 end:0x805D2E60
+
+MSL_C/k_tan.c:
+	.text       start:0x80392F58 end:0x803931B0
+	.rodata     start:0x804C3718 end:0x804C3780
+	.sdata2     start:0x805D2E60 end:0x805D2E98
+
+MSL_C/s_atan.c:
+	.text       start:0x803931B0 end:0x803933F0
+	.rodata     start:0x804C3780 end:0x804C3818
+	.sdata2     start:0x805D2E98 end:0x805D2EC0
+
+MSL_C/s_copysign.c:
+	.text       start:0x803933F0 end:0x8039341C
+
+MSL_C/s_cos.c:
+	.text       start:0x8039341C end:0x803934F0
+	.sdata2     start:0x805D2EC0 end:0x805D2EC8
+
+MSL_C/s_floor.c:
+	.text       start:0x803934F0 end:0x80393634
+	.sdata2     start:0x805D2EC8 end:0x805D2ED8
+
+MSL_C/s_frexp.c:
+	.text       start:0x80393634 end:0x803936BC
+	.sdata2     start:0x805D2ED8 end:0x805D2EE0
+
+MSL_C/s_ldexp.c:
+	.text       start:0x803936BC end:0x80393828
+	.sdata2     start:0x805D2EE0 end:0x805D2F08
+
+MSL_C/s_sin.c:
+	.text       start:0x80393828 end:0x80393900
+	.sdata2     start:0x805D2F08 end:0x805D2F10
+
+MSL_C/s_tan.c:
+	.text       start:0x80393900 end:0x80393978
+	.sdata2     start:0x805D2F10 end:0x805D2F18
+
+MSL_C/e_sqrt.c:
+	.text       start:0x80393998 end:0x80393BE0
+	.sdata2     start:0x805D2F18 end:0x805D2F20
