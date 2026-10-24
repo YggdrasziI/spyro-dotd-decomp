@@ -9,6 +9,7 @@ described in the decomp-unit skill before splitting.
 Usage:
   python tools/unit_candidates.py           # 40 smallest candidates
   python tools/unit_candidates.py -n 100    # more
+  python tools/unit_candidates.py --version RO8X7D   # another game version (default RO8P7D)
 """
 
 import argparse
@@ -18,11 +19,15 @@ import re
 import struct
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-VERSION = "RO8P7D"
-TEXT_START = 0x8000C4E0  # start of the main .text section (DOL header)
-# Hypothesis: game code ends at the first SDK function dtk named (PPCMfmsr);
-# the region between main (0x802F5BB8) and it is not identified yet (notes/SPLITS.md).
-GAME_END = 0x80355F60
+DEFAULT_VERSION = "RO8P7D"
+# Per version: (start of the main .text section from the DOL header, end of game code).
+# Hypothesis: game code ends at the first SDK function dtk named (PPCMfmsr); the region
+# between main and it is not identified yet (notes/SPLITS.md). RO8X7D has the same code
+# as RO8P7D; RO8E7D is added once it is configured.
+TEXT_BOUNDS = {
+    "RO8P7D": (0x8000C4E0, 0x80355F60),
+    "RO8X7D": (0x8000C4E0, 0x80355F60),
+}
 FLOAT_PREFIXES = ("f", "lfs", "lfd", "stfs", "stfd", "psq")
 
 
@@ -44,12 +49,15 @@ def read_dol(path):
 def main():
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument("-n", type=int, default=40, help="number of candidates to show")
+    parser.add_argument("--version", default=DEFAULT_VERSION, type=str.upper,
+                        choices=sorted(TEXT_BOUNDS), help="game version (default: %(default)s)")
     args = parser.parse_args()
+    text_start, game_end = TEXT_BOUNDS[args.version]
 
-    config = os.path.join(ROOT, "config", VERSION)
+    config = os.path.join(ROOT, "config", args.version)
     symbols = open(os.path.join(config, "symbols.txt"), encoding="utf-8").read()
     splits = open(os.path.join(config, "splits.txt"), encoding="utf-8").read()
-    read_word = read_dol(os.path.join(ROOT, "orig", VERSION, "sys", "main.dol"))
+    read_word = read_dol(os.path.join(ROOT, "orig", args.version, "sys", "main.dol"))
 
     funcs = {}
     for m in re.finditer(r"^(\S+) = \.text:(0x[0-9A-F]+); // type:function size:(0x[0-9A-F]+)",
@@ -72,14 +80,14 @@ def main():
                                splits, re.M)]
 
     opcodes = {}
-    for path in glob.glob(os.path.join(ROOT, "build", VERSION, "asm", "**", "*.s"), recursive=True):
+    for path in glob.glob(os.path.join(ROOT, "build", args.version, "asm", "**", "*.s"), recursive=True):
         for m in re.finditer(r"^/\* ([0-9A-F]{8}) [0-9A-F]+  [0-9A-F ]+ \*/\t(\S+)",
                              open(path, encoding="utf-8").read(), re.M):
             opcodes[int(m.group(1), 16)] = m.group(2)
 
-    ends = sorted(v + funcs.get(v, ("", 0))[1] for v in entries if v < GAME_END)
+    ends = sorted(v + funcs.get(v, ("", 0))[1] for v in entries if v < game_end)
     rows = []
-    start = TEXT_START
+    start = text_start
     for end in ends:
         unit = (start, end)
         start = end

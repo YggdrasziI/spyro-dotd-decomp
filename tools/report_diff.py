@@ -7,6 +7,7 @@ Usage:
   python tools/report_diff.py --save            # save build/RO8P7D/report.json as the baseline
   python tools/report_diff.py                   # compare the current report with the baseline
   python tools/report_diff.py --base other.json # compare with another report
+  python tools/report_diff.py --version RO8X7D  # another game version (default RO8P7D)
 
 Exit status 1 when a function present in both reports lost match percentage, or a
 fully matched function or data section disappeared without a 100 % replacement.
@@ -19,8 +20,7 @@ import shutil
 import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-REPORT = os.path.join(ROOT, "build", "RO8P7D", "report.json")
-BASELINE = os.path.join(ROOT, "build", "RO8P7D", "report_base.json")
+DEFAULT_VERSION = "RO8P7D"
 
 
 def load(path):
@@ -40,12 +40,17 @@ def load(path):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
+    parser.add_argument("--version", default=DEFAULT_VERSION, type=str.upper,
+                        help="game version (default: %(default)s)")
     parser.add_argument("--save", action="store_true", help="save the current report as the baseline")
-    parser.add_argument("--base", default=BASELINE, help="baseline report (default: %(default)s)")
+    parser.add_argument("--base", help="baseline report (default: build/<version>/report_base.json)")
     args = parser.parse_args()
+    report = os.path.join(ROOT, "build", args.version, "report.json")
+    if args.base is None:
+        args.base = os.path.join(ROOT, "build", args.version, "report_base.json")
 
     if args.save:
-        shutil.copyfile(REPORT, args.base)
+        shutil.copyfile(report, args.base)
         print(f"Saved baseline to {args.base}")
         return 0
     if not os.path.exists(args.base):
@@ -53,7 +58,7 @@ def main():
         return 2
 
     base_measures, base = load(args.base)
-    cur_measures, cur = load(REPORT)
+    cur_measures, cur = load(report)
 
     regressions, improvements, removed, added = [], [], [], []
     for key in sorted(set(base) | set(cur)):

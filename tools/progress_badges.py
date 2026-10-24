@@ -111,12 +111,26 @@ def record(report, history_path):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    parser.add_argument("--report", default=os.path.join(ROOT, "build", "RO8P7D", "report.json"))
-    parser.add_argument("--out", default=os.path.join(ROOT, "progress"))
-    parser.add_argument("--history", default=os.path.join(ROOT, "progress", "history.csv"))
+    parser.add_argument("--version", default="RO8P7D", type=str.upper,
+                        help="game version whose report is read (default: %(default)s); "
+                             "the README badges track RO8P7D")
+    parser.add_argument("--report", help="objdiff report (default: build/<version>/report.json)")
+    parser.add_argument("--out", help="badge folder (default: progress/ for RO8P7D, "
+                                       "build/<version>/progress_badges otherwise)")
+    parser.add_argument("--history", help="history file (default: progress/history.csv, RO8P7D only)")
     parser.add_argument("--record", action="store_true", help="append the current state to history.csv")
     args = parser.parse_args()
 
+    if args.report is None:
+        args.report = os.path.join(ROOT, "build", args.version, "report.json")
+    # progress/ holds the README badges and history of the reference version only.
+    if args.out is None:
+        args.out = (os.path.join(ROOT, "progress") if args.version == "RO8P7D"
+                    else os.path.join(ROOT, "build", args.version, "progress_badges"))
+    if args.history is None:
+        if args.record and args.version != "RO8P7D":
+            parser.error("--record for another version needs an explicit --history")
+        args.history = os.path.join(ROOT, "progress", "history.csv")
     os.makedirs(args.out, exist_ok=True)
     with open(args.report, encoding="utf-8") as f:
         report = json.load(f)
