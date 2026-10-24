@@ -55,7 +55,7 @@ place. The float wrappers at 0x8038F680-0x8038F8A4 (small functions that call
 
 Runtime.PPCEABI.H layout (`.text`): `__mem.c` (`strlen`), `__va_arg.c`,
 `global_destructor_chain.c`, `New.cpp` (0x80380AD0-0x80380BC4), `NMWException.cpp`
-(from 0x80380BC4 in this DOL; split from 0x80380E20 so far), `ptmf.c`, `MWRTTI.cpp` (0x80381250-0x803814F8,
+(from 0x80380BC4), `ptmf.c`, `MWRTTI.cpp` (0x80381250-0x803814F8,
 `__dynamic_cast`, `bad_cast`; not split yet), `runtime.c`, `__init_cpp_exceptions.cpp`,
 `Gecko_ExceptionPPC.cpp` (from 0x80381D50; not split yet). The order and the two
 extra files are those of rb3 (`sdk/Runtime/*`); `extab` / `extabindex` are cut by the
@@ -67,8 +67,8 @@ functions they describe.
 | `Runtime.PPCEABI.H/__mem.c` | `.init` 0x80004338-0x8000446C, `.text` 0x8038098C-0x803809A8 (`strlen`) | Matching; same code as mlab |
 | `Runtime.PPCEABI.H/__va_arg.c` | `.text` 0x803809A8-0x80380A70 | Matching; same code as mlab |
 | `Runtime.PPCEABI.H/global_destructor_chain.c` | `.text` 0x80380A70-0x80380AD0, `.sbss` 0x805CE5F0-0x805CE5F8 | Matching (objdiff 100 %, `main.dol: OK`) |
-| `Runtime.PPCEABI.H/New.cpp` | `extab` 0x800064E0-0x80006514, `extabindex` 0x80008B80-0x80008B98, `.text` 0x80380AD0-0x80380BC4, `.rodata` 0x804C26B0-0x804C2708, `.data` 0x805061F8-0x80506220, `.sdata` 0x805CC1E0-0x805CC1F0, `.sbss` 0x805CE5F8-0x805CE600 | NonMatching: code 100 %, gap in `TASKS.md`. `operator new` (`__nw__FUl`), `std::bad_alloc` dtor, `what`, vtable and RTTI, `std::exception` RTTI; the exception-specification string `"!std::bad_alloc!!"` (0x804C26B0, pointed to by the `extab` of `operator new`) starts the `.rodata`. The functions from 0x80380BC4 (default `terminate` / `unexpected` handlers, `__throw_catch_compare` at 0x80380BE4, called from the exception code) are the start of `NMWException.cpp` in rb3's source, not split yet |
-| `Runtime.PPCEABI.H/NMWException.cpp` | `extab` 0x80006514-0x8000655C, `extabindex` 0x80008B98-0x80008BD4, `.text` 0x80380E20-0x803811D0 | Matching; same code and sizes as mlab |
+| `Runtime.PPCEABI.H/New.cpp` | `extab` 0x800064E0-0x80006514, `extabindex` 0x80008B80-0x80008B98, `.text` 0x80380AD0-0x80380BC4, `.rodata` 0x804C26B0-0x804C2708, `.data` 0x805061F8-0x80506220, `.sdata` 0x805CC1E0-0x805CC1F0, `.sbss` 0x805CE5F8-0x805CE600 | NonMatching: code 100 %, gap in `TASKS.md`. `operator new` (`__nw__FUl`), `std::bad_alloc` dtor, `what`, vtable and RTTI, `std::exception` RTTI; the exception-specification string `"!std::bad_alloc!!"` (0x804C26B0, pointed to by the `extab` of `operator new`) starts the `.rodata`. The functions from 0x80380BC4 belong to `NMWException.cpp` |
+| `Runtime.PPCEABI.H/NMWException.cpp` | `extab` 0x80006514-0x8000655C, `extabindex` 0x80008B98-0x80008BD4, `.text` 0x80380BC4-0x803811D0, `.sdata` 0x805CC1F0-0x805CC1F8 | Matching; mlab's code from 0x80380E20, preceded by rb3's `std::dthandler`, `duhandler`, `terminate`, `unexpected` (`set_terminate` / `set_unexpected` dead-stripped), `__throw_catch_compare` and the `thandler` / `uhandler` pointers |
 | `Runtime.PPCEABI.H/ptmf.c` | `.text` 0x803811D0-0x80381250 | Matching; `__ptmf_test`, `__ptmf_scall`, `__ptmf_scall4` |
 | `Runtime.PPCEABI.H/MWRTTI.cpp` | `extab` 0x8000655C-0x8000656C, `extabindex` 0x80008BD4-0x80008BEC, `.text` 0x80381250-0x803814F8, `.rodata` 0x804C2718-0x804C2770, `.data` 0x80506220-0x80506248, `.sdata` 0x805CC1F8-0x805CC200 | NonMatching: code 100 %, data gap in `TASKS.md`. `__dynamic_cast` (calls `__throw`, 0x8038331C), `std::bad_cast` dtor and `what`, vtable and RTTI; `std::exception`'s RTTI (0x805CC1E8) sits before, with `New.cpp` |
 | `Runtime.PPCEABI.H/runtime.c` | `.text` 0x803814F8-0x80381CE0, `.rodata` 0x804C2770-0x804C2788 | Matching |

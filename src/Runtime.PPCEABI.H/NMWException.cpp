@@ -1,5 +1,129 @@
 // Adapted from https://github.com/SMGCommunity/Petari (CC0-1.0).
 #include <NMWException.h>
+#include <stdlib.h>
+#include <exception>
+
+// From rb3 (see notes/PROVENANCE.md): the default handlers, terminate, unexpected and
+// __throw_catch_compare, which this DOL keeps before __construct_new_array.
+namespace std {
+    static void dthandler() {
+        abort();
+    }
+
+    static terminate_handler thandler = dthandler;
+
+    static void duhandler() {
+        terminate();
+    }
+
+    static unexpected_handler uhandler = duhandler;
+
+    extern terminate_handler set_terminate(terminate_handler handler) throw() {
+        terminate_handler old = thandler;
+        thandler = handler;
+        return old;
+    }
+
+    extern void terminate() {
+        thandler();
+    }
+
+    extern unexpected_handler set_unexpected(unexpected_handler handler) throw() {
+        unexpected_handler old = uhandler;
+        uhandler = handler;
+        return old;
+    }
+
+    extern void unexpected() {
+        uhandler();
+    }
+}
+
+extern char
+__throw_catch_compare(const char *throwtype, const char *catchtype, long *offset_result) {
+    const char *cptr1, *cptr2;
+
+    *offset_result = 0;
+
+    if ((cptr2 = catchtype) == 0) {
+        return true;
+    }
+
+    cptr1 = throwtype;
+
+    if (*cptr2 == 'P') {
+        cptr2++;
+        if (*cptr2 == 'C')
+            cptr2++;
+        if (*cptr2 == 'V')
+            cptr2++;
+        if (*cptr2 == 'v') {
+            if (*cptr1 == 'P' || *cptr1 == '*') {
+                return true;
+            }
+        }
+        cptr2 = catchtype;
+    }
+
+    switch (*cptr1) {
+    case '*':
+    case '!':
+        if (*cptr1++ != *cptr2++)
+            return false;
+        for (;;) {
+            if (*cptr1 == *cptr2++) {
+                if (*cptr1++ == '!') {
+                    long offset;
+
+                    for (offset = 0; *cptr1 != '!';) {
+                        offset = offset * 10 + *cptr1++ - '0';
+                    }
+                    *offset_result = offset;
+                    return true;
+                }
+            } else {
+                while (*cptr1++ != '!') {
+                }
+                while (*cptr1++ != '!') {
+                }
+                if (*cptr1 == 0)
+                    return false;
+
+                cptr2 = catchtype + 1;
+            }
+        }
+        return false;
+    }
+
+    while ((*cptr1 == 'P' || *cptr1 == 'R') && *cptr1 == *cptr2) {
+        cptr1++;
+        cptr2++;
+
+        if (*cptr2 == 'C') {
+            if (*cptr1 == 'C')
+                cptr1++;
+            cptr2++;
+        }
+        if (*cptr1 == 'C')
+            return false;
+
+        if (*cptr2 == 'V') {
+            if (*cptr1 == 'V')
+                cptr1++;
+            cptr2++;
+        }
+        if (*cptr1 == 'V')
+            return false;
+    }
+
+    for (; *cptr1 == *cptr2; cptr1++, cptr2++) {
+        if (*cptr1 == 0)
+            return true;
+    }
+
+    return false;
+}
+
 
 class __partial_array_destructor
 {

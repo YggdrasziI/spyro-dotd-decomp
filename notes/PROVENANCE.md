@@ -151,3 +151,11 @@ and `MWRTTI.h` unchanged, `MSL/MSL_C++/exception` and `typeinfo` into
 Written for this project from the DOL. `libs/MSL_C++/include/new` from rb3 (same commit
 as `MWRTTI.cpp`), with its `<MSL_C++/...>` includes changed to `<stddef.h>` /
 `<exception>` and `using ::size_t;` added in `std`.
+
+## Runtime.PPCEABI.H/NMWException.cpp (start)
+
+The `namespace std` block (default handlers, `set_terminate`, `terminate`,
+`set_unexpected`, `unexpected`) and `__throw_catch_compare` are copied unchanged from rb3
+`src/sdk/PowerPC_EABI_Support/Runtime/NMWException.cpp` (same commit as `MWRTTI.cpp`)
+at the top of mlab's file; `libs/Runtime/include/NMWException.h` gains the
+`__throw_catch_compare` declaration from rb3's header.
