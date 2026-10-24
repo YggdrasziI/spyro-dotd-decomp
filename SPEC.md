@@ -51,9 +51,10 @@ Model (after `zeldaret/tp`):
 
 Evidence and the candidate analysis go in `notes/COMPILER.md`.
 
-- Compiler and linker: **unknown**. `configure.py` still holds the template values
-  (`GC/1.3.2` linker, `mw_comment_version: 15`); they are placeholders, not evidence.
-  The build matches today only because no unit is linked yet.
+- Linker: **GC 3.0 family** (3.0a3 … 3.0a5.2 all link a matching DOL; Wii 1.x,
+  GC 2.7 and GC 2.6 do not, see `notes/COMPILER.md`). `configure.py` uses
+  `GC/3.0a5.2` with `mw_comment_version: 15`, a working choice inside that family.
+- Game-code compiler: **unknown**, not tested yet.
 - Wii SDK: RVL_SDK libraries built August 2007 to January 2008, tag `0x4199_60831`
   (version strings in `main.dol`, e.g. OS at file offset 0x4EE1E8). Commercial SDK
   version name unknown.

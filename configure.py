@@ -229,6 +229,8 @@ cflags_base = [
     "-multibyte",  # For Wii compilers, replace with `-enc SJIS`
     "-i include",
     f"-i build/{config.version}/include",
+    "-i libs/Runtime/include",
+    "-i libs/MSL_C/include",
     f"-DBUILD_VERSION={version_num}",  # compare with the names in include/version.h
 ]
 
@@ -264,7 +266,7 @@ cflags_rel = [
     "-sdata2 0",
 ]
 
-config.linker_version = "GC/1.3.2"
+config.linker_version = "GC/3.0a5.2"
 
 
 # Helper function for Dolphin libraries
@@ -315,8 +317,8 @@ config.libs = [
         "cflags": cflags_runtime,
         "progress_category": "sdk",  # str | List[str]
         "objects": [
-            Object(NonMatching, "Runtime.PPCEABI.H/global_destructor_chain.c"),
-            Object(NonMatching, "Runtime.PPCEABI.H/__init_cpp_exceptions.cpp"),
+            Object(Matching, "Runtime.PPCEABI.H/global_destructor_chain.c"),
+            Object(Matching, "Runtime.PPCEABI.H/__init_cpp_exceptions.cpp"),
         ],
     },
 ]

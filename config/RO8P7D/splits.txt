@@ -12,3 +12,14 @@ Sections:
 	.sbss       type:bss align:32
 	.sdata2     type:rodata align:32
 	.sbss2      type:bss align:8
+
+Runtime.PPCEABI.H/global_destructor_chain.c:
+	.text       start:0x80380A70 end:0x80380AD0
+	.sbss       start:0x805CE5F0 end:0x805CE5F8
+
+Runtime.PPCEABI.H/__init_cpp_exceptions.cpp:
+	.text       start:0x80381CE0 end:0x80381D50
+	.ctors      start:0x804B7EC0 end:0x804B7EC4 rename:.ctors$10
+	.dtors      start:0x804B88C0 end:0x804B88C4 rename:.dtors$10
+	.dtors      start:0x804B88C4 end:0x804B88C8 rename:.dtors$15
+	.sdata      start:0x805CC200 end:0x805CC208

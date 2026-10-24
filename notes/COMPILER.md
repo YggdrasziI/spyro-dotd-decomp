@@ -1,8 +1,7 @@
 # Compiler, SDK and runtime — evidence
 
-Nothing about the compiler is proven yet. `configure.py` holds the dtk-template
-defaults (`GC/1.3.2` linker, `mw_comment_version: 15` in `config/RO8P7D/config.yml`);
-they are placeholders until a matching unit settles them.
+The linker family is proven (GC 3.0, see "Linker test" below). The game-code
+compiler is not tested yet.
 
 ## Disc
 
@@ -48,12 +47,41 @@ proven to use mwcc GC 3.0 (3.0a3 … 3.0a5.2). This is a lead for Spyro, not evi
 | 0x4c19ec | `Not a Bink file.` | Bink video (RAD Game Tools) |
 | 0x4b6674 | `Vivendi Games` | game (publisher string) |
 
+## Runtime and CodeWarrior hints
+
+- Symbols named by dtk: `__init_cpp_exceptions` (0x80381CE0), `__fini_cpp_exceptions`
+  (0x80381D1C), `__init_cpp_exceptions_reference` (.ctors 0x804B7EC0),
+  `__destroy_global_chain_reference` (.dtors 0x804B88C0),
+  `__fini_cpp_exceptions_reference` (.dtors 0x804B88C4), `fragmentID` (.sdata
+  0x805CC200): the template's "GC 2.7+ and Wii linkers" layout (two `.dtors` entries).
+
+## Linker test (2026-10-24)
+
+Setup: `global_destructor_chain.c` and `__init_cpp_exceptions.cpp` split and linked
+(objdiff 100 % code and data with every compiler below), `mw_comment_version: 15`,
+`linker_version` (also used for the runtime units) changed one at a time.
+
+| Linker | Result |
+|---|---|
+| GC/2.6 | `main.dol: FAILED` |
+| GC/2.7 | internal linker error (`ELF_gen.c` line 672) |
+| GC/3.0a3, 3.0a3.2, 3.0a3.3, 3.0a3.4, 3.0a5, 3.0a5.2 | `main.dol: OK` |
+| Wii/0x4201_127, 1.0, 1.1, 1.3, 1.7 | `main.dol: FAILED`: DOL 32 bytes longer, header and section layout differ |
+
+Conclusion: the linker belongs to the GC 3.0 family. These two units do not tell
+3.0a3 … 3.0a5.2 apart. `GC/3.0a5.2` is kept as a working choice (same choice and same
+reason as in Monster Lab: SDK tag `0x4199_60831`); not proven.
+
+Without `#pragma force_active on` around the `.ctors$10` / `.dtors$15` references,
+the linker strips them and `.ctors` / `.dtors` shift (`main.dol: FAILED`).
+
 ## Candidates
 
 | Part | Candidates | Status |
 |---|---|---|
-| Linker / `mw_comment_version` | — | not tested |
-| Runtime.PPCEABI.H, MSL_C | — | not tested |
+| Linker | GC 3.0a3 … 3.0a5.2 | family proven, exact version open |
+| Runtime.PPCEABI.H | GC 3.0a3 … 3.0a5.2 (2 small units only) | partial |
+| MSL_C | — | not tested |
 | MetroTRK | — | not tested |
 | RVL_SDK | — | not tested |
 | Game code | — | not tested |
