@@ -6,6 +6,31 @@
 
 typedef void* ctor_dtor_ptr;
 
+// From rb3's NMWException.h (see notes/PROVENANCE.md).
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+typedef short vbase_ctor_arg_type;
+typedef char local_cond_type;
+
+typedef struct CatchInfo {
+    void* location;
+    void* typeinfo;
+    void* dtor;
+    void* sublocation;
+    long pointercopy;
+    void* stacktop;
+} CatchInfo;
+
+extern void __end__catch(CatchInfo* catchinfo);
+extern void __throw(char* throwtype, void* location, void* dtor);
+extern void __unexpected(CatchInfo* catchinfo);
+
+#ifdef __cplusplus
+}
+#endif
+
 extern "C"
 {
 

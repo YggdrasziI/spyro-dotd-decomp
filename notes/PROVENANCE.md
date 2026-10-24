@@ -152,6 +152,17 @@ Written for this project from the DOL. `libs/MSL_C++/include/new` from rb3 (same
 as `MWRTTI.cpp`), with its `<MSL_C++/...>` includes changed to `<stddef.h>` /
 `<exception>` and `using ::size_t;` added in `std`.
 
+## Runtime.PPCEABI.H/Gecko_ExceptionPPC.cpp (NonMatching)
+
+From rb3 (same commit as `MWRTTI.cpp`): `src/sdk/PowerPC_EABI_Support/Runtime/Gecko_ExceptionPPC.cpp`,
+`Gecko_ExceptionPPC.h` and `MWCPlusLib.h` into `libs/Runtime/include/`. Changes: the
+six array-function declarations of `MWCPlusLib.h` removed (they conflict with mlab's
+`NMWException.h`); rb3's `__register_fragment` / `__unregister_fragment` and their
+`#pragma schedule once` replaced by mscharged's (CC0, commit `8592d67e…`, one
+`fragmentinfo` slot, `MAXFRAGMENTS 1`). `libs/Runtime/include/NMWException.h` gains
+rb3's `vbase_ctor_arg_type`, `local_cond_type`, `CatchInfo`, `__end__catch`,
+`__throw` and `__unexpected` declarations.
+
 ## Runtime.PPCEABI.H/NMWException.cpp (start)
 
 The `namespace std` block (default handlers, `set_terminate`, `terminate`,

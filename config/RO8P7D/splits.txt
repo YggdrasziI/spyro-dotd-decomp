@@ -69,6 +69,15 @@ Runtime.PPCEABI.H/__init_cpp_exceptions.cpp:
 	.dtors      start:0x804B88C4 end:0x804B88C8 rename:.dtors$15
 	.sdata      start:0x805CC200 end:0x805CC208
 
+Runtime.PPCEABI.H/Gecko_ExceptionPPC.cpp:
+	extab       start:0x8000656C end:0x800065E0
+	extabindex  start:0x80008BEC end:0x80008C40
+	.text       start:0x80381D50 end:0x80383498
+	.rodata     start:0x804C2788 end:0x804C27F0
+	.data       start:0x80506248 end:0x80506348
+	.bss        start:0x8057ADA8 end:0x8057ADB8
+	.sdata      start:0x805CC208 end:0x805CC210
+
 Runtime.PPCEABI.H/GCN_mem_alloc.c:
 	.text       start:0x80383498 end:0x80383608
 	.rodata     start:0x804C27F0 end:0x804C2860
