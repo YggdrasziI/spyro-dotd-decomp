@@ -44,7 +44,8 @@ Model (after `zeldaret/tp`):
   never a raw number.
 - Per version: `config/<ID>/` (own `symbols.txt` / `splits.txt` once enabled),
   `orig/<ID>/`, a CI matrix entry and its `main.dol` in the build repository.
-- Scripts take `--version` (default `RO8P7D`); the README badges track `RO8P7D`.
+- Scripts take `--version` (default `RO8P7D`); progress badges and history are kept
+  per version in `progress/<ID>/`, one README row each (after `Yotona/twewy`).
 
 ## Toolchain
 
@@ -99,7 +100,7 @@ orig/<ID>/                original game files (git-ignored, never committed)
 build/                    build output (git-ignored)
 src/  include/  libs/     sources and headers (game, SDK, runtime, MSL), when added
 tools/                    shared scripts (progress badges, report and asm helpers)
-progress/                 progress badges and history (README images)
+progress/<ID>/            progress badges and history per version (README images)
 notes/                    reference documentation (see CLAUDE.md routing table)
 .claude/skills/           project workflows (decomp-manager, decomp-unit,
                           unit-readiness)

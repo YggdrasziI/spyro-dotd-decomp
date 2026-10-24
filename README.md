@@ -16,15 +16,18 @@ Progress
 
 | Release | Game ID | Progress |
 |---|---|---|
-| Spyro: Dawn of the Dragon (Europe) | `RO8P7D` | [![Fuzzy](progress/fuzzy.svg)](notes/PROGRESS.md) [![Perfect](progress/perfect.svg)](notes/PROGRESS.md) [![Linked](progress/linked.svg)](notes/PROGRESS.md) |
+| Spyro: Dawn of the Dragon (Europe) | `RO8P7D` | [![Fuzzy](progress/RO8P7D/fuzzy.svg)](notes/PROGRESS.md) [![Perfect](progress/RO8P7D/perfect.svg)](notes/PROGRESS.md) [![Linked](progress/RO8P7D/linked.svg)](notes/PROGRESS.md) |
+| Spyro: Dawn of the Dragon (Scandinavia) | `RO8X7D` | not supported yet |
+| Spyro: Dawn of the Dragon (USA) | `RO8E7D` | not supported yet |
 
 - **Fuzzy**: objdiff fuzzy match score over all code.
 - **Perfect**: code that matches byte for byte.
 - **Linked**: code linked into the matching `main.dol`.
 
-The badges are drawn from the objdiff report by `tools/progress_badges.py`. After a
-build, `python tools/progress_badges.py --record` redraws them and adds the current
-commit to `progress/history.csv`; commit the `progress/` folder with it.
+The badges are drawn from the objdiff report by `tools/progress_badges.py`, one folder
+per version. After a build, `python tools/progress_badges.py --version <ID> --record`
+redraws `progress/<ID>/` and adds the current commit to `progress/<ID>/history.csv`;
+commit the `progress/` folder with it.
 
 Dependencies
 ============

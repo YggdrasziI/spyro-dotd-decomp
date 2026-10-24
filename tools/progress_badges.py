@@ -1,14 +1,17 @@
 #!/usr/bin/env python3
 """Draw the README progress badges from the objdiff report, without decomp.dev.
 
-Outputs (shield-style SVG, one per measure, all code of the DOL):
-  progress/fuzzy.svg    fuzzy match percentage    (fuzzy_match_percent)
-  progress/perfect.svg  perfectly matched code    (matched_code_percent)
-  progress/linked.svg   code linked into main.dol (complete_code_percent)
+Outputs, one folder per game version (shield-style SVG, one per measure, all code of
+the DOL):
+  progress/<version>/fuzzy.svg    fuzzy match percentage    (fuzzy_match_percent)
+  progress/<version>/perfect.svg  perfectly matched code    (matched_code_percent)
+  progress/<version>/linked.svg   code linked into main.dol (complete_code_percent)
+  progress/<version>/history.csv  one line per --record
 
 Usage:
-  python tools/progress_badges.py            # draw from build/RO8P7D/report.json
-  python tools/progress_badges.py --record   # also append the current state to history.csv
+  python tools/progress_badges.py                      # draw from build/RO8P7D/report.json
+  python tools/progress_badges.py --record             # also append the current state to history.csv
+  python tools/progress_badges.py --version RO8E7D     # another game version
 """
 
 import argparse
@@ -112,25 +115,19 @@ def record(report, history_path):
 def main():
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--version", default="RO8P7D", type=str.upper,
-                        help="game version whose report is read (default: %(default)s); "
-                             "the README badges track RO8P7D")
+                        help="game version (default: %(default)s)")
     parser.add_argument("--report", help="objdiff report (default: build/<version>/report.json)")
-    parser.add_argument("--out", help="badge folder (default: progress/ for RO8P7D, "
-                                       "build/<version>/progress_badges otherwise)")
-    parser.add_argument("--history", help="history file (default: progress/history.csv, RO8P7D only)")
+    parser.add_argument("--out", help="badge folder (default: progress/<version>)")
+    parser.add_argument("--history", help="history file (default: progress/<version>/history.csv)")
     parser.add_argument("--record", action="store_true", help="append the current state to history.csv")
     args = parser.parse_args()
 
     if args.report is None:
         args.report = os.path.join(ROOT, "build", args.version, "report.json")
-    # progress/ holds the README badges and history of the reference version only.
     if args.out is None:
-        args.out = (os.path.join(ROOT, "progress") if args.version == "RO8P7D"
-                    else os.path.join(ROOT, "build", args.version, "progress_badges"))
+        args.out = os.path.join(ROOT, "progress", args.version)
     if args.history is None:
-        if args.record and args.version != "RO8P7D":
-            parser.error("--record for another version needs an explicit --history")
-        args.history = os.path.join(ROOT, "progress", "history.csv")
+        args.history = os.path.join(ROOT, "progress", args.version, "history.csv")
     os.makedirs(args.out, exist_ok=True)
     with open(args.report, encoding="utf-8") as f:
         report = json.load(f)
