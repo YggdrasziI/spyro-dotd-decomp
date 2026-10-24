@@ -20,12 +20,16 @@ Progress
 | Spyro: Dawn of the Dragon (Scandinavia) | `RO8X7D` | not supported yet |
 | Spyro: Dawn of the Dragon (USA) | `RO8E7D` | not supported yet |
 
+[![Progress card](progress/RO8P7D/card.svg)](notes/PROGRESS.md)
+
 - **Fuzzy**: objdiff fuzzy match score over all code.
 - **Perfect**: code that matches byte for byte.
 - **Linked**: code linked into the matching `main.dol`.
 
-The badges are drawn from the objdiff report by `tools/progress_badges.py`, one folder
-per version. After a build, `python tools/progress_badges.py --version <ID> --record`
+The card counts every function of the DOL, split or not: each region total is the
+code between the region bounds of `notes/SPLITS.md` (approximate for game / engine and
+SDK / RenderWare). The badges and the card are drawn from the objdiff report by
+`tools/progress_badges.py`, one folder per version. After a build, `python tools/progress_badges.py --version <ID> --record`
 redraws `progress/<ID>/` and adds the current commit to `progress/<ID>/history.csv`;
 commit the `progress/` folder with it.
 
