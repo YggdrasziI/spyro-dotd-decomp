@@ -1,19 +1,8 @@
 // Adapted from https://github.com/SMGCommunity/Petari (CC0-1.0).
 #include "GCN_mem_alloc.h"
-
-// From the RVL SDK headers <revolution/os/OSAlloc.h>, <revolution/os/OSArena.h> and
-// <revolution/os/OSError.h> (this project has no RVL_SDK headers yet).
-typedef int OSHeapHandle;
-extern volatile OSHeapHandle __OSCurrHeap;
-void* OSInitAlloc(void* arenaStart, void* arenaEnd, int maxHeaps);
-OSHeapHandle OSCreateHeap(void* start, void* end);
-OSHeapHandle OSSetCurrentHeap(OSHeapHandle heap);
-void* OSAllocFromHeap(OSHeapHandle heap, unsigned int size);
-void OSFreeToHeap(OSHeapHandle heap, void* ptr);
-void* OSGetArenaHi(void);
-void* OSGetArenaLo(void);
-void OSSetArenaLo(void* lo);
-void OSReport(const char* msg, ...);
+#include <revolution/os/OSAlloc.h>
+#include <revolution/os/OSArena.h>
+#include <revolution/os/OSError.h>
 
 #define OSRoundUp32B(x) (((unsigned int)(x) + 32 - 1) & ~(32 - 1))
 #define OSRoundDown32B(x) (((unsigned int)(x)) & ~(32 - 1))

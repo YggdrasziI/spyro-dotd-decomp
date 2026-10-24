@@ -1,10 +1,6 @@
 // From mlab-decomp; OSAllocFromMEM1ArenaLo from tp (see notes/PROVENANCE.md).
-#include <stddef.h>
-#include <types.h>
+#include <revolution/os.h>
 
-// From mlab-decomp's <decomp.h> (this project has no RVL_SDK headers yet).
-#define ROUNDUP(x, align) (((x) + ((align) - 1)) & ~((align) - 1))
-#define PTR_ROUNDUP(x, align) ((void*)ROUNDUP((unsigned long)(x), (align)))
 // From tp's include/global.h (CC0).
 #define ROUND(n, a) (((u32)(n) + (a)-1) & ~((a)-1))
 

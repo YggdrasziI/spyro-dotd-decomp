@@ -133,16 +133,20 @@ inlined) and `swprintf` is added, written for this project from the DOL.
 
 From [yannicksuter/mscharged-decomp](https://github.com/yannicksuter/mscharged-decomp)
 `src/Runtime/GCN_mem_alloc.c` (CC0-1.0, itself adapted from Petari; local clone at
-commit `8592d67e2865975066fa6a9065826ff0e36e610f`), unchanged except that the three
-`<revolution/os/...>` includes are replaced by declarations taken from mscharged's
-`OSAlloc.h`, `OSArena.h` and `OSError.h` (this project has no RVL_SDK headers yet).
+commit `8592d67e2865975066fa6a9065826ff0e36e610f`), unchanged.
+
+## RVL_SDK headers
+
+`libs/RVL_SDK/include/revolution/**` (240 files) and `include/decomp.h` copied
+unchanged from mlab-decomp (commit `55db5381722bed8ad1fe3cd096f3955ae28130c1`), whose
+headers come from mscharged-decomp (CC0-1.0, commit
+`126acd42cb8ca0eea1efa75c5a8da7110ef9a142`) with mlab's additions. `include/types.h`
+already skips its typedefs when `<revolution/types.h>` came first, as in mlab.
 
 ## RVL_SDK/os/OSAlloc.c, OSArena.c
 
-From mlab-decomp `src/RVL_SDK/os/OSAlloc.c` and `OSArena.c`, with
-`#include <revolution/os.h>` replaced by `<stddef.h>`, `<types.h>` and the few
-declarations and macros they need (from mlab's `revolution/os.h`, `revolution/types.h`,
-`revolution/os/OSAlloc.h`, `include/decomp.h`). From tp (CC0, commit
+From mlab-decomp `src/RVL_SDK/os/OSAlloc.c` and `OSArena.c`, unchanged except for
+these additions. From tp (CC0, commit
 `c8fa8c9e2aab72cf4e5db0e5d1c84a9ea6ee6eb0`, `libs/revolution/src/os/`):
 `OSDestroyHeap` in `OSAlloc.c` (assertions and debug code removed),
 `OSAllocFromMEM1ArenaLo` in `OSArena.c` and the `ROUND` macro of tp's

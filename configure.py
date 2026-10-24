@@ -231,6 +231,7 @@ cflags_base = [
     f"-i build/{config.version}/include",
     "-i libs/Runtime/include",
     "-i libs/MSL_C/include",
+    "-i libs/RVL_SDK/include",
     "-i libs/MetroTRK/include",
     "-i libs/MSL_C++/include",
     f"-DBUILD_VERSION={version_num}",  # compare with the names in include/version.h

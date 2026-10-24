@@ -1,16 +1,5 @@
-// From mlab-decomp (see notes/PROVENANCE.md); OSDestroyHeap from tp (CC0).
-#include <stddef.h>
-#include <types.h>
-
-// From mlab-decomp's <revolution/os.h>, <revolution/types.h>,
-// <revolution/os/OSAlloc.h> and <decomp.h> (this project has no RVL_SDK headers yet).
-typedef int OSHeapHandle;
-
-#define DEFAULT_ALIGN 32
-#define ROUNDUP(x, align) (((x) + ((align) - 1)) & ~((align) - 1))
-#define ROUNDDOWN(x, align) ((x) & ~((align) - 1))
-#define OSRoundUp32B(x) ROUNDUP((unsigned long)(x), 32)
-#define OSRoundDown32B(x) ROUNDDOWN((unsigned long)(x), 32)
+// From mlab-decomp; OSDestroyHeap from tp (see notes/PROVENANCE.md).
+#include <revolution/os.h>
 
 typedef struct HeapCell HeapCell;
 struct HeapCell {
