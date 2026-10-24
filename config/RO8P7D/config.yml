@@ -1,0 +1,9 @@
+# See https://github.com/encounter/dtk-template/blob/main/config/GAMEID/config.example.yml
+object_base: orig/RO8P7D
+object: sys/main.dol
+hash: 516dfa405567beec1e08cee1df4f7c156b7f43e9
+symbols: config/RO8P7D/symbols.txt
+splits: config/RO8P7D/splits.txt
+# Change this to match the linker version.
+# See config.example.yml for a list.
+mw_comment_version: 15
