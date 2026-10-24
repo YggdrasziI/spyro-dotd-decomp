@@ -22,6 +22,30 @@ Out of scope: a PC port, game assets, any redistribution of game files.
 | Main `.text` | `0x8000C4E0` – `0x804B7EC0` (0x4AB9E0 bytes) | DOL header |
 | Build date | unknown | — |
 
+## Other versions
+
+The project is set up for three versions; only `RO8P7D` is enabled. The others stay in
+`DISABLED_VERSIONS` (`configure.py`) until the owner decides to support them.
+
+| ID | Region | `main.dol` SHA-1 | Difference from `RO8P7D` | Status |
+|---|---|---|---|---|
+| `RO8P7D` | Europe (En,Fr,De,Es,It,Nl) | `516dfa40…` | — | enabled, reference version |
+| `RO8X7D` | Scandinavia (En,Sv,No,Da,Fi) | `09e239e6b20a1f001a8a0f70b9f838c2f66991c0` | one byte: product code `"RVL-RO8X"` instead of `"RVL-RO8P"` (`.rodata` 0x804BA5AB); same sections and addresses | disabled |
+| `RO8E7D` | USA (En,Fr,Es) | `e306b21b16e4caaedbe32896bbc0856374966792` | separate build: `.text` 0x200 bytes shorter, `.rodata` 0x20 longer, later sections shifted; `.init`, `extab`, `extabindex` differ | disabled |
+
+All three discs are revision 0 with no RELs (`disc/header.bin`, `files/`).
+
+Model (after `zeldaret/tp`):
+
+- `configure.py`: `VERSIONS` (index = `BUILD_VERSION`, only append), `DISABLED_VERSIONS`,
+  groups `ALL_PAL`, `ALL_USA`, `ALL`; `MatchingFor(...)` accepts IDs and groups.
+- Source: one `src/` for all versions; differences under `#if` with the names of
+  `include/version.h` (`BUILD_VERSION == VERSION_SCA`, `REGION_PAL`, `REGION_USA`),
+  never a raw number.
+- Per version: `config/<ID>/` (own `symbols.txt` / `splits.txt` once enabled),
+  `orig/<ID>/`, a CI matrix entry and its `main.dol` in the build repository.
+- Scripts take `--version` (default `RO8P7D`); the README badges track `RO8P7D`.
+
 ## Toolchain
 
 Evidence and the candidate analysis go in `notes/COMPILER.md`.
@@ -63,13 +87,15 @@ Evidence and the candidate analysis go in `notes/COMPILER.md`.
   on the same library.
 - Code, comments, notes and commit messages are in English.
 - Shared game headers go in `include/game/` (listed here as they are added).
+  `include/version.h` holds the version names used in `#if`.
 
 ## Repository layout
 
 ```
 configure.py              project configuration and build.ninja generator
-config/RO8P7D/            dtk config: config.yml, symbols.txt, splits.txt, build.sha1
-orig/RO8P7D/              original game files (git-ignored, never committed)
+config/<ID>/              dtk config per version: config.yml, symbols.txt, splits.txt,
+                          build.sha1 (RO8X7D, RO8E7D: build.sha1 only while disabled)
+orig/<ID>/                original game files (git-ignored, never committed)
 build/                    build output (git-ignored)
 src/  include/  libs/     sources and headers (game, SDK, runtime, MSL), when added
 tools/                    shared scripts (progress badges, report and asm helpers)
