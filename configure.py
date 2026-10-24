@@ -232,6 +232,7 @@ cflags_base = [
     "-i libs/Runtime/include",
     "-i libs/MSL_C/include",
     "-i libs/MetroTRK/include",
+    "-i libs/MSL_C++/include",
     f"-DBUILD_VERSION={version_num}",  # compare with the names in include/version.h
 ]
 
@@ -346,6 +347,7 @@ config.libs = [
             Object(Matching, "Runtime.PPCEABI.H/global_destructor_chain.c"),
             Object(Matching, "Runtime.PPCEABI.H/NMWException.cpp", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "Runtime.PPCEABI.H/ptmf.c"),
+            Object(NonMatching, "Runtime.PPCEABI.H/MWRTTI.cpp", extra_cflags=["-Cpp_exceptions on", "-RTTI on"]),
             Object(Matching, "Runtime.PPCEABI.H/runtime.c"),
             Object(Matching, "Runtime.PPCEABI.H/__init_cpp_exceptions.cpp"),
             Object(Matching, "Runtime.PPCEABI.H/GCN_mem_alloc.c"),

@@ -136,3 +136,12 @@ From [yannicksuter/mscharged-decomp](https://github.com/yannicksuter/mscharged-d
 commit `8592d67e2865975066fa6a9065826ff0e36e610f`), unchanged except that the three
 `<revolution/os/...>` includes are replaced by declarations taken from mscharged's
 `OSAlloc.h`, `OSArena.h` and `OSError.h` (this project has no RVL_SDK headers yet).
+
+## Runtime.PPCEABI.H/MWRTTI.cpp (NonMatching)
+
+From [DarkRTA/rb3](https://github.com/DarkRTA/rb3) (no license file; reuse allowed by
+the owner, see `notes/REFERENCES.md`), local clone at commit
+`30a2e6f59d61899d2a79380da80a1fee8500f76d`: `src/sdk/PowerPC_EABI_Support/Runtime/MWRTTI.cpp`
+and `MWRTTI.h` unchanged, `MSL/MSL_C++/exception` and `typeinfo` into
+`libs/MSL_C++/include/` with the `<MSL_C++/...>` includes of `typeinfo` changed to
+`<cstring>`, `<stddef.h>`, `<exception>`.

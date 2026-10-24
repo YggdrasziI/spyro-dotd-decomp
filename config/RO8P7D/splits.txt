@@ -40,6 +40,14 @@ Runtime.PPCEABI.H/NMWException.cpp:
 Runtime.PPCEABI.H/ptmf.c:
 	.text       start:0x803811D0 end:0x80381250
 
+Runtime.PPCEABI.H/MWRTTI.cpp:
+	extab       start:0x8000655C end:0x8000656C
+	extabindex  start:0x80008BD4 end:0x80008BEC
+	.text       start:0x80381250 end:0x803814F8
+	.rodata     start:0x804C2718 end:0x804C2770
+	.data       start:0x80506220 end:0x80506248
+	.sdata      start:0x805CC1F8 end:0x805CC200
+
 Runtime.PPCEABI.H/runtime.c:
 	.text       start:0x803814F8 end:0x80381CE0
 	.rodata     start:0x804C2770 end:0x804C2788
