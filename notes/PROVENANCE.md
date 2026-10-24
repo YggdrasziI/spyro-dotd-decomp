@@ -34,7 +34,7 @@ Functions of these sources that this DOL does not have (`__ptmf_cmpr`, `__shr2u`
 `__cvt_ull_dbl`, `__cvt_ull_flt`) are left in the sources and dead-stripped by the
 linker (the build matches).
 
-## MSL_C (28 units, Matching)
+## MSL_C (31 units, Matching)
 
 Source: `YggdrasziI/mlab-decomp` (private, same owner), commit
 `55db5381722bed8ad1fe3cd096f3955ae28130c1`, copied unchanged. mlab-decomp's
@@ -60,6 +60,15 @@ headers `libs/MSL_C/include/{abort_exit.h,critical_regions.h,stddef.h,stdlib.h,
 string_api.h,wchar_t.h}`; `signal.h` with its include of `<revolution/types.h>`
 changed to `<types.h>` (this project has no RVL_SDK headers yet). See mlab-decomp
 `notes/PROVENANCE.md` for their origin.
+
+Then, from the same commit: `alloc.c`, `ansi_fp.c`, `scanf.c` and the headers
+`libs/MSL_C/include/{alloc.h,ansi_fp.h,ctype.h,float.h,internal/locale.h,math.h,
+scanf.h,stdarg.h,stdint.h,stdio.h,stdio_api.h,strtold.h,strtoul.h}` and
+`libs/Runtime/include/GCN_mem_alloc.h`, copied unchanged except: `ansi_fp.h` includes
+`<types.h>` instead of `<revolution/types.h>`; `alloc.c` gains `__pool_alloc_clear`
+and `calloc` at its end, written for this project from the DOL (mlab's DOL has no
+`calloc`). `include/types.h` gains `s64`, `u64` and, in C, `bool` / `true` / `false`
+(definitions as in mlab-decomp's `revolution/types.h`).
 
 Units chosen with a scratch script: the reference unit's functions appear in the same
 order with the same normalized code (`tools/ref_match.py` fingerprints), the `.text`

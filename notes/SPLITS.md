@@ -49,9 +49,8 @@ RenderWare from about 0x803EAF84), what lies around 0x804117F0, and where PhysX
 
 ## Units
 
-MSL_C units not split yet: those with exception tables (`alloc.c`, `ansi_fp.c`,
-`scanf.c`: same code as mlab, `extab` / `extabindex` bounds still to place), and
-those whose code differs from mlab or is too short to place (`ansi_files.c`,
+MSL_C units not split yet: those whose code differs from mlab or is too short to
+place (`ansi_files.c`,
 `printf.c`, `string.c`, `w_*.c`, `math_ppc.c` …). Gaps between the fdlibm units:
 0x80390170-0x803903A4 (after `e_atan2.c`) and 0x80393978-0x80393998 (after `s_tan.c`).
 
@@ -74,6 +73,9 @@ functions they describe.
 | `Runtime.PPCEABI.H/runtime.c` | `.text` 0x803814F8-0x80381CE0, `.rodata` 0x804C2770-0x804C2788 | Matching |
 | `Runtime.PPCEABI.H/__init_cpp_exceptions.cpp` | `.text` 0x80381CE0-0x80381D50, `.ctors$10` 0x804B7EC0, `.dtors$10` 0x804B88C0, `.dtors$15` 0x804B88C4, `.sdata` 0x805CC200-0x805CC208 | Matching (objdiff 100 %, `main.dol: OK`) |
 | `MSL_C/mem_funcs.c` | `.text` 0x80387070-0x80387340 | Matching; same code as mlab |
+| `MSL_C/alloc.c` | `extab` 0x800065E0-0x80006630, `extabindex` 0x80008C40-0x80008CB8, `.text` 0x80383608-0x80384A40, `.rodata` 0x804C2860-0x804C2878, `.bss` 0x8057ADB8-0x8057ADF0, `.sbss` 0x805CE600-0x805CE608 | Matching. mlab's 12 functions plus `calloc` (0x80384980, 0xC0), which this DOL keeps and mlab's does not: it allocates `size * nmemb` from the malloc pool (`protopool`, `init`) and clears it with `memset`, the shape of MSL's `calloc`; it has its own `extabindex` entry and ends the unit (`ansi_files.c` matches from 0x80384A40) |
+| `MSL_C/ansi_fp.c` | `extab` 0x80006640-0x80006678, `extabindex` 0x80008CD0-0x80008D24, `.text` 0x80384B50-0x803864C0, `.rodata` 0x804C2878-0x804C2958, `.data` 0x80506488-0x805065F0, `.sdata2` 0x805D2920-0x805D2958 | Matching; same code and data sizes as mlab |
+| `MSL_C/scanf.c` | `extab` 0x80006730-0x80006748, `extabindex` 0x80008E38-0x80008E5C, `.text` 0x80389940-0x8038AEAC, `.rodata` 0x804C2E90-0x804C2EB8, `.data` 0x80506A38-0x80506B58 | Matching; same code and data sizes as mlab |
 | `MSL_C/mem.c` | `extab` 0x800066B0-0x800066B8, `extabindex` 0x80008D78-0x80008D84, `.text` 0x80386F00-0x80387070 | Matching; same code as mlab. `extab` / `extabindex` bounds of these MSL_C units: the `extabindex` entries (function, size, `extab` pointer) of the unit's functions |
 | `MSL_C/math_api.c` | `extab` 0x800066B8-0x800066C8, `extabindex` 0x80008D84-0x80008D9C, `.text` 0x80387340-0x803873D8 | Matching; same code as mlab |
 | `MSL_C/qsort.c` | `extab` 0x80006728-0x80006730, `extabindex` 0x80008E2C-0x80008E38, `.text` 0x803897B0-0x80389920 | Matching; same code as mlab |

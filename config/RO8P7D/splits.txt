@@ -51,6 +51,22 @@ Runtime.PPCEABI.H/__init_cpp_exceptions.cpp:
 	.dtors      start:0x804B88C4 end:0x804B88C8 rename:.dtors$15
 	.sdata      start:0x805CC200 end:0x805CC208
 
+MSL_C/alloc.c:
+	extab       start:0x800065E0 end:0x80006630
+	extabindex  start:0x80008C40 end:0x80008CB8
+	.text       start:0x80383608 end:0x80384A40
+	.rodata     start:0x804C2860 end:0x804C2878
+	.bss        start:0x8057ADB8 end:0x8057ADF0
+	.sbss       start:0x805CE600 end:0x805CE608
+
+MSL_C/ansi_fp.c:
+	extab       start:0x80006640 end:0x80006678
+	extabindex  start:0x80008CD0 end:0x80008D24
+	.text       start:0x80384B50 end:0x803864C0
+	.rodata     start:0x804C2878 end:0x804C2958
+	.data       start:0x80506488 end:0x805065F0
+	.sdata2     start:0x805D2920 end:0x805D2958
+
 MSL_C/mem.c:
 	extab       start:0x800066B0 end:0x800066B8
 	extabindex  start:0x80008D78 end:0x80008D84
@@ -68,6 +84,13 @@ MSL_C/qsort.c:
 	extab       start:0x80006728 end:0x80006730
 	extabindex  start:0x80008E2C end:0x80008E38
 	.text       start:0x803897B0 end:0x80389920
+
+MSL_C/scanf.c:
+	extab       start:0x80006730 end:0x80006748
+	extabindex  start:0x80008E38 end:0x80008E5C
+	.text       start:0x80389940 end:0x8038AEAC
+	.rodata     start:0x804C2E90 end:0x804C2EB8
+	.data       start:0x80506A38 end:0x80506B58
 
 MSL_C/signal.c:
 	extab       start:0x80006748 end:0x80006750

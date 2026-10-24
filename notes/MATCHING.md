@@ -29,11 +29,17 @@ in `mlab-decomp/notes/MATCHING.md` is a lead once the compiler is identified.
 ## Data layout
 
 - A dtk-inferred object size can include the alignment padding after the object;
-  objdiff then scores the data below 100 %. Set the size from the code (`signal.c`:
-  `signal_funcs` is 0x1C, dtk said 0x20).
+  objdiff then scores the data below 100 %. Set the size from the code or from the
+  compiled object (`signal.c`: `signal_funcs` 0x1C, dtk said 0x20; `ansi_fp.c`:
+  `@stringBase0` 0xDD, dtk said 0xE0; `alloc.c`: `init` 1 byte, dtk said 8).
+- Compiler-generated data names (`@980`, `pow_10$560`, `protopool$244`) are paired by
+  position; the `lbl_` names can stay, only the sizes must agree.
 
 - Library sources may define functions this DOL lacks; the linker dead-strips
   unreferenced functions, so leave them in (`ptmf.c`, `runtime.c`).
+
+- `mullw rD, rD, rB` versus `mullw rD, rB, rD`: swap the operands of `*` in the
+  source (`calloc` in `alloc.c`: `size * nmemb`).
 
 ## Control flow
 
