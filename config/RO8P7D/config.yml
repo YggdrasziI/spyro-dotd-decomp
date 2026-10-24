@@ -13,3 +13,6 @@ mw_comment_version: 15
 block_relocations:
 - source: .text:0x80356D68
 - source: .text:0x80356DE0
+# vi3in1.c gammaSet holds the halfwords 0x8000, 0xA000 at 0x80501FA0 (gamma table data);
+# dtk read them as a pointer into extabindex.
+- source: .data:0x80501FA0

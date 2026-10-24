@@ -191,6 +191,25 @@ RVL_SDK/os/OSLaunch.c:
 RVL_SDK/os/__ppc_eabi_init.cpp:
 	.text       start:0x803645AC end:0x80364660
 
+RVL_SDK/vi/vi.c:
+	.text       start:0x8036D3B8 end:0x8036FD90
+	.data       start:0x805018D8 end:0x80501E30
+	.bss        start:0x80564C40 end:0x80564DB0
+	.sdata      start:0x805CC120 end:0x805CC140
+	.sbss       start:0x805CE320 end:0x805CE3D0
+
+RVL_SDK/vi/i2c.c:
+	.text       start:0x8036FD90 end:0x803707AC
+	.sdata      start:0x805CC140 end:0x805CC148
+	.sbss       start:0x805CE3D0 end:0x805CE3D8
+
+RVL_SDK/vi/vi3in1.c:
+	.text       start:0x803707AC end:0x80371E50
+	.data       start:0x80501E30 end:0x805023C0
+	.bss        start:0x80564DB0 end:0x80564DD0
+	.sdata      start:0x805CC148 end:0x805CC160
+	.sbss       start:0x805CE3D8 end:0x805CE3F0
+
 RVL_SDK/os/init/__ppc_eabi_init.cpp:
 	.init       start:0x800042E0 end:0x80004338
 

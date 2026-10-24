@@ -43,6 +43,12 @@ in `mlab-decomp/notes/MATCHING.md` is a lead once the compiler is identified.
   functions under `#if 0` (`ansi_files.c`, `buffer_io.c`, `direct_io.c`, `file_io.c`).
   Same for a function whose string literals are absent from the DOL's `.data`: the
   linker strips them with it, objdiff does not (`SIGetTypeString` in `SIBios.c`).
+- A `static inline` function that the DOL also keeps as a global function: make it a
+  plain global function; under `-ipa file` the compiler still inlines it into earlier
+  callers (`VIGetScanMode` into `VIInit`).
+- Data below 100 % with identical bytes: look for a relocation dtk invented in the
+  target object (`objdump -r` on `build/RO8P7D/obj/<unit>.o`) and block it in
+  `config.yml` (`gammaSet` in `vi3in1.c`).
   Conversely, re-enable a function mlab disabled when this DOL has it (`mbstowcs` in
   `mbstring.c`). A function the DOL lacks but that a kept function inlines is marked
   `inline` instead, so it is still inlined but not emitted (`strtol` in `strtoul.c`,

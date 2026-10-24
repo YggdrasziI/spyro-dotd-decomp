@@ -160,6 +160,18 @@ From mlab-decomp `src/RVL_SDK/si/SIBios.c`, `SISamplingRate.c` (commit
 that `SIGetTypeString` is put under `#if 0` in `SIBios.c` (dead-stripped; its strings are not
 in the DOL and would only add unmatched `.data` to the object).
 
+## RVL_SDK/vi (3 units)
+
+From mlab-decomp `src/RVL_SDK/vi/vi.c`, `i2c.c`, `vi3in1.c` (commit
+`55db5381722bed8ad1fe3cd096f3955ae28130c1`, from mscharged-decomp, CC0), unchanged except
+in `vi.c`:
+
+- `VIGetNextField` added after `VIGetRetraceCount`, from tp (CC0, commit
+  `c8fa8c9e2aab72cf4e5db0e5d1c84a9ea6ee6eb0`, `libs/revolution/src/vi/vi.c`) without its
+  `unused` padding array.
+- `VIGetScanMode` is a global function instead of `static inline`, as in Petari (CC0,
+  commit `f3defb7b21bad70d84949adfdeb66b7b1c573031`, `src/RVL_SDK/vi/vi.c`).
+
 ## RVL_SDK/os (34 units)
 
 From mlab-decomp `src/RVL_SDK/os/*` (commit `55db5381722bed8ad1fe3cd096f3955ae28130c1`,
