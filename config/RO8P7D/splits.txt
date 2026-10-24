@@ -51,8 +51,40 @@ Runtime.PPCEABI.H/__init_cpp_exceptions.cpp:
 	.dtors      start:0x804B88C4 end:0x804B88C8 rename:.dtors$15
 	.sdata      start:0x805CC200 end:0x805CC208
 
+MSL_C/mem.c:
+	extab       start:0x800066B0 end:0x800066B8
+	extabindex  start:0x80008D78 end:0x80008D84
+	.text       start:0x80386F00 end:0x80387070
+
 MSL_C/mem_funcs.c:
 	.text       start:0x80387070 end:0x80387340
+
+MSL_C/math_api.c:
+	extab       start:0x800066B8 end:0x800066C8
+	extabindex  start:0x80008D84 end:0x80008D9C
+	.text       start:0x80387340 end:0x803873D8
+
+MSL_C/qsort.c:
+	extab       start:0x80006728 end:0x80006730
+	extabindex  start:0x80008E2C end:0x80008E38
+	.text       start:0x803897B0 end:0x80389920
+
+MSL_C/signal.c:
+	extab       start:0x80006748 end:0x80006750
+	extabindex  start:0x80008E5C end:0x80008E68
+	.text       start:0x8038AEAC end:0x8038AF5C
+	.bss        start:0x8057B0F0 end:0x8057B110
+
+MSL_C/abort_exit_ppc_eabi.c:
+	extab       start:0x800067B8 end:0x800067C0
+	extabindex  start:0x80008F04 end:0x80008F10
+	.text       start:0x8038F60C end:0x8038F640
+	.sbss       start:0x805CE618 end:0x805CE620
+
+MSL_C/math_sun.c:
+	extab       start:0x800067C0 end:0x800067C8
+	extabindex  start:0x80008F10 end:0x80008F1C
+	.text       start:0x8038F640 end:0x8038F680
 
 MSL_C/e_acos.c:
 	.text       start:0x8038F9A4 end:0x8038FC68

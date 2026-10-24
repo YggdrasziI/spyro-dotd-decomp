@@ -34,7 +34,7 @@ Functions of these sources that this DOL does not have (`__ptmf_cmpr`, `__shr2u`
 `__cvt_ull_dbl`, `__cvt_ull_flt`) are left in the sources and dead-stripped by the
 linker (the build matches).
 
-## MSL_C (22 units, Matching)
+## MSL_C (28 units, Matching)
 
 Source: `YggdrasziI/mlab-decomp` (private, same owner), commit
 `55db5381722bed8ad1fe3cd096f3955ae28130c1`, copied unchanged. mlab-decomp's
@@ -53,6 +53,13 @@ Source: `YggdrasziI/mlab-decomp` (private, same owner), commit
 Headers copied unchanged from the same mlab-decomp commit (mscharged origin):
 `include/types.h`, `libs/MSL_C/include/{errno.h,mem_funcs.h}`,
 `libs/MSL_C/include/internal/{fdlibm.h,math_api.h,math_nan.h}`.
+
+Added later from the same mlab-decomp commit, copied unchanged: `mem.c`,
+`math_api.c`, `qsort.c`, `signal.c`, `abort_exit_ppc_eabi.c`, `math_sun.c` and the
+headers `libs/MSL_C/include/{abort_exit.h,critical_regions.h,stddef.h,stdlib.h,
+string_api.h,wchar_t.h}`; `signal.h` with its include of `<revolution/types.h>`
+changed to `<types.h>` (this project has no RVL_SDK headers yet). See mlab-decomp
+`notes/PROVENANCE.md` for their origin.
 
 Units chosen with a scratch script: the reference unit's functions appear in the same
 order with the same normalized code (`tools/ref_match.py` fingerprints), the `.text`

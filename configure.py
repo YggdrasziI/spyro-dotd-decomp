@@ -356,7 +356,13 @@ config.libs = [
         "cflags": cflags_msl,
         "progress_category": "sdk",
         "objects": [
+            Object(Matching, "MSL_C/mem.c"),
             Object(Matching, "MSL_C/mem_funcs.c"),
+            Object(Matching, "MSL_C/math_api.c"),
+            Object(Matching, "MSL_C/qsort.c", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
+            Object(Matching, "MSL_C/signal.c", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "MSL_C/abort_exit_ppc_eabi.c", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "MSL_C/math_sun.c", cflags=cflags_runtime, extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "MSL_C/e_acos.c"),
             Object(Matching, "MSL_C/e_asin.c", mw_version="GC/3.0a5"),
             Object(Matching, "MSL_C/e_atan2.c"),

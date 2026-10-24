@@ -50,8 +50,7 @@ RenderWare from about 0x803EAF84), what lies around 0x804117F0, and where PhysX
 ## Units
 
 MSL_C units not split yet: those with exception tables (`alloc.c`, `ansi_fp.c`,
-`mem.c`, `math_api.c`, `qsort.c`, `scanf.c`, `signal.c`, `abort_exit_ppc_eabi.c`,
-`math_sun.c`: same code as mlab, `extab` / `extabindex` bounds still to place), and
+`scanf.c`: same code as mlab, `extab` / `extabindex` bounds still to place), and
 those whose code differs from mlab or is too short to place (`ansi_files.c`,
 `printf.c`, `string.c`, `w_*.c`, `math_ppc.c` …). Gaps between the fdlibm units:
 0x80390170-0x803903A4 (after `e_atan2.c`) and 0x80393978-0x80393998 (after `s_tan.c`).
@@ -75,4 +74,10 @@ functions they describe.
 | `Runtime.PPCEABI.H/runtime.c` | `.text` 0x803814F8-0x80381CE0, `.rodata` 0x804C2770-0x804C2788 | Matching |
 | `Runtime.PPCEABI.H/__init_cpp_exceptions.cpp` | `.text` 0x80381CE0-0x80381D50, `.ctors$10` 0x804B7EC0, `.dtors$10` 0x804B88C0, `.dtors$15` 0x804B88C4, `.sdata` 0x805CC200-0x805CC208 | Matching (objdiff 100 %, `main.dol: OK`) |
 | `MSL_C/mem_funcs.c` | `.text` 0x80387070-0x80387340 | Matching; same code as mlab |
+| `MSL_C/mem.c` | `extab` 0x800066B0-0x800066B8, `extabindex` 0x80008D78-0x80008D84, `.text` 0x80386F00-0x80387070 | Matching; same code as mlab. `extab` / `extabindex` bounds of these MSL_C units: the `extabindex` entries (function, size, `extab` pointer) of the unit's functions |
+| `MSL_C/math_api.c` | `extab` 0x800066B8-0x800066C8, `extabindex` 0x80008D84-0x80008D9C, `.text` 0x80387340-0x803873D8 | Matching; same code as mlab |
+| `MSL_C/qsort.c` | `extab` 0x80006728-0x80006730, `extabindex` 0x80008E2C-0x80008E38, `.text` 0x803897B0-0x80389920 | Matching; same code as mlab |
+| `MSL_C/signal.c` | `extab` 0x80006748-0x80006750, `extabindex` 0x80008E5C-0x80008E68, `.text` 0x8038AEAC-0x8038AF5C, `.bss` 0x8057B0F0-0x8057B110 | Matching; `signal_funcs` has 7 entries (`raise` tests `sig > 7`), so 0x1C bytes plus padding |
+| `MSL_C/abort_exit_ppc_eabi.c` | `extab` 0x800067B8-0x800067C0, `extabindex` 0x80008F04-0x80008F10, `.text` 0x8038F60C-0x8038F640, `.sbss` 0x805CE618-0x805CE620 | Matching; `__aborting`, `__stdio_exit` |
+| `MSL_C/math_sun.c` | `extab` 0x800067C0-0x800067C8, `extabindex` 0x80008F10-0x80008F1C, `.text` 0x8038F640-0x8038F680 | Matching; `scalbn` |
 | `MSL_C/e_acos.c` … `MSL_C/s_tan.c`, `MSL_C/e_sqrt.c` (21 fdlibm units) | `.text` 0x8038F9A4-0x80393BE0 with gaps; `.rodata`, `.sbss`, `.sdata2` per unit (see `splits.txt`) | Matching; same code and sizes as mlab |

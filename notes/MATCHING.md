@@ -28,6 +28,10 @@ in `mlab-decomp/notes/MATCHING.md` is a lead once the compiler is identified.
 
 ## Data layout
 
+- A dtk-inferred object size can include the alignment padding after the object;
+  objdiff then scores the data below 100 %. Set the size from the code (`signal.c`:
+  `signal_funcs` is 0x1C, dtk said 0x20).
+
 - Library sources may define functions this DOL lacks; the linker dead-strips
   unreferenced functions, so leave them in (`ptmf.c`, `runtime.c`).
 
