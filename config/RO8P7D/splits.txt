@@ -179,6 +179,11 @@ MSL_C/e_atan2.c:
 	.text       start:0x8038FF00 end:0x80390170
 	.sdata2     start:0x805D2AB8 end:0x805D2B10
 
+MSL_C/e_exp.c:
+	.text       start:0x80390170 end:0x803903A4
+	.rodata     start:0x804C34D0 end:0x804C3500
+	.sdata2     start:0x805D2B10 end:0x805D2B88
+
 MSL_C/e_fmod.c:
 	.text       start:0x803903A4 end:0x803906D4
 	.rodata     start:0x804C3500 end:0x804C3510
@@ -253,6 +258,36 @@ MSL_C/s_tan.c:
 	.text       start:0x80393900 end:0x80393978
 	.sdata2     start:0x805D2F10 end:0x805D2F18
 
+MSL_C/w_acos.c:
+	.text       start:0x80393978 end:0x8039397C
+
+MSL_C/w_asin.c:
+	.text       start:0x8039397C end:0x80393980
+
+MSL_C/w_atan2.c:
+	.text       start:0x80393980 end:0x80393984
+
+MSL_C/w_exp.c:
+	.text       start:0x80393984 end:0x80393988
+
+MSL_C/w_fmod.c:
+	.text       start:0x80393988 end:0x8039398C
+
+MSL_C/w_log.c:
+	.text       start:0x8039398C end:0x80393990
+
+MSL_C/w_log10.c:
+	.text       start:0x80393990 end:0x80393994
+
+MSL_C/w_pow.c:
+	.text       start:0x80393994 end:0x80393998
+
 MSL_C/e_sqrt.c:
 	.text       start:0x80393998 end:0x80393BE0
 	.sdata2     start:0x805D2F18 end:0x805D2F20
+
+MSL_C/math_ppc.c:
+	.text       start:0x80393BE0 end:0x80393BE4
+
+MSL_C/w_sqrt.c:
+	.text       start:0x80393BE4 end:0x80393BE8

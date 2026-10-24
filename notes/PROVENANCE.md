@@ -34,7 +34,7 @@ Functions of these sources that this DOL does not have (`__ptmf_cmpr`, `__shr2u`
 `__cvt_ull_dbl`, `__cvt_ull_flt`) are left in the sources and dead-stripped by the
 linker (the build matches).
 
-## MSL_C (42 units, Matching)
+## MSL_C (53 units, Matching)
 
 Source: `YggdrasziI/mlab-decomp` (private, same owner), commit
 `55db5381722bed8ad1fe3cd096f3955ae28130c1`, copied unchanged. mlab-decomp's
@@ -99,3 +99,9 @@ had under `#if 0`, are enabled again (this DOL has them at 0x8038F3F0 and 0x8038
 
 Then `printf.c` from the same mlab-decomp commit, copied unchanged except that
 `printf` and `fprintf`, absent from this DOL, are put under `#if 0`.
+
+Then `w_acos.c`, `w_asin.c`, `w_atan2.c`, `w_fmod.c`, `w_log.c`, `w_log10.c`, `w_pow.c`,
+`w_sqrt.c`, `math_ppc.c` from the same mlab-decomp commit, copied unchanged; `e_exp.c`
+and `w_exp.c` from [zeldaret/tp](https://github.com/zeldaret/tp)
+`libs/PowerPC_EABI_Support/MSL/MSL_C/MSL_Common_Embedded/Math/Double_precision/`
+(CC0-1.0, commit `c8fa8c9e2aab72cf4e5db0e5d1c84a9ea6ee6eb0`), include line adapted.
