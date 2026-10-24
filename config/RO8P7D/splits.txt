@@ -112,6 +112,9 @@ MSL_C/math_api.c:
 	extabindex  start:0x80008D84 end:0x80008D9C
 	.text       start:0x80387340 end:0x803873D8
 
+MSL_C/misc_io.c:
+	.text       start:0x803873D8 end:0x803873E8
+
 MSL_C/printf.c:
 	extab       start:0x800066C8 end:0x80006728
 	extabindex  start:0x80008D9C end:0x80008E2C
@@ -168,6 +171,12 @@ MSL_C/wstring.c:
 
 MSL_C/wchar_io.c:
 	.text       start:0x8038F4B0 end:0x8038F534
+
+MSL_C/uart_console_io_gcn.c:
+	extab       start:0x800067B0 end:0x800067B8
+	extabindex  start:0x80008EF8 end:0x80008F04
+	.text       start:0x8038F534 end:0x8038F60C
+	.sbss       start:0x805CE610 end:0x805CE618
 
 MSL_C/abort_exit_ppc_eabi.c:
 	extab       start:0x800067B8 end:0x800067C0
