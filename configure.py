@@ -377,6 +377,8 @@ config.libs = [
             Object(Matching, "MSL_C/string.c", extra_cflags=["-Cpp_exceptions on", "-str reuse,pool,readonly"]),
             Object(Matching, "MSL_C/strtold.c", extra_cflags=["-Cpp_exceptions on", "-str reuse,pool,readonly", "-use_lmw_stmw on"]),
             Object(Matching, "MSL_C/strtoul.c", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"], mw_version="GC/3.0a5"),
+            Object(Matching, "MSL_C/wmem.c"),
+            Object(Matching, "MSL_C/wprintf.c", extra_cflags=["-Cpp_exceptions on", "-str reuse,pool,readonly", "-use_lmw_stmw on"]),
             Object(Matching, "MSL_C/wstring.c"),
             Object(Matching, "MSL_C/wchar_io.c"),
             Object(Matching, "MSL_C/uart_console_io_gcn.c", extra_cflags=["-Cpp_exceptions on"]),

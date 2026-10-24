@@ -34,7 +34,7 @@ Functions of these sources that this DOL does not have (`__ptmf_cmpr`, `__shr2u`
 `__cvt_ull_dbl`, `__cvt_ull_flt`) are left in the sources and dead-stripped by the
 linker (the build matches).
 
-## MSL_C (58 units, Matching)
+## MSL_C (60 units, Matching)
 
 Source: `YggdrasziI/mlab-decomp` (private, same owner), commit
 `55db5381722bed8ad1fe3cd096f3955ae28130c1`, copied unchanged. mlab-decomp's
@@ -122,3 +122,9 @@ Then `extras.c` and `libs/MSL_C/include/extras.h` from the same mlab-decomp comm
 `strnicmp`, `strncasecmp` and `itoa`, absent from this DOL and calling functions
 removed from `file_io.c`, are put under `#if 0`; `strlwr` is added, written for this
 project from the DOL.
+
+`wmem.c`, `wprintf.c` and the headers `libs/MSL_C/include/{wchar.h,wctype.h,wmem.h}`
+from [yannicksuter/mscharged-decomp](https://github.com/yannicksuter/mscharged-decomp)
+(CC0-1.0, local clone at commit `8592d67e2865975066fa6a9065826ff0e36e610f`), copied
+unchanged except in `wprintf.c`: `vswprintf` is declared `inline` (this DOL has it only
+inlined) and `swprintf` is added, written for this project from the DOL.
