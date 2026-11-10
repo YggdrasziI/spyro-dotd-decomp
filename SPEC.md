@@ -69,7 +69,7 @@ Evidence and the candidate analysis go in `notes/COMPILER.md`.
   `config/RO8P7D/build.sha1`), locally and in CI.
 - A unit is `Matching` in `configure.py` only when objdiff reports 100 % for all its
   functions and data and the linked DOL still matches. Anything else stays
-  `NonMatching`, with the remaining gap written in `TASKS.md`.
+  `NonMatching`, with the remaining gap written in `notes/SPLITS.md`.
 - A split that builds proves the bytes, not the translation unit: a TU boundary is
   proven only once the unit is decompiled and matches (`notes/SPLITS.md`).
 - Every name, compiler fact or structure layout rests on evidence (RTTI, assertion
@@ -105,9 +105,7 @@ build/                    build output (git-ignored)
 src/  include/  libs/     sources and headers (game, SDK, runtime, MSL), when added
 tools/                    shared scripts (progress badges, report and asm helpers)
 progress/<ID>/            progress badges and history per version (README images)
-notes/                    reference documentation (see CLAUDE.md routing table)
-.claude/skills/           project workflows (decomp-manager, decomp-unit,
-                          unit-readiness)
+notes/                    reference documentation
 .github/workflows/        CI: split, link and check main.dol in a private image
 ```
 
