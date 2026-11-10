@@ -10,21 +10,18 @@
 - [encounter/objdiff](https://github.com/encounter/objdiff): local diff (reads
   `objdiff.json`).
 - [decomp.me](https://decomp.me): shared scratches and compiler tests.
-- [decomp.dev](https://decomp.dev): progress tracking (not used: the project stays
-  private).
 - [decompals/wibo](https://github.com/decompals/wibo) (runs mwcc on Linux),
   [encounter/sjiswrap](https://github.com/encounter/sjiswrap) (UTF-8 to Shift-JIS).
 - Ghidra (Gekko/Broadway module) and the Dolphin debugger to understand behaviour;
   Dolphin to extract the disc.
 - Discord "GC/Wii Decompilation" (`#dtk` channel).
 
-## Reference projects (local clones)
+## Reference projects
 
-Search the local clones (Grep/Glob) before GitHub. A clone may be behind GitHub: ask
-the owner before `git pull`. When reusing code, record the clone's commit
-(`git -C <path> rev-parse HEAD`) and the license in `notes/PROVENANCE.md`.
+When reusing code, record the commit it was taken from and the license in
+`notes/PROVENANCE.md`.
 
-Wii, `E:\Projets\Github\Decomp\WIII\`:
+Wii:
 
 | Folder | Project | State |
 |---|---|---|
@@ -40,7 +37,7 @@ Wii, `E:\Projets\Github\Decomp\WIII\`:
 | `mkw` | [Mario Kart Wii](https://github.com/doldecomp/mkw) | partial |
 | `Castaway` | [The Sims 2: Castaway](https://github.com/HaydnTrigg/Castaway) | partial |
 
-GameCube, `E:\Projets\Github\Decomp\GC\`:
+GameCube:
 
 | Folder | Project | State |
 |---|---|---|
@@ -61,7 +58,7 @@ version of each library against this DOL.
 `tools/ref_match.py <project root> <ID>` compares this game's functions with another
 dtk project's (symbol operands and local branch offsets normalized) and prints runs of
 matched functions with the reference unit names. Monster Lab
-(`E:\Projets\Dev\mlab-decomp`, `RM7P4F`, same RVL_SDK build tag) gives the region map
+(`mlab-decomp`, `RM7P4F`, same RVL_SDK build tag) gives the region map
 of `notes/SPLITS.md`; its `build/RM7P4F/asm` must exist (`ninja` there).
 
 `tools/ref_port.py <project root> <ID> <command>` ports a reference library unit by

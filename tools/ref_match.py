@@ -16,8 +16,8 @@ each matched function with its reference name. The result is evidence to check, 
 a split: compare the neighbours and data before writing splits.txt.
 
 Usage:
-  python tools/ref_match.py E:/Projets/Dev/mlab-decomp RM7P4F
-  python tools/ref_match.py E:/Projets/Dev/mlab-decomp RM7P4F --symbols
+  python tools/ref_match.py path/to/mlab-decomp RM7P4F
+  python tools/ref_match.py path/to/mlab-decomp RM7P4F --symbols
 """
 
 import argparse

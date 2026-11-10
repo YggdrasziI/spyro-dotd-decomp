@@ -31,9 +31,9 @@ missing functions, size differences and several candidate starts. Unit names are
 in the reference splits.txt (e.g. RVL_SDK/os/OSAlarm.c).
 
 Usage:
-  python tools/ref_port.py E:/Projets/Dev/mlab-decomp RM7P4F place RVL_SDK/os/OSAlarm.c
-  python tools/ref_port.py E:/Projets/Dev/mlab-decomp RM7P4F plan RVL_SDK/dvd/
-  python tools/ref_port.py E:/Projets/Dev/mlab-decomp RM7P4F names RVL_SDK/dvd/ --write
+  python tools/ref_port.py path/to/mlab-decomp RM7P4F place RVL_SDK/os/OSAlarm.c
+  python tools/ref_port.py path/to/mlab-decomp RM7P4F plan RVL_SDK/dvd/
+  python tools/ref_port.py path/to/mlab-decomp RM7P4F names RVL_SDK/dvd/ --write
   python tools/ref_port.py - - fixdata RVL_SDK/os/OSExec.c .sbss .sdata2
 """
 

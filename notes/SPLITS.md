@@ -26,7 +26,7 @@ matches. Every bound below says which evidence it rests on.
 ## `.text` regions
 
 All bounds are approximate until the units are split and matched. "Matches mlab"
-means `tools/ref_match.py E:/Projets/Dev/mlab-decomp RM7P4F` (2026-10-24) found
+means `tools/ref_match.py <mlab-decomp> RM7P4F` (2026-10-24) found
 functions with the same code as Monster Lab (`RM7P4F`, same SDK build tag), unique on
 both sides; 2168 functions matched in all.
 
