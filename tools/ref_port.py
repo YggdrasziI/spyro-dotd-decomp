@@ -422,14 +422,27 @@ def cmd_fixdata(project, args):
     lines = raw.replace("\r\n", "\n").split("\n")
 
     def index():
+        """{(section, address): [line indices]}: several symbols can share an
+        address (dtk labels of size 0 beside an object)."""
         out = {}
         for i, line in enumerate(lines):
             if line is None:  # dropped above, removed when the file is written
                 continue
             m = SYMBOL_RE.match(line)
             if m:
-                out[(m.group(2), int(m.group(3), 16))] = i
+                out.setdefault((m.group(2), int(m.group(3), 16)), []).append(i)
         return out
+
+    def where_named(label):
+        """(section, address) of every line that defines label."""
+        return {(m.group(2), int(m.group(3), 16))
+                for m in (SYMBOL_RE.match(line) for line in lines if line is not None)
+                if m and m.group(1) == label}
+
+    def taken(label, binding, section, addr):
+        """Whether a global or weak label is already defined at another address
+        (dtk refuses two globals with one name; local names may repeat)."""
+        return binding != "l" and bool(where_named(label) - {(section, addr)})
 
     def change(i, new):
         if lines[i] != new:
@@ -450,23 +463,37 @@ def cmd_fixdata(project, args):
                   f"split end 0x{end:08X}: not written; put the code that emits it "
                   f"under #if 0 if the DOL lacks it")
             continue
-        scope ={"l": "scope:local", "w": "scope:weak"}.get(binding, "scope:global")
-        for (s, a), i in sorted(idx.items()):
-            if s != section or lines[i] is None:
+        scope = {"l": "scope:local", "w": "scope:weak"}.get(binding, "scope:global")
+        for (s, a), ids in sorted(idx.items()):
+            if s != section:
                 continue
-            if a < addr:  # a dtk symbol running into the object is shortened
-                old = re.search(r"size:0x([0-9A-Fa-f]+)", lines[i])
-                if old and a + int(old.group(1), 16) > addr:
-                    change(i, lines[i].replace(old.group(0), f"size:0x{addr - a:X}"))
-            elif addr < a < addr + size:  # dtk pieces inside the object are dropped
-                print(f"- {lines[i]}")
-                lines[i] = None
-        idx = {k: i for k, i in idx.items() if lines[i] is not None}
+            for i in ids:
+                if a < addr:  # a dtk symbol running into the object is shortened
+                    old = re.search(r"size:0x([0-9A-Fa-f]+)", lines[i])
+                    if old and a + int(old.group(1), 16) > addr:
+                        change(i, lines[i].replace(old.group(0), f"size:0x{addr - a:X}"))
+                elif addr < a < addr + size:  # dtk pieces inside the object are dropped
+                    print(f"- {lines[i]}")
+                    lines[i] = None
+        idx = index()
         if (section, addr) in idx:
-            i = idx[(section, addr)]
+            ids = idx[(section, addr)]
+            # The line to update: the one already named like our symbol, else an
+            # object, else one with a size, else the first one; the others at this
+            # address (labels of size 0) are kept and reported
+            def rank(i):
+                m = SYMBOL_RE.match(lines[i])
+                return (m.group(1) == name, "type:object" in m.group(4), "size:" in m.group(4))
+            i = max(ids, key=rank)  # max keeps the first of equal ranks
+            for other in ids:
+                if other != i:
+                    print(f"! also at 0x{addr:08X}, kept: {lines[other]}")
             m = SYMBOL_RE.match(lines[i])
             old, attrs = m.group(1), m.group(4)
             new = name if GENERIC_RE.match(old) and not name.startswith("@") else old
+            if new != old and taken(new, binding, section, addr):
+                print(f"! {new} is already defined elsewhere: {old} kept at 0x{addr:08X}")
+                new = old
             attrs = re.sub(r"size:0x[0-9A-Fa-f]+", f"size:0x{size:X}", attrs)
             if "scope:" in attrs:
                 attrs = re.sub(r"scope:\w+", scope, attrs)
@@ -475,8 +502,11 @@ def cmd_fixdata(project, args):
             change(i, f"{new} = {m.group(2)}:0x{m.group(3)}; // {attrs}")
         else:
             label = name if not name.startswith("@") else f"lbl_{addr:08X}"
+            if label != f"lbl_{addr:08X}" and taken(label, binding, section, addr):
+                print(f"! {label} is already defined elsewhere: lbl_{addr:08X} used")
+                label = f"lbl_{addr:08X}"
             new = f"{label} = {section}:0x{addr:08X}; // type:object size:0x{size:X} {scope}"
-            same = [(a, i) for (s, a), i in idx.items() if s == section]
+            same = [(a, i) for (s, a), ids in idx.items() if s == section for i in ids]
             if not same:
                 sys.exit(f"symbols.txt has no {section} symbol to place {label} after")
             before = [i for a, i in same if a < addr]
