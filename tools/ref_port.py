@@ -159,6 +159,7 @@ class Project:
         self.symbols = read_symbols(self.symbols_path)
         self.by_name = {}
         self.by_addr = {}
+        self.attrs_at = {}  # attributes of the by_addr symbol
         self.code_by_name = {}  # static function names repeat: every address
         for name, section, addr, attrs in self.symbols:
             self.by_name.setdefault(name, (section, addr, attrs))
@@ -167,6 +168,7 @@ class Project:
             # several symbols can share an address (labels of size 0): keep the function
             if (section, addr) not in self.by_addr or "type:function" in attrs:
                 self.by_addr[(section, addr)] = name
+                self.attrs_at[(section, addr)] = attrs
         self._refs = None
         self._pairs = None
 
@@ -177,9 +179,9 @@ class Project:
         return int(m.group(1), 16) if m else None
 
     def in_section(self, label, addr, section):
-        """Whether a referenced label lies in the given section."""
-        if label in self.by_name:
-            return self.by_name[label][0] == section
+        """Whether a referenced label lies in the given section. Its resolved
+        address decides, not its name: static names repeat across units and
+        sections."""
         return (section, addr) in self.by_addr
 
     def refs(self):
@@ -263,7 +265,8 @@ def place(project, ref_root, ref_version, unit):
                 if code in base and abs(h - value - base[code]) <= MAX_SHIFT]
         here = min(near, key=lambda h: abs(h - value - base[code])) if near else None
         our_name = project.by_addr.get((code, here)) if here is not None else None
-        our_size = symbol_size(project.by_name[our_name][2]) if our_name else None
+        # the size of the symbol at that address, not of the first one with its name
+        our_size = symbol_size(project.attrs_at[(code, here)]) if our_name else None
         functions.append(Func(name, code, value, size, here, our_name, our_size,
                               binding.get(name, "g")))
         if here is None:
