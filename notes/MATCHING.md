@@ -34,7 +34,8 @@ hypothesis here until a function of this game matches with it.
   objdiff then scores the data below 100 %. Set the size from the code or from the
   compiled object (`signal.c`: `signal_funcs` 0x1C, dtk said 0x20; `ansi_fp.c`:
   `@stringBase0` 0xDD, dtk said 0xE0; `alloc.c`: `init` 1 byte, dtk said 8; `string.c`: `""` in `.sdata2` 1 byte, dtk
-  said 8).
+  said 8). dtk may also make the padding its own `lbl_` symbol at the end of a
+  section: remove it when nothing uses it (`dvdDeviceError.c`, `.rodata` 0x804C26AC).
 - Compiler-generated data names (`@980`, `pow_10$560`, `protopool$244`) are paired by
   position; the `lbl_` names can stay, only the sizes must agree.
 

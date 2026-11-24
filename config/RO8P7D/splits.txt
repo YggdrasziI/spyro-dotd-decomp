@@ -203,6 +203,47 @@ RVL_SDK/mtx/mtx44.c:
 	.text       start:0x80364AAC end:0x80364B44
 	.sdata2     start:0x805D2738 end:0x805D2748
 
+RVL_SDK/dvd/dvdfs.c:
+	.text       start:0x80364B44 end:0x8036545C
+	.data       start:0x804FFE98 end:0x804FFFD0
+	.sdata      start:0x805CC0E0 end:0x805CC0F0
+	.sbss       start:0x805CE208 end:0x805CE228
+
+RVL_SDK/dvd/dvd.c:
+	.text       start:0x8036545C end:0x80369F30
+	.data       start:0x804FFFD0 end:0x80500340
+	.bss        start:0x8055FB40 end:0x805647F0
+	.sdata      start:0x805CC0F0 end:0x805CC108
+	.sbss       start:0x805CE240 end:0x805CE2D8
+
+RVL_SDK/dvd/dvdqueue.c:
+	.text       start:0x80369F30 end:0x8036A188
+	.bss        start:0x805647F0 end:0x80564810
+
+RVL_SDK/dvd/dvderror.c:
+	.text       start:0x8036A188 end:0x8036AA8C
+	.data       start:0x80500340 end:0x80500370
+	.bss        start:0x80564820 end:0x80564A80
+	.sbss       start:0x805CE2D8 end:0x805CE2E8
+
+RVL_SDK/dvd/dvdidutils.c:
+	.text       start:0x8036AA8C end:0x8036AB7C
+
+RVL_SDK/dvd/dvdFatal.c:
+	.text       start:0x8036AB7C end:0x8036ACD4
+	.rodata     start:0x804C2658 end:0x804C2690
+	.data       start:0x80500370 end:0x80500880
+	.sbss       start:0x805CE2E8 end:0x805CE2F0
+	.sdata2     start:0x805D2748 end:0x805D2750
+
+RVL_SDK/dvd/dvdDeviceError.c:
+	.text       start:0x8036ACD4 end:0x8036AF6C
+	.rodata     start:0x804C2690 end:0x804C26B0
+	.data       start:0x80500880 end:0x80500A18
+	.bss        start:0x80564A80 end:0x80564AA0
+	.sdata      start:0x805CC108 end:0x805CC110
+	.sbss       start:0x805CE2F0 end:0x805CE2F8
+
 RVL_SDK/vi/vi.c:
 	.text       start:0x8036D3B8 end:0x8036FD90
 	.data       start:0x805018D8 end:0x80501E30

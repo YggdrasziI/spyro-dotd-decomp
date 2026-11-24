@@ -172,6 +172,18 @@ in `vi.c`:
 - `VIGetScanMode` is a global function instead of `static inline`, as in Petari (CC0,
   commit `f3defb7b21bad70d84949adfdeb66b7b1c573031`, `src/RVL_SDK/vi/vi.c`).
 
+## RVL_SDK/dvd (7 units)
+
+From mlab-decomp `src/RVL_SDK/dvd/dvdfs.c`, `dvd.c`, `dvdqueue.c`, `dvderror.c`,
+`dvdidutils.c`, `dvdFatal.c`, `dvdDeviceError.c` (commit
+`74a861680207a54aa9863554f411d66889bd7ce9`). mlab built them from mscharged-decomp
+(CC0) with parts from Petari (CC0, commit `6804bd31`: `dvdDeviceError.c`, `dvderror.c`,
+the message tables of `dvdFatal.c`, functions of `dvd.c`) and TP (CC0:
+`stateCoverClosed_CMD` in `dvd.c`); see mlab's `notes/PROVENANCE.md`. Unchanged except
+that `DVDReadPrio` and `cbForReadSync` are put under `#if 0` in `dvdfs.c`
+(dead-stripped; the assertion string of `DVDReadPrio` is not in the DOL's `.data`).
+`dvd_broadway.c` is not ported yet: most of its functions differ from mlab's.
+
 ## RVL_SDK/mtx (3 units)
 
 From mlab-decomp `src/RVL_SDK/mtx/mtx.c`, `mtxvec.c`, `mtx44.c` (commit
