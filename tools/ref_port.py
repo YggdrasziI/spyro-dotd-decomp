@@ -441,7 +441,16 @@ def cmd_fixdata(project, args):
         if section not in starts:
             sys.exit(f"{unit} has no {section} split")
         addr = starts[section][0] + value
-        scope = {"l": "scope:local", "w": "scope:weak"}.get(binding, "scope:global")
+        end = starts[section][1]
+        if addr + size > end:
+            # Our section is longer than the DOL's (data of a dead-stripped
+            # function, notes/MATCHING.md): writing it would drop or shorten the
+            # next unit's symbols
+            print(f"! {name} ({section} +0x{value:X}, size 0x{size:X}) ends past the "
+                  f"split end 0x{end:08X}: not written; put the code that emits it "
+                  f"under #if 0 if the DOL lacks it")
+            continue
+        scope ={"l": "scope:local", "w": "scope:weak"}.get(binding, "scope:global")
         for (s, a), i in sorted(idx.items()):
             if s != section or lines[i] is None:
                 continue
