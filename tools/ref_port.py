@@ -424,6 +424,8 @@ def cmd_fixdata(project, args):
     def index():
         out = {}
         for i, line in enumerate(lines):
+            if line is None:  # dropped above, removed when the file is written
+                continue
             m = SYMBOL_RE.match(line)
             if m:
                 out[(m.group(2), int(m.group(3), 16))] = i
