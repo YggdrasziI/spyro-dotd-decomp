@@ -116,7 +116,8 @@ def objdump(*args):
 
 
 def object_symbols(path):
-    """[(section, value, size, name, binding)] of an object; binding is l, g or w."""
+    """[(section, value, size, name, binding, flags)] of an object; binding is l, g
+    or w, flags the six objdump flag characters after it."""
     out = []
     for line in objdump("-t", path).splitlines():
         m = OBJ_SYMBOL_RE.match(line)
@@ -403,7 +404,8 @@ def cmd_names(project, args):
         if bindings.get(name) == "l" and "scope:" not in rest:
             rest += " scope:local"
         return name + rest
-    text = re.sub(r"^(\S+)( = .*)$", sub, text, flags=re.M)
+    # [^\r\n]: in a CRLF file the \r stays after the added scope
+    text = re.sub(r"^(\S+)( = [^\r\n]*)", sub, text, flags=re.M)
     open(project.symbols_path, "wb").write(text.encode("utf-8"))
     print(f"{len(plan)} symbols renamed in {project.symbols_path}")
 
