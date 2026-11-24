@@ -103,7 +103,10 @@ config/<ID>/              dtk config per version: config.yml, symbols.txt, split
 orig/<ID>/                original game files (git-ignored, never committed)
 build/                    build output (git-ignored)
 src/  include/  libs/     sources and headers (game, SDK, runtime, MSL), when added
-tools/                    shared scripts (progress badges, report and asm helpers)
+tools/common/             decomp-tools submodule (report gate, asm compare, try,
+                          progress badges), settings in decomp.toml
+tools/wii/                wii-decomp-tools submodule (dtk-template build generator,
+                          unit candidates, compiler sweep, reference matching)
 progress/<ID>/            progress badges and history per version (README images)
 notes/                    reference documentation
 .github/workflows/        CI: split, link and check main.dol in a private image

@@ -81,7 +81,7 @@ Linux
 Building
 ========
 
-- Clone the repository with its submodule (`tools/common`):
+- Clone the repository with its submodules (`tools/common`, `tools/wii`):
 
   ```sh
   git clone --recursive https://github.com/YggdrasziI/spyro-dotd-decomp.git

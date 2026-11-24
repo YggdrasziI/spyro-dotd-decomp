@@ -68,7 +68,7 @@ hypothesis here until a function of this game matches with it.
   compiled object with this DOL's reference at the same offset of the same function;
   this gives every data section's start and the names of referenced symbols
   (RVL_SDK `os/`). Then copy the data symbol sizes of the compiled object into
-  `symbols.txt` (dtk merges or splits strings and pads sizes). `tools/ref_port.py`
+  `symbols.txt` (dtk merges or splits strings and pads sizes). `tools/wii/ref_port.py`
   does both (`plan`, `names`, `fixdata`; see `notes/REFERENCES.md`).
 
 - `mullw rD, rD, rB` versus `mullw rD, rB, rD`: swap the operands of `*` in the

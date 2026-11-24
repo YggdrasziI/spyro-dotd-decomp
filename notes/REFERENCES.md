@@ -9,6 +9,12 @@
   DOL analysis, `symbols.txt` / `splits.txt`, final match check.
 - [encounter/objdiff](https://github.com/encounter/objdiff): local diff (reads
   `objdiff.json`).
+- [YggdrasziI/decomp-tools](https://github.com/YggdrasziI/decomp-tools) and
+  [YggdrasziI/wii-decomp-tools](https://github.com/YggdrasziI/wii-decomp-tools) (the
+  owner's own projects, CC0-1.0): submodules `tools/common` and `tools/wii`, settings
+  in `decomp.toml`. They replace this project's former copies of the report, compare
+  and badge scripts, of dtk-template's build generator and of `unit_candidates.py`,
+  `compiler_sweep.py`, `ref_match.py` and `ref_port.py`.
 - [decomp.me](https://decomp.me): shared scratches and compiler tests.
 - [decompals/wibo](https://github.com/decompals/wibo) (runs mwcc on Linux),
   [encounter/sjiswrap](https://github.com/encounter/sjiswrap) (UTF-8 to Shift-JIS).
@@ -55,13 +61,13 @@ version of each library against this DOL.
 
 ## Finding library code by comparison
 
-`tools/ref_match.py <project root> <ID>` compares this game's functions with another
+`tools/wii/ref_match.py <project root> <ID>` compares this game's functions with another
 dtk project's (symbol operands and local branch offsets normalized) and prints runs of
 matched functions with the reference unit names. Monster Lab
 (`mlab-decomp`, `RM7P4F`, same RVL_SDK build tag) gives the region map
 of `notes/SPLITS.md`; its `build/RM7P4F/asm` must exist (`ninja` there).
 
-`tools/ref_port.py <project root> <ID> <command>` ports a reference library unit by
+`tools/wii/ref_port.py <project root> <ID> <command>` ports a reference library unit by
 unit (it needs the reference's compiled objects, `build/<ID>/src`): `place` shows one
 unit (functions here, data section starts, names), `plan` prints `splits.txt` blocks
 for a group of units with warnings, `names --write` gives reference names to generic

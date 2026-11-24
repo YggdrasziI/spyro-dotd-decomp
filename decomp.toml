@@ -33,6 +33,12 @@ target = "build/{version}/obj/{piece}.o"
 [try.suffix_flags]
 ".cpp" = "-lang=c++"
 
+# tools/wii/unit_candidates.py: [start, end) of the code whose units end with a static
+# initializer. Hypothesis: game code ends at the first SDK function dtk named
+# (PPCMfmsr); the region between main and it is not identified yet (notes/SPLITS.md).
+[wii.game_text]
+RO8P7D = [0x8000C4E0, 0x80355F60]
+
 # Code regions of the progress card, from the region map of notes/SPLITS.md. The
 # game / engine and SDK / RenderWare bounds are approximate until those units are
 # split. Each region is a list of [start, end) ranges.
