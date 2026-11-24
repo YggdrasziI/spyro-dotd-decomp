@@ -27,7 +27,7 @@ auto_units = ["main/auto_"]
 # against the original object dtk split for its unit (piece = the unit name in
 # splits.txt without the extension, e.g. game/unit_8032E43C)
 [try]
-compile = "{cc} {flags} -i include -i build/{version}/include -i libs/Runtime/include -i libs/MSL_C/include -i libs/RVL_SDK/include -i libs/MetroTRK/include -i libs/MSL_C++/include -DBUILD_VERSION=0 -DNDEBUG=1 {suffix_flags} -c {src} -o {obj}"
+compile = "{cc} {flags} -i include -i build/{version}/include -i libs/Runtime/include -i libs/MSL_C/include -i libs/RVL_SDK/include -i libs/MetroTRK/include -i libs/MSL_C++/include -DBUILD_VERSION={version_index} -DNDEBUG=1 {suffix_flags} -c {src} -o {obj}"
 target = "build/{version}/obj/{piece}.o"
 
 [try.suffix_flags]
