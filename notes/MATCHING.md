@@ -1,8 +1,10 @@
 # Matching techniques
 
-Techniques found on this project, each with the unit where it was proven. Empty
-until the first units are decompiled; the catalogue of Monster Lab (mwcc GC 3.0a5.2)
-in `mlab-decomp/notes/MATCHING.md` is a lead once the compiler is identified.
+Techniques found on this project, each with the unit where it was proven (game code
+GC/3.0a5.2, see `notes/COMPILER.md`; library units with their own flags). The
+catalogue of Monster Lab (same compiler) in `mlab-decomp/notes/MATCHING.md` and the
+digest `tools/common/docs/mwcceppc.md` are leads: a technique proven there is a
+hypothesis here until a function of this game matches with it.
 
 ## Loads, aliasing and `const`
 
