@@ -1,0 +1,45 @@
+# Project settings read by the tools of tools/common (see tools/common/decomp_config.py)
+
+title = "Spyro: Dawn of the Dragon"
+
+# First one is the default version; RO8X7D and RO8E7D stay disabled (configure.py)
+versions = [
+    "RO8P7D",  # PAL Europe, revision 0
+]
+
+[paths]
+# objdiff-cli is downloaded by the build (configure.py)
+objdiff_cli = "build/tools/objdiff-cli"
+
+# Compiler of the game code (src/game): GC/3.0a5.2, downloaded by the build
+# (notes/COMPILER.md). Code generation flags of cflags_game in configure.py,
+# without the include paths and defines. The libraries use other flag sets.
+[compiler]
+path = "build/compilers/GC/3.0a5.2/mwcceppc.exe"
+flags = "-nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma \"cats off\" -pragma \"warn_notinlined off\" -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -RTTI on"
+
+# tools/common/report_diff.py: units dtk makes from the code no source file
+# claims yet
+[report]
+auto_units = ["main/auto_"]
+
+# tools/common/try_unit.py: one game source compiled outside the build, scored
+# against the original object dtk split for its unit (piece = the unit name in
+# splits.txt without the extension, e.g. game/unit_8032E43C)
+[try]
+compile = "{cc} {flags} -i include -i build/{version}/include -i libs/Runtime/include -i libs/MSL_C/include -i libs/RVL_SDK/include -i libs/MetroTRK/include -i libs/MSL_C++/include -DBUILD_VERSION=0 -DNDEBUG=1 {suffix_flags} -c {src} -o {obj}"
+target = "build/{version}/obj/{piece}.o"
+
+[try.suffix_flags]
+".cpp" = "-lang=c++"
+
+# Code regions of the progress card, from the region map of notes/SPLITS.md. The
+# game / engine and SDK / RenderWare bounds are approximate until those units are
+# split. Each region is a list of [start, end) ranges.
+[regions.RO8P7D]
+"Game" = [[0x8000C4E0, 0x802F5BB8]]
+"Engine (CK*)" = [[0x802F5BB8, 0x80355F60]]
+"Wii SDK, Runtime, MSL" = [[0x80004000, 0x800064E0], [0x80355F60, 0x803EAF84], [0x804A4B84, 0x804A5278]]
+"RenderWare" = [[0x803EAF84, 0x80485310]]
+"HBM, nw4hbm" = [[0x80485310, 0x804A4B84]]
+"Bink" = [[0x804A5278, 0x804B7EC0]]
