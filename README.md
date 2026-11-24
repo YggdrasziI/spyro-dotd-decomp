@@ -37,9 +37,11 @@ Progress
 - **Linked**: code linked into the matching `main.dol`.
 
 The card counts every function of the DOL, split or not: each region total is the
-code between the region bounds of `notes/SPLITS.md` (approximate for game / engine and
-SDK / RenderWare). The badges and the card are drawn from the objdiff report by
-`tools/progress_badges.py`, one folder per version. After a build, `python tools/progress_badges.py --version <ID> --record`
+code between the region bounds of `notes/SPLITS.md`, written in `decomp.toml`
+(approximate for game / engine and SDK / RenderWare). The badges and the card are drawn
+from the objdiff report by `tools/common/progress_badges.py` (submodule
+[decomp-tools](https://github.com/YggdrasziI/decomp-tools)), one folder per version.
+After a build, `python tools/common/progress_badges.py --version <ID> --record`
 redraws `progress/<ID>/` and adds the current commit to `progress/<ID>/history.csv`;
 commit the `progress/` folder with it.
 
@@ -79,10 +81,10 @@ Linux
 Building
 ========
 
-- Clone the repository:
+- Clone the repository with its submodule (`tools/common`):
 
   ```sh
-  git clone https://github.com/YggdrasziI/spyro-dotd-decomp.git
+  git clone --recursive https://github.com/YggdrasziI/spyro-dotd-decomp.git
   ```
 
 - Copy your game's disc image to `orig/RO8P7D`.
